@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #freeschoolアプリをプロジェクトに登録する
+    'freeschoolapp.apps.FreeschoolappConfig',
+    #studentアプリをプロジェクトに登録する
+    'studentapp.apps.StudentappConfig',
 ]
 
 MIDDLEWARE = [
