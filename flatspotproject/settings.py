@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'freeschoolapp.apps.FreeschoolappConfig',
     #studentアプリをプロジェクトに登録する
     'studentapp.apps.StudentappConfig',
+    #accountsアプリをプロジェクトに登録する
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Userモデルの代わりにCustomUserモデルを使用する
+AUTH_USER_MODEL='accounts.CustomUser'
