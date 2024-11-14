@@ -8,7 +8,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
-class FreeSchoolUser(AbstractUser):
+class StudentUser(AbstractUser):
     #UUIDを設定する
     id=models.UUIDField(primary_key=True, default=uuid.uuid4) 
     
