@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import FreeSchoolUser
 
-# Register your models here.
+#Django管理者サイトにFreeSchoolUserを登録する
+admin.site.register(FreeSchoolUser)
