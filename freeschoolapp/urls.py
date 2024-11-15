@@ -16,5 +16,12 @@ urlpatterns=[
     path('usersearch',views.UserSearchView.as_view(),name='usersearch'),
     path('userdetail',views.UserDetailView.as_view(),name='userdetail'),
     path('sessiontest',views.SessionTestView.as_view(),name='sessiontest'),
+    path('clubpost',views.ClubPostView.as_view(),name='clubpost'),
+    path('clubpostcheck',views.ClubPostCheckView.as_view(),name='clubpostcheck'),
+    path('myclublist',views.MyClubListView.as_view(),name='myclublist'),
+    path('eventpost',views.EventPostView.as_view(),name='eventpost'),
+    path('myeventlist',views.MyEventListView.as_view(),name='myeventlist'),
+    path('blogpost',views.BlogPostView.as_view(),name='blogpost'),
     path('mybloglist',views.MyBlogListView.as_view(),name='mybloglist'),
+    
 ]
