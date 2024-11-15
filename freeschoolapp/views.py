@@ -79,6 +79,12 @@ class ClubPostCheckView(TemplateView):
     template_name='freeschool_clubpostcheck.html'
     
 
+class ClubPostDoneView(TemplateView):
+    
+    #freeschool_clubpostdone.htmlをレンダリングする（描写）する
+    template_name='freeschool_clubpostdone.html'
+
+   
 class MyClubListView(TemplateView):
     
     #freeschool_myclublist.htmlをレンダリング（描写）する
