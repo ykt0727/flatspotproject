@@ -15,4 +15,6 @@ urlpatterns=[
     path('passwordresetdone',views.PasswordResetDoneView.as_view(),name='passwordresetdone'),
     path('usersearch',views.UserSearchView.as_view(),name='usersearch'),
     path('userdetail',views.UserDetailView.as_view(),name='userdetail'),
+    path('sessiontest',views.SessionTestView.as_view(),name='sessiontest'),
+    path('mybloglist',views.MyBlogListView.as_view(),name='mybloglist'),
 ]

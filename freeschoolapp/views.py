@@ -54,8 +54,20 @@ class UserSearchView(TemplateView):
     #freeschool_usersearch.htmlをレンダリング（描写）する
     template_name='freeschool_usersearch.html'
 
-
 class UserDetailView(TemplateView):
-    
     #freeschool_userdetail.htmlをレンダリング（描写）する
     template_name='freeschool_userdetail.html'
+    
+class SessionTestView(TemplateView):
+    #freeschool_sessiontest.htmlをレンダリング（描写）する
+    template_name='freeschool_sessiontest.html'
+    
+class MyBlogListView(TemplateView):
+    #freeschool_mybloglist.htmlをレンダリング（描写）する
+    template_name='freeschool_mybloglist.html'
+    
+class MyBlogDetailView(TemplateView):
+    #freeschool_myblogdetail.htmlをレンダリング（描写）する
+    template_name='freeschool_myblogdetail.html'
+    
+
