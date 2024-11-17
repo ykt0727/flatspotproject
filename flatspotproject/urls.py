@@ -24,4 +24,6 @@ urlpatterns = [
     path('student/',include('studentapp.urls')),
     #freeschoolアプリのURLを登録する
     path('freeschool/',include('freeschoolapp.urls')),
+    #accountsアプリのURLを登録する
+    path('accounts/',include('accounts.urls')),
 ]

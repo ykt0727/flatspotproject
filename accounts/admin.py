@@ -6,6 +6,6 @@ class CustomUserAdmin(admin.ModelAdmin):
     pass
 
 
-#Django管理サイトにCCustomUser,CustomUserAdminを登録する
+#Django管理サイトにCustomUser,CustomUserAdminを登録する
 
 admin.site.register(CustomUser,CustomUserAdmin)
