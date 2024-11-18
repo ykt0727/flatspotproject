@@ -43,7 +43,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('is_staffはTrueにしてください')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('is_superuserはTrueにしてください')
-
+        
         #メールの正規化を行う
         extra_fields['mail']=self.normalize_email(extra_fields.get('mail'))
         
