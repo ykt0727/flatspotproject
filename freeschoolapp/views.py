@@ -91,16 +91,73 @@ class MyClubListView(TemplateView):
     template_name='freeschool_myclublist.html'
     
 
+class MyClubDetailView(TemplateView):
+    
+    #freeschool_myclubdetail.htmlをレンダリング（描写）する
+    template_name='freeschool_myclubdetail.html'
+    
+class MyClubUpDateView(TemplateView):
+    
+    #freeshool_myclubupdate.htmlをレンダリング（描写）する
+    template_name='freeschool_myclubupdate.html'
+
+class MyClubDeleteCheckView(TemplateView):
+    
+    #freeshool_myclubdeletecheck.htmlをレンダリング（描写）する
+    template_name='freeschool_myclubdeletecheck.html'
+
+
+class MyClubDeleteDoneView(TemplateView):
+    
+    #freeshool_myclubderetedoneview.htmlをレンダリング（描写）する
+    template_name='freeschool_myclubdeletedone.html'
+
 class EventPostView(TemplateView):
     
     #freeschool_eventpost.htmlをレンダリング（描写）する
     template_name='freeschool_eventpost.html'
     
 
+class EventPostCheckView(TemplateView):
+    
+    #freshool_eventpostcheck.htmlをレンダリング（描写）する
+    template_name='freeschool_eventpostcheck.html'
+
+
+class EventPostDoneView(TemplateView):
+    
+    #freshool_eventpostdone.htmlをレンダリング（描写）する
+    template_name='freeschool_eventpostdone.html'
+
+
 class MyEventListView(TemplateView):
     
     #freeschool_myeventlist.htmlをレンダリング（描写）する
     template_name='freeschool_myeventlist.html'
+
+
+class MyEventDetailView(TemplateView):
+    
+    #freeschool_myeventdetail.htmlをレンダリング（描写）する
+    template_name='freeschool_myeventdetail.html'
+
+
+class MyEventUpDateView(TemplateView):
+    
+    #freeschool_myeventupdate.htmlをレンダリング（描写）する
+    template_name='freeschool_myeventupdate.html'
+
+
+class MyEventDeleteCheckView(TemplateView):
+    
+    #freeschool_myeventdeleteCheck.htmlをレンダリング（描写）する
+    template_name='freeschool_myeventdeletecheck.html'
+
+
+class MyEventDeleteDoneView(TemplateView):
+    
+    #freeschool_myeventdeletedone.htmlをレンダリング（描写）する
+    template_name='freeschool_myeventdeletedone.html'
 
 
 class BlogPostView(TemplateView):
@@ -109,6 +166,12 @@ class BlogPostView(TemplateView):
     template_name='freeschool_blogpost.html'
     
 
+class BlogPostCheckView(TemplateView):
+    
+    #freeschool_blogpostcheck.htmlをレンダリング（描写）する
+    template_name='freeschool_blogpostcheck.html'
+
+
 class MyBlogListView(TemplateView):
     
     #freeschool_mybloglist.htmlをレンダリング（描写）する
@@ -116,7 +179,37 @@ class MyBlogListView(TemplateView):
     
     
 class MyBlogDetailView(TemplateView):
+    
     #freeschool_myblogdetail.htmlをレンダリング（描写）する
     template_name='freeschool_myblogdetail.html'
     
+
+class MyBlogUpDateView(TemplateView):
+    
+    #freeschool_myblogupdate.htmlをレンダリング（描写）する
+    template_name='freeschool_myblogupdate.html'
+
+
+class MyBlogDeleteCheckView(TemplateView):
+    
+    #freeschool_myblogdeletecheck.htmlをレンダリング（描写）する
+    template_name='freeschool_myblogdeletecheck.html'
+    
+    
+class MyBlogDeleteDoneView(TemplateView):
+    
+    #freeschool_myblogdeeltedone.htmlをレンダリング（描写）する
+    template_name='freeschool_myblogdeletedone.html'
+
+
+class ContactView(TemplateView):
+    
+    #freeschool_contact.htmlをレンダリング(描写)する
+    template_name='freeschool_contact.html'
+
+
+class ContactDoneView(TemplateView):
+    
+    #freeschool_contactdone.htmlをレンダリング（描写）する
+    template_name='freeschool_contactdone.html'
 
