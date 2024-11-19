@@ -76,8 +76,8 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     user_type=models.CharField(max_length=20,choices=user_type_choices)
     
     #is_staffとis_superuserを追加
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+    is_staff=models.BooleanField(default=False)
+    is_superuser=models.BooleanField(default=False)
     
     #ログインIDで認証
     USERNAME_FIELD='login_id'

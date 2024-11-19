@@ -9,7 +9,7 @@ class Student(models.Model):
     
     #ニックネームを定義する
     nickname=models.CharField(max_length=25)
-   
+    
     #保護者フラグ、デフォルトはFalse
     is_guardian=models.BooleanField(default=False)
    
