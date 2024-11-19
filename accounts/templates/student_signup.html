@@ -6,7 +6,7 @@
     <title>サインアップ</title>
 </head>
 <body>
-    <form method="POST" action="student_signupdone">
+    <form method="POST">
     {% csrf_token %}
     {{ user_form.as_p }}
     {{ student_form.as_p }}

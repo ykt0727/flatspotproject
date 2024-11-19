@@ -1,19 +1,33 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView,View
+from django.urls import reverse_lazy
 #リダイレクト
 from django.shortcuts import redirect
-
+#Django標準のログインビュー
+from django.contrib.auth.views import LoginView
 #forms.pyで定義したフォーム
 from .forms import SignupForm,StudentSignupForm,FreeSchoolSignupForm
 
-#仮でTemplateViewを継承してlogin.htmlを描画する
-class LoginView(TemplateView):
+
+#LoginViewを利用者別で変えられるように判別、'login.html'を描画する
+class CustomLoginView(LoginView):
     template_name='login.html'
-    
-#student_signupdone.htmlをびょうふぁする
-class SignupDoneView(TemplateView):
+    def get_redirect_url(self):
+        user=self.request.user
+        #ユーザー認証が成功されている場合
+        if user.is_authenticated:
+            #利用者種別によって遷移されるページを変える
+            if user.user_type=='student':
+                return '../student/top'
+            elif user.user_type=='freeschool':
+                return '../freeschool/top'
+
+        return super().get_redirect_url()
+
+#student_signupdone.htmlを描画する
+class StudentSignupDoneView(TemplateView):
     template_name='student_signupdone.html'
-    
+
 #不登校生徒用のサインアップビューを追加
 class StudentSignupView(View):
     
@@ -54,13 +68,11 @@ class StudentSignupView(View):
             student.user=user
             student.save()
             
-            # パラメータからリダイレクト先を取得,遷移前の画面でパラメータでnextを指定してください
-            next_page=request.GET.get('next') or '/'
-            return redirect(next_page)            
+            #signupdoneにリダイレクトする
+            return redirect('accounts:student_signupdone')            
         
         #フォームが無効の場合再描画する
         return render(request,'student_signup.html',{
             'user_form':user_form,
             'student_form':student_form,
         })
-            
