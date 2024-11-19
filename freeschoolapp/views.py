@@ -1,17 +1,30 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.views import View
+from .models import CustomUser,FreeSchool
 
-class LoginView(TemplateView):
-    
-    #freeschool_login.htmlをレンダリング（描写）する
-    template_name='freeschool_login.html'
+#ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
+class BaseView(View):
+    #テンプレートに使用するコンテキスト情報を設定する
+    def get_context_data(self, **kwargs):
+        #contextを初期化
+        context={}    
+        if self.request.user.is_authenticated and self.request.user.user_type=='freeschool':
+            #認証ユーザーに紐づいているFreeSchoolの行を取得
+            freeschool=FreeSchool.objects.get(user=self.request.user)
+            context['freeschool']=freeschool
+        return context
 
-
-class TopView(TemplateView):
-    
+class TopView(BaseView):
     #freeschool_top.htmlをレンダリング（描写）する
-    template_name='freeschool_top.html'
-    
+    def get(self, request, *args, **kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'freeschool_top.html',context)
+    def post(self, request, *args, **kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'freeschool_top.html',context)
 
 class MailSendView(TemplateView):
     

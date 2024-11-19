@@ -1,3 +1,7 @@
+{% extends 'freeschool_base.html' %}
+
+{% load static%}
+{% block contents %}
 freeschool toppage
 <a href="{% url 'freeschoolapp:clubpost' %}">サークル掲載</a>
 <a href="{% url 'freeschoolapp:myclublist' %}">管理サークル一覧</a>
@@ -9,3 +13,4 @@ freeschool toppage
 <a href="{% url 'freeschoolapp:account' %}">アカウント情報</a>
 <a href="{% url 'freeschoolapp:contact' %}">お問い合わせ</a>
 <a href="{% url 'accounts:login' %}">ログアウト</a>
+{% endblock %}

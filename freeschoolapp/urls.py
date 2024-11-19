@@ -5,7 +5,6 @@ app_name='freeschoolapp'
 
 #URLパターンを登録するためのリスト
 urlpatterns=[
-    path('login',views.LoginView.as_view(),name='login'),
     path('top',views.TopView.as_view(),name='top'),
     path('mailsend',views.MailSendView.as_view(),name='mailsend'),
     path('mailsenddone',views.MailSendDoneView.as_view(),name='mailsenddone'),
@@ -41,5 +40,4 @@ urlpatterns=[
     path('myblogdeletedone',views.MyBlogDeleteDoneView.as_view(),name='myblogdeletedone'),
     path('contact',views.ContactView.as_view(),name='contact'),
     path('contactdone',views.ContactDoneView.as_view(),name='contactdone')
-    
 ]
