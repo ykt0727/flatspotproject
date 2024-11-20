@@ -1,16 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
+<link rel="stylesheet" href="{% static "css/accounts.css"%}">
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>サインアップ</title>
 </head>
-<body>
-    <form method="POST">
+<body class="signup_body">
+    <form method="POST" class="student_signup">
+    <p>新規登録するアカウントの情報を入力してください</p>
     {% csrf_token %}
     {{ user_form.as_p }}
     {{ student_form.as_p }}
-    <button type="submit">★新規登録★</button>
+    <button type="submit" class="signup_button">★新規登録★</button>
     </form>
 </body>
 </html>
