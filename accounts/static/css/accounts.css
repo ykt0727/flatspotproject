@@ -1,0 +1,8 @@
+body {
+   background-color: #ffefd5;
+   font-family: 'Comic Sans MS', cursive, sans-serif;
+   height: 60vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
