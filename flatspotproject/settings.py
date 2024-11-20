@@ -130,3 +130,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Userモデルの代わりにCustomUserモデルを使用する
 AUTH_USER_MODEL='accounts.CustomUser'
+
+#以下パスワードリセットのテスト記述
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+
+DEFAULT_FROM_EMAIL='wenrenzhanggang@gmail.com'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='wenrenzhanggang@gmail.com'
+EMAIL_HOST_PASSWORD='hoykduztrzwmvwyf'
+EMAIL_USE_TLS=True
