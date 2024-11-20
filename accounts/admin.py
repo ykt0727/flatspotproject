@@ -6,7 +6,7 @@ class CustomUserAdmin(UserAdmin):
     # ユーザー詳細画面のフィールドセットを定義
     fieldsets = (
         (None,{'fields':('login_id','password')}),
-        ('Personal info',{'fields':('mail','phone_number','user_type')}),
+        ('Personal info',{'fields':('email','phone_number','user_type')}),
         ('Important dates',{'fields':('last_login','date_joined')}),
         ('Permissions',{'fields':('is_staff','is_superuser','groups','user_permissions')}),
     )
@@ -17,7 +17,7 @@ class CustomUserAdmin(UserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("login_id", "mail", "phone_number", "user_type", "password1", "password2"),
+                "fields": ("login_id", "email", "phone_number", "user_type", "password1", "password2"),
             },
         ),
     )
@@ -31,6 +31,6 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('login_id',)
 
     # 検索対象のフィールドを指定
-    search_fields = ('login_id', 'mail')
+    search_fields = ('login_id', 'email')
 
 admin.site.register(CustomUser, CustomUserAdmin)

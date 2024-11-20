@@ -21,7 +21,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('ログインIDが設定されていません')
         
         #メールの正規化を行う
-        extra_fields['mail']=self.normalize_email(extra_fields.get('mail'))
+        extra_fields['email']=self.normalize_email(extra_fields.get('email'))
         
         #インスタンスを作成
         user=self.model(login_id=login_id,**extra_fields)
@@ -45,7 +45,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('is_superuserはTrueにしてください')
         
         #メールの正規化を行う
-        extra_fields['mail']=self.normalize_email(extra_fields.get('mail'))
+        extra_fields['email']=self.normalize_email(extra_fields.get('email'))
         
         return self.create_user(login_id,password,**extra_fields)
 
@@ -61,7 +61,7 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     date_joined=models.DateTimeField("登録日",default=timezone.now)
     
     #メールフィールド
-    mail=models.EmailField(unique=True)
+    email=models.EmailField(unique=True)
     
     #電話番号フィールド、phonenumbersパッケージを使用する
     phone_number=PhoneNumberField(unique=True,null=True,blank=True,region='JP')
@@ -75,6 +75,9 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     #利用者種別
     user_type=models.CharField(max_length=20,choices=user_type_choices)
     
+    #is_activeを追加
+    is_active=models.BooleanField(default=True)
+    
     #is_staffとis_superuserを追加
     is_staff=models.BooleanField(default=False)
     is_superuser=models.BooleanField(default=False)
@@ -83,7 +86,7 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     USERNAME_FIELD='login_id'
     
     #ユーザー作成時に必須にする項目
-    REQUIRED_FIELDS=['mail'] 
+    REQUIRED_FIELDS=['email'] 
     
     #データベースを操作するためのマネージャーを登録
     objects=CustomUserManager()
