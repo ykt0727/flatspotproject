@@ -1,1 +1,17 @@
-アカウント登録完了です！！！！
+{% load static %}
+<!DOCTYPE html>
+<link rel="stylesheet" href="{% static "css/accounts.css" %}" >
+<html>
+    <head>
+        <title>ユーザー登録完了画面</title>
+
+    </head>
+
+    <body>
+        <div class="singupdone">
+            <h1>ユーザー登録が完了しました</h1>
+            <a href="{% url 'studentapp:top' %}"><button class="singupdonebutton">トップページに進む</button></a>
+        </div>
+    </body>
+
+</html>

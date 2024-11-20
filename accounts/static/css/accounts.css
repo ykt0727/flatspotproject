@@ -1,8 +1,28 @@
 body {
    background-color: #ffefd5;
-   font-family: 'Comic Sans MS', cursive, sans-serif;
-   height: 60vh;
+ }
+
+ .singupdone {
+   /*フォントサイズ変更*/
+   font-size: 20px;
+   color: #ff6b6b;
    display: flex;
+   height: 90vh;
    justify-content: center;
    align-items: center;
+   /*要素を縦にする*/
+   flex-flow: column;
+ }
+
+ .singupdonebutton {
+   width: 200px;
+   padding: 20px;
+   background-color: #ff69b4;
+   border: none;
+   border-radius: 25px;
+   color: #fff;
+   font-size: 16px;
+   font-weight: bold;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
  }
