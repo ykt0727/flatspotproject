@@ -2,6 +2,7 @@ from django import forms
 from accounts.models import CustomUser
 from studentapp.models import Student
 from freeschoolapp.models import FreeSchool
+from phonenumber_field.formfields import PhoneNumberField
 
 #時刻関連
 import datetime

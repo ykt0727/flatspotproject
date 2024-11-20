@@ -21,7 +21,6 @@ class CustomLoginView(LoginView):
                 return '../student/top'
             elif user.user_type=='freeschool':
                 return '../freeschool/top'
-
         return super().get_redirect_url()
 
 #student_signupdone.htmlを描画する

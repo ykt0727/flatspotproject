@@ -10,10 +10,16 @@
     <!--ログインされている場合-->
     {% if user.is_authenticated %}
         <!--利用者がフリースクール関係者の場合のみ表示-->
-        {% if user.user_type == 'freeschool' %}
-        <h1>{{ freeschool.freeschool_name }}</h1>
+        {% if user.user_type == 'student' %}
+        <!--仮でログインされているユーザーを表示中-->
+        <h1>{{ student.student_name }}さん</h1>
         {% block contents %}{% endblock %}
+        {% else%}
+        <p>不登校生徒アカウントでログインしてください</p>
         {% endif %}
+    {% else %}
+        <p>ログインが必要です</p>
+        <a href="{% url 'accounts:login' %}">ログインする</a>
     {% endif %}
 </body>
 </html>

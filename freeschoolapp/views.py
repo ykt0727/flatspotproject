@@ -215,11 +215,16 @@ class MyBlogDeleteDoneView(TemplateView):
     template_name='freeschool_myblogdeletedone.html'
 
 
-class ContactView(TemplateView):
-    
+class ContactView(BaseView):
     #freeschool_contact.htmlをレンダリング(描写)する
-    template_name='freeschool_contact.html'
-
+    def get(self, request, *args, **kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'freeschool_contact.html',context)
+    def post(self, request, *args, **kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'freeschool_contact.html',context)
 
 class ContactDoneView(TemplateView):
     

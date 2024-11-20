@@ -1,5 +1,19 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.views import View
+from django import 
+
+#ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
+class BaseView(View):
+    #テンプレートに使用するコンテキスト情報を設定する
+    def get_context_data(self, **kwargs):
+        #contextを初期化
+        context={}    
+        if self.request.user.is_authenticated and self.request.user.user_type=='student':
+            #認証ユーザーに紐づいているStudentの行を取得
+            student=student.objects.get(user=self.request.user)
+            context['student']=student
+        return context
 
 class TopView(TemplateView):
     
