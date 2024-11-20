@@ -17,11 +17,11 @@ class SignupForm(forms.ModelForm):
     class Meta:
         model=CustomUser
         #フォームを表示する項目、利用者種別は表示しない
-        fields=['login_id','mail','phone_number','password']
+        fields=['login_id','email','phone_number','password']
         #画面に表示するラベルを設定する
         labels={
             'login_id':'ID',
-            'mail':'メールアドレス',
+            'email':'メールアドレス',
             'phone_number':'電話番号',
         }
 
