@@ -64,7 +64,7 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     mail=models.EmailField(unique=True)
     
     #電話番号フィールド、phonenumbersパッケージを使用する
-    phone_number=PhoneNumberField(unique=True,null=True,blank=True)
+    phone_number=PhoneNumberField(unique=True,null=True,blank=True,region='JP')
     
     #利用者種別の選択肢
     user_type_choices=(
