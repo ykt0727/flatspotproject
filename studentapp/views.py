@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views import View
+from .models import Student
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
 class BaseView(View):
@@ -10,75 +11,131 @@ class BaseView(View):
         context={}    
         if self.request.user.is_authenticated and self.request.user.user_type=='student':
             #認証ユーザーに紐づいているStudentの行を取得
-            student=student.objects.get(user=self.request.user)
+            student=Student.objects.get(user=self.request.user)
             context['student']=student
         return context
 
-class TopView(TemplateView):
-    
+class TopView(BaseView):
     #student_top.htmlをレンダリング（描写）する
-    template_name='student_top.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_top.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_top.html',context)
     
 
-class ClubListView(TemplateView):
-    
+class ClubListView(BaseView):
     #student_clublist.htmlをレンダリング（描写）する
-    template_name='student_clublist.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_clublist.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_clublist.html',context)
     
-    
-class ClubDetailView(TemplateView):
-    
+class ClubDetailView(BaseView):
     #student_clubdetail.htmlをレンダリング（描写）する
-    template_name='student_clubdetail.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_clubdetail.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_cluvdetail.html',context)
 
-
-class ClubRequestView(TemplateView):
-    
+class ClubRequestView(BaseView):
     #student_clubrequest.htmlをレンダリング（描写）する
-    template_name='student_clubrequest.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_clubrequest.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_clubrequest.html',context)
     
     
-class ClubRequestDoneView(TemplateView):
-    
+class ClubRequestDoneView(BaseView):
     #student_clubrequestdone.htmlをレンダリング（描写）する
-    template_name='student_clubrequestdone.html'
-
-
-class EventListView(TemplateView):
-    
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_clubrequestdone.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_clubrequestdone.html',context)
+class EventListView(BaseView):
     #student_eventlist.htmlをレンダリング（描写）する
-    template_name='student_eventlist.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventlist.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventlist.html',context)
 
-
-class EventDetailView(TemplateView):
-    
+class EventDetailView(BaseView):
     #student_eventdetail.htmlをレンダリング（描写）する
-    template_name='student_eventdetail.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventdetail.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventdetail.html',context)
 
-
-class EventRequestView(TemplateView):
-    
+class EventRequestView(BaseView):
     #student_eventrequest.htmlをレンダリング（描写）する
-    template_name='student_eventrequest.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventrequest.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventrequest.html',context)    
     
-    
-class EventRequestDoneView(TemplateView):
-    
+class EventRequestDoneView(BaseView):
     #student_eventrequestdone.htmlをレンダリング（描写）する
-    template_name='student_eventrequestdone.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventrequestdone.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_eventrequestdone.html',context)
 
-
-class BlogListView(TemplateView):
-    
+class BlogListView(BaseView):
     #student_bloglist.htmlをレンダリング（描写）する
-    template_name='student_bloglist.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_bloglist.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_bloglist.html',context)
 
-
-class BlogDetailView(TemplateView):
-    
+class BlogDetailView(BaseView):
     #student_blogdetail.htmlをレンダリング（描写）する
-    template_name='student_blogdetail.html'
-
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_blogdetail.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_blogdetail.html',context)
 
 class ContactView(TemplateView):
     
