@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views import View
-from django import 
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
 class BaseView(View):
