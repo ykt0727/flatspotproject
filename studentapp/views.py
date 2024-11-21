@@ -137,19 +137,35 @@ class BlogDetailView(BaseView):
         context=self.get_context_data(**kwargs)
         return render(request,'student_blogdetail.html',context)
 
-class ContactView(TemplateView):
-    
+class ContactView(BaseView):
     #student_contact.htmlをレンダリング（描写）する
-    template_name='student_contact.html'
-
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_contact.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_contact.html',context)    
 
 class ContactDoneView(TemplateView):
-    
     #student_contactdone.htmlをレンダリング（描写）する
-    template_name='student_contactdone.html'
-
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_contactdone.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_contactdone.html',context)
 
 class AboutView(TemplateView):
-    
     #student_about.htmlをレンダリング（描写）する
-    template_name='student_about.html'
+    def get(self, request, *args,**kwargs):
+        #getリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_about.html',context)
+    def post(self, request, *args,**kwargs):
+        #postリクエスト用の処理
+        context=self.get_context_data(**kwargs)
+        return render(request,'student_about.html',context)
