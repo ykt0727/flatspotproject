@@ -1,4 +1,8 @@
+{% extends 'freeschool_base.html' %}
+{% block title %}管理サークル詳細画面{% endblock %}
+{% block contents %}
 管理サークル詳細画面
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
 <a href="{% url 'freeschoolapp:myclubupdate' %}"><button>変更</button></a>
 <a href="{% url 'freeschoolapp:myclubdeletecheck' %}"><button>削除</button></a>
+{% endblock %}

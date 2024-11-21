@@ -1,4 +1,8 @@
+{% extends 'freeschool_base.html' %}
+{% block title %}freeschool search{% endblock %}
+{% block contents %}
 freeschool search
 <input type="text">
 <button>検索</button>
 <a href="{% url 'freeschoolapp:userdetail' %}"><button>詳細</button></a>
+{% endblock %}

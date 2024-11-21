@@ -1,3 +1,7 @@
+{% extends 'freeschool_base.html' %}
+{% block title %}投稿ブログ記事削除確認画面{% endblock %}
+{% block contents %}
 投稿ブログ記事削除確認画面
 <a href="{% url 'freeschoolapp:myblogdeletedone' %}"><button>はい</button></a>
 <a href="{% url 'freeschoolapp:mybloglist' %}"><button>いいえ</button></a>
+{% endblock %}

@@ -1,3 +1,7 @@
+{% extends 'freeschool_base.html' %}
+{% block title %}管理サークル情報変更画面{% endblock %}
+{% block contents %}
 管理サークル情報変更画面
 <a href="{% url 'freeschoolapp:myclubdetail' %}"><button>管理サークル詳細画面に戻る</button></a>
 <a href="{% url 'freeschoolapp:myclubupdate' %}"><button>変更する</button></a>
+{% endblock %}

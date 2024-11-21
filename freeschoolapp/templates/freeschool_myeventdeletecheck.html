@@ -1,3 +1,7 @@
+{% extends 'freeschool_base.html' %}
+{% block title %}掲載イベント削除確認画面{% endblock %}
+{% block contents %}
 掲載イベント削除確認画面
 <a href="{% url 'freeschoolapp:myeventdeletedone' %}"><button>はい</button></a>
 <a href="{% url 'freeschoolapp:myeventlist' %}"><button>いいえ</button></a>
+{% endblock %}

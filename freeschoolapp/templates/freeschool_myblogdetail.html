@@ -1,4 +1,8 @@
+{% extends 'freeschool_base.html' %}
+{% block title %}投稿ブログ記事詳細画面{% endblock %}
+{% block contents %}
 投稿ブログ記事詳細画面
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
 <a href="{% url 'freeschoolapp:myblogupdate' %}"><button>変更</button></a>
 <a href="{% url 'freeschoolapp:myblogdeletecheck' %}"><button>削除</button></a>
+{% endblock %}
