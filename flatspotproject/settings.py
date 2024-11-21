@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'studentapp.apps.StudentappConfig',
     #accountsアプリをプロジェクトに登録する
     'accounts.apps.AccountsConfig',
+    #クラス図自動生成ライブラリ
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
