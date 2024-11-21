@@ -1,7 +1,4 @@
-不登校生徒/保護者トップページ
-<a href="{% url 'studentapp:clublist' %}">サークル</a>
-<a href="{% url 'studentapp:eventlist' %}">イベント</a>
-<a href="{% url 'studentapp:bloglist' %}">ブログ</a>
-<a href="{% url 'studentapp:contact' %}">お問い合わせ</a>
-<a href="{% url 'studentapp:about' %}">このサイトについて</a>
-<a href="{% url 'accounts:login' %}"><button>ログイン/ユーザー登録</button></a>
+{% extends 'student_base_anyone.html' %}
+{% load static %}
+{% block title %}不登校生徒/保護者トップページ{% endblock %}
+{% block contents %}{% endblock %}
