@@ -1,15 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
 </head>
 <body>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">ログイン</button>
-    </form>
+    <div class="login-form">
+        <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+                <button type="submit" class="login-button">ログイン</button>
+            </form>
+            <br>
+            <div class=""><a href="{% url 'accounts:student_signup' %}"><button class="signup-button">ユーザー登録</button></a></div>
+            <br>
+            <div class=""><a href="#">パスワードをお忘れの方</a></div>
+        </div>
+    </div>
 </body>
 </html>
