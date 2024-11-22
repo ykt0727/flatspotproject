@@ -75,6 +75,9 @@ class StudentSignupForm(forms.ModelForm):
         
         self.fields['ent_year'].widget=forms.Select(choices=ent_year_choices)
         
+        #性別のラジオボタン、選択肢はStudenモデルから持ってきた
+        self.fields['gender'].widget=forms.RadioSelect(choices=Student.GENDER_CHOICES)
+        
             
 #フリースクール関係者用のサインアップフォーム(現時点だと使う必要なし)
 class FreeSchoolSignupForm(forms.ModelForm):
