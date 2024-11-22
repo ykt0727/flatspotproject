@@ -1,0 +1,70 @@
+/*ログイン・ユーザー登録ボタンを右寄せする*/
+.account-button {
+    text-align: right;
+}
+
+/*ボタンにカーソルを乗せると色が変化する*/
+button:hover {
+    background-color: #ff1493;
+}
+
+/*ログイン・ユーザー登録ボタンの形や色等を指定する*/
+.login-signup-button {
+    width: 200px;
+    padding: 10px;
+    background-color: #ff69b4;
+    border: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/*フリースクール情報について指定する*/
+.footer {
+    background-color: #ffefd5; /*フッター全体の色*/
+    .footer-main {
+        max-width: 1080px;
+        padding: 20px 24px; /*上のコンテンツとフッターの隙間を作る記述*/
+        align-items: center;
+        display: flex; /*一つの項目ごとにブロックを作る*/
+        flex-direction: column;
+   
+        h2.footer-logo {
+            align-self: flex-start;
+            a {
+                color: black; /*ロゴに色を付ける*/
+                font-size: 32px; /*文字の大きさ*/
+                font-weight: 600; /*文字の太さ pxいらない*/
+                margin: 0;
+            }
+        }
+        nav {
+            ul {
+                display: flex;
+                list-style: none; /*メニューの点をなくす*/
+                li {
+                    a {
+                        padding: 1em;
+                        color: #0e0000;
+                        font-size: 15px;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+        .footer-icon {
+            width: 100%;
+            display: flex;
+            justify-content: center; /*アイコンを中央寄せにする*/
+        }
+        .footer-sns {
+            display: flex;
+            margin-top: 10px;
+            list-style: none;
+            gap: 20px; /*アイコン間に隙間を作る*/
+        }
+    }
+}

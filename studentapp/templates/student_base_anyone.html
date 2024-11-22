@@ -12,7 +12,7 @@
     <!--タイトル-->
     <nav class="navbar navbar-expand-lg" style="background-color: #ffefd5;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="{% url 'studentapp:top' %}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
               <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
               <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
@@ -41,7 +41,54 @@
       </li>
     </ul>
 
+    <!--アカウント-->
+    <div class="account-button">
+        <a href="{% url 'accounts:login' %}">
+            <button class="login-signup-button">
+                ログイン/ユーザー登録
+            </button>
+        </a>
+    </div>
 
-    <a href="{% url 'accounts:login' %}"><button>ログイン/ユーザー登録</button></a>
+    <div><h1>ここに各ページのコンテンツが入ります</h1></div>
+
+    <!--各画面でヘッダーの設定をする-->
+    {% block header %}{% endblock %}
+
+    <!--各画面でコンテンツの設定をする-->
+    {% block contents %}{% endblock %}
+    
+    <!--フリースクール情報等-->
+    <footer class="footer">
+      <div class="footer-main">
+          <h2 class="footer-logo">
+              <a href="{% url 'studentapp:top' %}">ふらっとすぽっと</a>
+          </h2>
+          <nav>
+              <ul class="footer-menu">
+                  <li><a href="{% url 'studentapp:clublist' %}">サークル</a></li>
+                  <li><a href="{% url 'studentapp:eventlist' %}">イベント</a></li>
+                  <li><a href="{% url 'studentapp:bloglist' %}">ブログ</a></li>
+                  <li><a href="{% url 'studentapp:contact' %}">お問い合わせ</a></li>
+                  <li><a href="{% url 'studentapp:about' %}">このサイトについて</a></li>
+              </ul>
+          </nav>
+          <div class="footer-icon">
+              <p>関連SNS</p>
+              <ul class="footer-sns">
+                  <li>
+                      <a href="https://x.com/?lang=ja" target="_blank">
+                      <img src="{% static 'img/logo-white.png' %}" alt="X" width="40" height="40">
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://www.instagram.com/?locale=ja_JP" target="_blank">
+                      <img src="{% static 'img/Instagram_Glyph_White.png' %}" alt="Instagram" width="40" height="40">
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+    </footer>           
 </body>
 </html>
