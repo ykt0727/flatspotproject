@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView,ListView
+from django.views.generic import TemplateView,ListView,DetailView
 from django.views import View
 from .models import Student
 from freeschoolapp.models import BlogPost
@@ -126,19 +126,14 @@ class BlogListView(ListView):
     queryset=BlogPost.objects.order_by('created_at')
     
     #1ページに表示するレコードの件数を設定
-    paginate_by=3
+    paginate_by=5
     
 
-class BlogDetailView(BaseView):
+class BlogDetailView(DetailView):
     #student_blogdetail.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_blogdetail.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_blogdetail.html',context)
+    template_name='blogdetail.html'
+    #モデルを設定
+    model=BlogPost
 
 class ContactView(BaseView):
     #student_contact.htmlをレンダリング（描写）する

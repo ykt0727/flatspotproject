@@ -15,8 +15,8 @@ urlpatterns=[
     path('eventrequest',views.EventRequestView.as_view(),name='eventrequest'),
     path('eventrequestdone',views.EventRequestDoneView.as_view(),name='eventrequestdone'),
     path('bloglist',views.BlogListView.as_view(),name='bloglist'),
-    path('blogdetail',views.BlogDetailView.as_view(),name='blogdetail'),
+    path('blogdetail/<int:pk>',views.BlogDetailView.as_view(),name='blogdetail'),
     path('contact',views.ContactView.as_view(),name='contact'),
     path('contactdone',views.ContactDoneView.as_view(),name='contactdone'),
     path('about',views.AboutView.as_view(),name='about'),
-    ]
+]    
