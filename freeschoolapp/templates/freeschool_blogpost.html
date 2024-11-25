@@ -2,6 +2,11 @@
 {% block title %}ブログ記事投稿画面{% endblock %}
 {% block contents %}
 ブログ記事投稿画面
+<!--画像を送信する際はenctypeが必要-->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ post_form.as_p }}
+    <button type="submit">投稿する</button>
+</form>
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
-<a href="{% url 'freeschoolapp:blogpostcheck' %}"><button>投稿内容の確認</button></a>
 {% endblock %}
