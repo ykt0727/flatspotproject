@@ -94,11 +94,11 @@ class BlogPost(models.Model):
     category=models.CharField(max_length=25,choices=category_choices)
    
   #画像1~5、1枚目は必須
-    image1=models.ImageField(blank=False,null=False)
-    image2=models.ImageField(blank=True,null=True)
-    image3=models.ImageField(blank=True,null=True)
-    image4=models.ImageField(blank=True,null=True)
-    image5=models.ImageField(blank=True,null=True)
+    image1=models.ImageField(blank=False,null=False,upload_to='photos')
+    image2=models.ImageField(blank=True,null=True,upload_to='photos')
+    image3=models.ImageField(blank=True,null=True,upload_to='photos')
+    image4=models.ImageField(blank=True,null=True,upload_to='photos')
+    image5=models.ImageField(blank=True,null=True,upload_to='photos')
    
     #公開状況
     public_flag=models.BooleanField(default=True)
