@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <link href="{% static 'css/student.css' %}"  rel="stylesheet" />
 </head>
 <body>
@@ -41,26 +43,47 @@
       </li>
     </ul>
 
+
     <!--アカウント-->
-    <div class="account-button">
+    <!--ログインされている場合-->
+    {% if user.is_authenticated %}
+        <!--利用者が不登校生徒の場合のみ表示-->
+        {% if user.user_type == 'student' %}
+        <div class="dropdown">
+          <div class="account-button">
+            <button class="login-signup-button dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                {{ student.nickname }}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">アカウント情報</a></li>
+              <li><a class="dropdown-item" href="#">ログアウト</a></li>
+            </ul>          
+          </div>
+        </div>
+        {% endif %}
+    {% else %}
+      <div class="account-button">
         <a href="{% url 'accounts:login' %}">
             <button class="login-signup-button">
-                ログイン/ユーザー登録
+              ログイン/ユーザー登録
             </button>
         </a>
-    </div>
+      </div>
+    {% endif %}
+
 
     <!--各画面でヘッダーの設定をする-->
     {% block header %}{% endblock %}
 
     <!--各画面でコンテンツの設定をする-->
-    {% block contents %}{% endblock %}
+    {% block naiyou %}{% endblock %}
     
     <!--フリースクール情報等-->
     <footer class="footer">
       <div class="footer-main">
           <h2 class="footer-logo">
-              <a href="{% url 'studentapp:top' %}">ふらっとすぽっと</a>
+              <a href="{% url 'studentapp:top' %}" style="text-decoration:none;">ふらっとすぽっと</a>
           </h2>
           <nav>
               <ul class="footer-menu">
