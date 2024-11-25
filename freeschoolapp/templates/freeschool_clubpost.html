@@ -1,7 +1,11 @@
 {% extends 'freeschool_base.html' %}
 {% block title %}サークル掲載情報登録画面{% endblock %}
 {% block contents %}
-サークル掲載情報登録画面
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューへ戻る</button></a>
-<a href="{% url 'freeschoolapp:clubpostcheck' %}"><button>掲載内容の確認</button></a>
+サークル掲載情報登録画面
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ clubpost_form.as_p }}
+    <button type="submit">掲載内容の確認</button>
+</form>
 {% endblock %}

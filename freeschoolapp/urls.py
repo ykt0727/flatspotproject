@@ -16,7 +16,6 @@ urlpatterns=[
     path('userdetail',views.UserDetailView.as_view(),name='userdetail'),
     path('sessiontest',views.SessionTestView.as_view(),name='sessiontest'),
     path('clubpost',views.ClubPostView.as_view(),name='clubpost'),
-    path('clubpostcheck',views.ClubPostCheckView.as_view(),name='clubpostcheck'),
     path('clubpostdone',views.ClubPostDoneView.as_view(),name='clubpostdone'),
     path('myclublist',views.MyClubListView.as_view(),name='myclublist'),
     path('myclubdetail',views.MyClubDetailView.as_view(),name='myclubdetail'),

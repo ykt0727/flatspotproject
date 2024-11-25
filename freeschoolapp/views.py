@@ -1,10 +1,24 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views import View
-from .models import CustomUser,FreeSchool
+from .models import CustomUser,FreeSchool,Club,BlogPost
+from .forms import ClubPostForm,BlogPostForm
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
 class BaseView(View):
+    
+    #すべてのメソッドにログイン必須を適用
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('login')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     #テンプレートに使用するコンテキスト情報を設定する
     def get_context_data(self, **kwargs):
         #contextを初期化
@@ -80,16 +94,52 @@ class SessionTestView(TemplateView):
     template_name='freeschool_sessiontest.html'
 
 
-class ClubPostView(TemplateView):
-    
-    #freeschool_clubpost.htmlをレンダリング（描写）する
+class ClubPostView(BaseView,CreateView):
+
+    #サークル掲載情報登録画面を表示
     template_name='freeschool_clubpost.html'
+    #フォームとモデルを指定する
+    form_class=ClubPostForm
+    form=ClubPostForm
+    model=Club
     
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        #投稿フォームをcontextに格納
+        context['clubpost_form']=self.form
+        return context
     
-class ClubPostCheckView(TemplateView):
+    def form_valid(self,form):
+        #POSTされたデータを取得
+        postdata=form.save(commit=False)
+        #ユーザー情報を設定
+        postdata.user=self.request.user
+        #保存
+        postdata.save()
+        
+        return super().form_valid(form)
     
-    #freeschool_clubpostcheck.htmlをレンダリング（描写）する
-    template_name='freeschool_clubpostcheck.html'
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:clubpostdone')
+    #サークル掲載フォームを表示する処理
+    # def get(self,request,*args,**kwargs):
+        
+    #     context=super().get_context_data(**kwargs)
+    #     #Clubを作成するフォーム
+    #     clubpost_form=ClubPostForm()
+    #     context['clubpost_form']=clubpost_form
+    #     #freeschool_clubpost.htmlにフォームをレンダリングする
+    #     return render(request,'freeschool_clubpost.html',context)
+    
+    # def post(self,request,*args,**kwargs):
+        
+    #     context=super().get_context_data(**kwargs)
+    #     #Clubを作成するフォーム
+    #     clubpost_form=ClubPostForm()
+    #     context['clubpost_form']=clubpost_form
+    #     #freeschool_clubpost.htmlにフォームをレンダリングする
+    #     return render(request,'freeschool_clubpost.html',context)
     
 
 class ClubPostDoneView(TemplateView):
@@ -173,10 +223,33 @@ class MyEventDeleteDoneView(TemplateView):
     template_name='freeschool_myeventdeletedone.html'
 
 
-class BlogPostView(TemplateView):
-    
-    #freeschool_blogpost.htmlをレンダリング（描写）する
+class BlogPostView(BaseView,CreateView):
+    #ブログ記事投稿画面を表示
     template_name='freeschool_blogpost.html'
+    #フォームとモデルを指定する(必須)
+    form_class=BlogPostForm
+    form=BlogPostForm
+    model=BlogPost
+ 
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        #投稿フォームをcontextに格納
+        context['post_form']=self.form
+        return context
+ 
+    def form_valid(self,form):
+        #POSTされたデータを取得
+        postdata=form.save(commit=False)
+        # ユーザー情報を設定
+        postdata.user=self.request.user
+        #保存
+        postdata.save()
+       
+        return super().form_valid(form)
+ 
+    def get_success_url(self):
+        # 成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:blogpost')
     
 
 class BlogPostCheckView(TemplateView):
