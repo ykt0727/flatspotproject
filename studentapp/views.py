@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.views.generic import TemplateView,ListView
 from django.views import View
 from .models import Student
+from freeschoolapp.models import BlogPost
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
 class BaseView(View):
@@ -115,16 +116,18 @@ class EventRequestDoneView(BaseView):
         context=self.get_context_data(**kwargs)
         return render(request,'student_eventrequestdone.html',context)
 
-class BlogListView(BaseView):
+#ブログ記事一覧
+class BlogListView(ListView):
     #student_bloglist.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_bloglist.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_bloglist.html',context)
+    template_name=('student_bloglist.html')
+    #モデルを指定
+    model=BlogPost
+    #モデルBlogPostのオブジェクトにquerysetを適用
+    queryset=BlogPost.objects.order_by('created_at')
+    
+    #1ページに表示するレコードの件数を設定
+    paginate_by=3
+    
 
 class BlogDetailView(BaseView):
     #student_blogdetail.htmlをレンダリング（描写）する
