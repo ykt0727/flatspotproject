@@ -27,14 +27,7 @@ body {
    transition: background-color 0.3s ease;
  }
  form {
-    display: flex;body {
-        background-color: #ffefd5;
-        font-family: 'Comic Sans MS', cursive, sans-serif;
-        height: 60vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
@@ -72,7 +65,7 @@ body {
     color: #ff69b4;
   }
 
-  input {
+ input{
     width: 100%;
     padding: 10px ;
     border: 2px solid #ffc0cb;
@@ -114,4 +107,41 @@ body {
   
   button:hover {
     background-color: #ff1493;
+  }
+
+  .labelandform {
+    div {
+      padding: 2px;
+      margin-bottom: 20px;
+    }
+    
+    label{
+      display: inline-block;
+      width: 300px;
+      text-align: center;
+    }
+    label[for="id_consideration"] {
+      vertical-align: top;
+    }
+    label[for="id_is_guardian"] {
+      position: relative;
+      left: 20px;
+    }
+    input{
+      width: 300px;
+    }
+    input[type=checkbox] {
+      /* display: inline; */
+      width: 20px;
+      transform: scale(1.5);
+    }
+    textarea{
+      border: 2px solid #ffc0cb; /*ボーダーラインの色*/
+      border-radius: 25px; /*ボーダーラインの丸み*/
+      outline: none;
+      padding: 10px;
+    }
+    #id_gender{
+      display: flex;
+    }
   }
