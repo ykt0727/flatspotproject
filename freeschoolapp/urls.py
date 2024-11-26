@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name='freeschoolapp'
 
@@ -18,9 +20,9 @@ urlpatterns=[
     path('clubpost',views.ClubPostView.as_view(),name='clubpost'),
     path('clubpostdone',views.ClubPostDoneView.as_view(),name='clubpostdone'),
     path('myclublist',views.MyClubListView.as_view(),name='myclublist'),
-    path('myclubdetail',views.MyClubDetailView.as_view(),name='myclubdetail'),
-    path('myclubupdate',views.MyClubUpDateView.as_view(),name='myclubupdate'),
-    path('myclubdeletecheck',views.MyClubDeleteCheckView.as_view(),name='myclubdeletecheck'),
+    path('myclubdetail/<int:pk>',views.MyClubDetailView.as_view(),name='myclubdetail'),
+    path('myclubupdate/<int:pk>',views.MyClubUpDateView.as_view(),name='myclubupdate'),
+    path('myclubdeletecheck/<int:pk>',views.MyClubDeleteCheckView.as_view(),name='myclubdeletecheck'),
     path('myclubdeletedone',views.MyClubDeleteDoneView.as_view(),name='myclubdeletedone'),
     path('eventpost',views.EventPostView.as_view(),name='eventpost'),
     path('eventpostcheck',views.EventPostCheckView.as_view(),name='eventpostcheck'),

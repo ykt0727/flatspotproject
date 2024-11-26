@@ -2,6 +2,10 @@
 {% block title %}管理サークル削除確認画面{% endblock %}
 {% block contents %}
 管理サークル削除確認画面
-<a href="{% url 'freeschoolapp:myclubdeletedone' %}"><button>はい</button></a>
-<a href="{% url 'freeschoolapp:myclublist' %}"><button>いいえ</button></a>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">はい</button>
+    <a href="{% url 'freeschoolapp:myclubdetail' object.pk %}">いいえ</a>
+    <!-- いいえをボタンにすると挙動がおかしくなるので、cssでボタンの見た目にしたください -->
+</form>
 {% endblock %}

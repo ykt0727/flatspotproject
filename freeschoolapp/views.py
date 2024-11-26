@@ -5,7 +5,7 @@ from .models import CustomUser,FreeSchool,Club,BlogPost
 from .forms import ClubPostForm,BlogPostForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView
+from django.views.generic import CreateView,ListView,DetailView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
@@ -122,24 +122,6 @@ class ClubPostView(BaseView,CreateView):
     def get_success_url(self):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:clubpostdone')
-    #サークル掲載フォームを表示する処理
-    # def get(self,request,*args,**kwargs):
-        
-    #     context=super().get_context_data(**kwargs)
-    #     #Clubを作成するフォーム
-    #     clubpost_form=ClubPostForm()
-    #     context['clubpost_form']=clubpost_form
-    #     #freeschool_clubpost.htmlにフォームをレンダリングする
-    #     return render(request,'freeschool_clubpost.html',context)
-    
-    # def post(self,request,*args,**kwargs):
-        
-    #     context=super().get_context_data(**kwargs)
-    #     #Clubを作成するフォーム
-    #     clubpost_form=ClubPostForm()
-    #     context['clubpost_form']=clubpost_form
-    #     #freeschool_clubpost.htmlにフォームをレンダリングする
-    #     return render(request,'freeschool_clubpost.html',context)
     
 
 class ClubPostDoneView(TemplateView):
@@ -148,26 +130,69 @@ class ClubPostDoneView(TemplateView):
     template_name='freeschool_clubpostdone.html'
 
    
-class MyClubListView(TemplateView):
+class MyClubListView(ListView):
     
     #freeschool_myclublist.htmlをレンダリング（描写）する
     template_name='freeschool_myclublist.html'
     
+    #投稿されたサークルを投稿日時の降順（新しい順）に並べ替える
+    queryset=Club.objects.order_by('-created_at')
+    
+    #1ページに表示する件数
+    paginate_by=10
+    
 
-class MyClubDetailView(TemplateView):
+class MyClubDetailView(DetailView):
     
     #freeschool_myclubdetail.htmlをレンダリング（描写）する
     template_name='freeschool_myclubdetail.html'
     
-class MyClubUpDateView(TemplateView):
+    #モデルを指定する
+    model=Club
+    
+class MyClubUpDateView(UpdateView):
     
     #freeshool_myclubupdate.htmlをレンダリング（描写）する
     template_name='freeschool_myclubupdate.html'
+    
+    #モデルを指定する
+    model=Club
+    
+    #フィールドを指定する
+    fields=('club_name',
+            'category',
+            'REP',
+            'email',
+            'phone_number',
+            'date',
+            'fee',
+            'place',
+            'sns_link',
+            'sns_name',
+            'image1',
+            'image2',
+            'image3',
+            'image4',
+            'image5',
+            'public_flag',
+            'detail_text',
+    )
+    
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:myclubupdate', kwargs={'pk': self.object.pk})
 
-class MyClubDeleteCheckView(TemplateView):
+class MyClubDeleteCheckView(DeleteView):
     
     #freeshool_myclubdeletecheck.htmlをレンダリング（描写）する
     template_name='freeschool_myclubdeletecheck.html'
+    
+    #モデルを指定する
+    model=Club
+    
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:myclubdeletedone')
 
 
 class MyClubDeleteDoneView(TemplateView):

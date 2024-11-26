@@ -58,6 +58,9 @@ class Club(models.Model):
     #SNSリンク
     sns_link=models.URLField(null=False)
     
+    #SNS名
+    sns_name=models.CharField(max_length=30,null=False)
+    
     #画像1~5
     image1=models.ImageField(blank=False,null=False,upload_to='photos')
     image2=models.ImageField(blank=True,null=True,upload_to='photos')

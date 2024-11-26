@@ -2,7 +2,53 @@
 {% block title %}管理サークル詳細画面{% endblock %}
 {% block contents %}
 管理サークル詳細画面
-<a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
-<a href="{% url 'freeschoolapp:myclubupdate' %}"><button>変更</button></a>
-<a href="{% url 'freeschoolapp:myclubdeletecheck' %}"><button>削除</button></a>
+<a href="{% url 'freeschoolapp:myclublist' %}"><button>管理サークル一覧へ戻る</button></a>
+<a href="{% url 'freeschoolapp:myclubupdate' object.id %}"><button>変更</button></a>
+<a href="{% url 'freeschoolapp:myclubdeletecheck' object.id %}"><button>削除</button></a>
+<br>
+サークルID
+{{ object.id }}
+サークル名
+{{ object.club_name }}
+掲載日時
+{{ object.created_at }}
+ジャンル
+{{ object.category }}
+代表者名
+{{ object.REP }}
+メールアドレス
+{{ object.email }}
+電話番号
+{{ object.phone_number }}
+日時
+{{ object.date }}
+参加費
+{{ object.fee }}
+活動場所
+{{ object.place }}
+SNSリンク
+{{ object.sns_link }}
+サークルの紹介画像①
+<p><img src="{{ object.image1.url }}"></p>
+サークルの紹介画像②
+{% if object.image2 %}
+<p><img src="{{ object.image2.url }}"></p>
+{% endif %}
+サークルの紹介画像③
+{% if object.image3 %}
+<p><img src="{{ object.image3.url }}"></p>
+{% endif %}
+サークルの紹介画像④
+{% if object.image4 %}
+<p><img src="{{ object.image4.url }}"></p>
+{% endif %}
+サークルの紹介画像⑤
+{% if object.image5 %}
+<p><img src="{{ object.image5.url }}"></p>
+{% endif %}
+サークルの紹介文
+{{ object.detail_text }}
+公開状況
+{{ object.public_flag }}
+
 {% endblock %}

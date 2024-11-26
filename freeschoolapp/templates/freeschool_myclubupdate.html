@@ -2,6 +2,19 @@
 {% block title %}管理サークル情報変更画面{% endblock %}
 {% block contents %}
 管理サークル情報変更画面
-<a href="{% url 'freeschoolapp:myclubdetail' %}"><button>管理サークル詳細画面に戻る</button></a>
-<a href="{% url 'freeschoolapp:myclubupdate' %}"><button>変更する</button></a>
+<a href="{% url 'freeschoolapp:myclubdetail' object.id %}"><button>管理サークル詳細画面に戻る</button></a>
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+        <label>{{ field.label }}</label>
+        {{ field }}
+        {{ field.errors }}
+        {{ field.help_text }}
+      </div>
+    {% endfor %}
+    {% for field in form.hidden_fields %}
+      {{ field }}
+    {% endfor %}
+    <button type="submit">変更する</button>
+</form>
 {% endblock %}

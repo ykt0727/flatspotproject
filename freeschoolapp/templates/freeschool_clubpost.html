@@ -6,6 +6,6 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ clubpost_form.as_p }}
-    <button type="submit">掲載内容の確認</button>
+    <button type="submit">掲載する</button>
 </form>
 {% endblock %}
