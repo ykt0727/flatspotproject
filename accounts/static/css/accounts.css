@@ -111,37 +111,33 @@ body {
 
   .labelandform {
     div {
-      padding: 2px;
-      margin-bottom: 20px;
+      margin-bottom: 20px; /* 上下の要素との幅を調整 */
     }
-    
     label{
-      display: inline-block;
-      width: 300px;
-      text-align: center;
+      display: inline-block;/* ラベルとフォーム要素の間隔を調整 */
+      width: 300px; /* 要素の幅を設定 */
+      text-align: center; /* テキストの位置を統一 */
     }
     label[for="id_consideration"] {
-      vertical-align: top;
+      vertical-align: top; /* 対応するラベルの位置を一番上にする */
     }
-    label[for="id_is_guardian"] {
+    /* label[for="id_is_guardian"] {
       position: relative;
-      left: 20px;
-    }
+    } のちに消すかも*/
     input{
-      width: 300px;
+      width: 300px; /* inputタグがついたフォームの長さ */
     }
     input[type=checkbox] {
-      /* display: inline; */
-      width: 20px;
-      transform: scale(1.5);
+      width: 20px; /* チェックボックスの位置 */
+      transform: scale(1.5); /* チェックボックスの大きさ */
     }
     textarea{
       border: 2px solid #ffc0cb; /*ボーダーラインの色*/
       border-radius: 25px; /*ボーダーラインの丸み*/
-      outline: none;
-      padding: 10px;
+      outline: none; /* ボーダーラインの色を維持する */
+      padding: 10px; /* ボーダーラインを丸くした場合に入力した文字が見切れるのを防ぐ */
     }
     #id_gender{
-      display: flex;
+      display: flex; /* ラジオボタンをラベルの下に移動する */
     }
   }
