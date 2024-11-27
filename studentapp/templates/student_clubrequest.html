@@ -1,3 +1,18 @@
-サークル体験申請画面
-<a href="{% url 'studentapp:clubdetail' %}"><button>戻る</button></a>
-<a href="{% url 'studentapp:clubrequestdone' %}"><button>送信</button></a>
+{% extends 'student_base_anyone.html' %}
+{% load static %}
+{% block title %}サークル体験申請画面{% endblock %}
+{% block contents %}
+    <p>※ログイン中のユーザーの情報、ここで入力した内容がクラブ管理者に送信されます</p>
+    <!--メールを送信するフォーム-->
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+            {{field.label }}
+            {{ field }}
+        {% endfor %}
+    
+        <button type="submit">クラブ申請者にメールを送る</button>
+    </form>   
+
+{% endblock %}

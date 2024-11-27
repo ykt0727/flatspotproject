@@ -1,3 +1,26 @@
-サークル詳細画面
-<a href="{% url 'studentapp:clublist' %}"><button>サークル一覧へ</button></a>
-<a href="{% url 'studentapp:clubrequest' %}"><button>参加</button></a>
+{% load static %}
+{% block title %}{{ object.club_name }}{% endblock %}
+{% block contents %}
+    {{ object.id }}
+    <a>{{ object.club_name }}</a>
+    <img src="{{ object.image1.url }}">
+    {% if object.image2 %}
+        <p><img src="{{ object.image2.url }}"></p>
+    {% endif %}
+    {% if object.image3 %}
+        <p><img src="{{ object.image3.url }}"></p>
+    {% endif %}
+    {% if object.image4 %}
+        <p><img src="{{ object.image4.url }}"></p>
+    {% endif %}
+    {% if object.image5 %}
+        <p><img src="{{ object.image5.url }}"></p>
+    {% endif %}
+
+<p>{{ object.category }}<p>    
+<p>{{ object.created_at }}<p>
+<p>{{ object.detail_text }}</p>
+
+<a href="{% url 'studentapp:clubrequest' club_id=object.pk %}">参加申し込み</a>
+
+{% endblock %}
