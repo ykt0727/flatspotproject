@@ -56,7 +56,7 @@ class ClubRequestView(FormView):
     #クラス変数form_classに設定
     form_class=ClubRequestForm
     #送信完了後遷移する
-    success_url=reverse_lazy('clubrequestdone')
+    success_url=reverse_lazy('studentapp:clubrequestdone')
     
     def get_initial(self):
         #初期値の取得
