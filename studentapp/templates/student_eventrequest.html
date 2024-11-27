@@ -1,3 +1,18 @@
-イベント参加申請画面
-<a href="{% url 'studentapp:eventdetail' %}"><button>戻る</button></a>
-<a href="{% url 'studentapp:eventrequestdone' %}"><button>送信</button></a>
+{% extends 'student_base_anyone.html' %}
+{% load static %}
+{% block title %}イベント体験申請画面{% endblock %}
+{% block contents %}
+    <p>※ログイン中のユーザーの情報、ここで入力した内容がイベント管理者に送信されます</p>
+    <!--メールを送信するフォーム-->
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+            {{field.label }}
+            {{ field }}
+        {% endfor %}
+    
+        <button type="submit">イベント申請者にメールを送る</button>
+    </form>   
+
+{% endblock %}

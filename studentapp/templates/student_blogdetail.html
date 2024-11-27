@@ -1,25 +1,25 @@
 {% load static %}
-{% block title %}{{ object.title }}{% endblock %}
+{% block title %}{{ record.title }}{% endblock %}
 {% block contents %}
-{{ object_title }}
-<a>{{ record.title }}</a>
-<img src="{{ record.image1.url }}">
-{% if object.image2 %}
-    <p><img src="{{ record.image2.url }}"></p>
-{% endif %}
-{% if object.image3 %}
-    <p><img src="{{ record.image3.url }}"></p>
-{% endif %}
-{% if object.image4 %}
-    <p><img src="{{ record.image4.url }}"></p>
-{% endif %}
-{% if object.image5 %}
-    <p><img src="{{ record.image5.url }}"></p>
-{% endif %}
+    <h1>{{ object.id }}</h1>
+
+    <a>{{ record.title }}</a>
+    <img src="{{ record.image1.url }}">
+    {% if record.image2 %}
+        <p><img src="{{ record.image2.url }}"></p>
+    {% endif %}
+    {% if record.image3 %}
+        <p><img src="{{ record.image3.url }}"></p>
+    {% endif %}
+    {% if record.image4 %}
+        <p><img src="{{ record.image4.url }}"></p>
+    {% endif %}
+    {% if record.image5 %}
+        <p><img src="{{ record.image5.url }}"></p>
+    {% endif %}
 
 <p>{{ record.category }}<p>    
 <p>{{ record.created_at }}<p>
 <p>{{ record.detail_text }}</p>
-<p>created_at</p>
 
 {% endblock %}
