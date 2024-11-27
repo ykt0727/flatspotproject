@@ -22,12 +22,12 @@ class Student(models.Model):
         ('female','女'),
         ('unknown','不明'),
     ]
-    
+
     gender=models.CharField(max_length=10,choices=GENDER_CHOICES,default='unknown')
- 
+
     #入学年度
     ent_year=models.IntegerField()
-   
+
     #生年月日フィールド
     date_of_birth=models.DateField()
    

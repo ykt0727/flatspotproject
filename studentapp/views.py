@@ -1,8 +1,14 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView,ListView,DetailView
+from django.shortcuts import render,get_object_or_404
+from django.views.generic import TemplateView,ListView,DetailView,FormView
+from django.urls import reverse_lazy
 from django.views import View
+
+#モデル、フォーム関連
 from .models import Student
-from freeschoolapp.models import BlogPost
+from .forms import ClubRequestForm
+
+from freeschoolapp.models import BlogPost,Club
+from django.core.mail import EmailMessage
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
 class BaseView(View):
@@ -28,50 +34,81 @@ class TopView(BaseView):
         return render(request,'student_top.html',context)
     
 
-class ClubListView(BaseView):
+class ClubListView(ListView):
     #student_clublist.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_clublist.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_clublist.html',context)
+    template_name=('student_clublist.html')
+    #モデルを指定
+    model=Club
+    #モデルBlogPostのオブジェクトにquerysetを適用
+    queryset=Club.objects.order_by('created_at')
+    #1ページに表示するレコードの件数を設定
+    paginate_by=5
     
-class ClubDetailView(BaseView):
-    #student_clubdetail.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_clubdetail.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_cluvdetail.html',context)
+class ClubDetailView(DetailView):
+    template_name='student_clubdetail.html'
+    #モデルを設定
+    model=Club
 
-class ClubRequestView(BaseView):
+class ClubRequestView(FormView):
+    
     #student_clubrequest.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_clubrequest.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_clubrequest.html',context)
+    template_name="student_clubrequest.html"
+    #クラス変数form_classに設定
+    form_class=ClubRequestForm
+    #送信完了後遷移する
+    success_url=reverse_lazy('clubrequestdone')
     
+    def get_initial(self):
+        #初期値の取得
+        initial=super().get_initial()
+        
+        #URLのパラメータからclub_idを取得
+        club_id=self.kwargs.get('club_id') 
+        
+        #フォームに club_id を渡す
+        initial['club_id']=club_id
+        
+        return initial
     
-class ClubRequestDoneView(BaseView):
-    #student_clubrequestdone.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_clubrequestdone.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_clubrequestdone.html',context)
+    #フォームのバリデーションを通過したデータがPOSTされたときに呼ばれるメール送信を行う
+    def form_valid(self,form):
+        
+        #URLのパラメータからclub_idを取得
+        club_id=self.kwargs.get('club_id')        
+        #Clubオブジェクトを取得
+        club=get_object_or_404(Club,pk=club_id)
+        
+        sender_email=self.request.user.email
+        club_owner_email=club.email
+        message=form.cleaned_data['message']
+        
+        # メールの内容をビューで動的に設定
+        subject='サークルに体験申請が来ました！'
+        body=f'<h1>新しい体験申請がありました！</h1>'
+        body+=f'<p><strong>申請者のメールアドレス:</strong> {sender_email}</p>'
+        body+=f'<p><strong>メッセージ:</strong></p><p>{message}</p>'
+        
+        # メール送信
+        email=EmailMessage(
+            #タイトル
+            subject=subject,
+            #本文
+            body=body,
+            #送信元
+            from_email=sender_email,
+            #宛先
+            to=[club_owner_email],
+            #HTMLメールとして送信
+            headers={'Content-Type':'text/html'},  
+        )
+        email.send()
+        
+        return super().form_valid(form)
+    
+class ClubRequestDoneView(TemplateView):
+    #student_clubrequestdone.htmlをレンダリング（描写）する 
+    template_name="student_clubrequestdone.html"
+    
 class EventListView(BaseView):
     #student_eventlist.htmlをレンダリング（描写）する
     def get(self, request, *args,**kwargs):
