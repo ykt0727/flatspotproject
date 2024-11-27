@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views import View
-from .models import CustomUser,FreeSchool,Club,BlogPost
-from .forms import ClubPostForm,BlogPostForm
+from .models import CustomUser,FreeSchool,Club,Event,BlogPost
+from .forms import ClubPostForm,EventPostForm,BlogPostForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView,ListView,DetailView,UpdateView,DeleteView
@@ -200,16 +200,34 @@ class MyClubDeleteDoneView(TemplateView):
     #freeshool_myclubderetedoneview.htmlをレンダリング（描写）する
     template_name='freeschool_myclubdeletedone.html'
 
-class EventPostView(TemplateView):
-    
-    #freeschool_eventpost.htmlをレンダリング（描写）する
-    template_name='freeschool_eventpost.html'
-    
+class EventPostView(BaseView,CreateView):
 
-class EventPostCheckView(TemplateView):
+    #イベント掲載情報登録画面を表示
+    template_name='freeschool_eventpost.html'
+    #フォームとモデルを指定する
+    form_class=EventPostForm
+    form=EventPostForm
+    model=Event
     
-    #freshool_eventpostcheck.htmlをレンダリング（描写）する
-    template_name='freeschool_eventpostcheck.html'
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        #投稿フォームをcontextに格納
+        context['eventpost_form']=self.form
+        return context
+    
+    def form_valid(self,form):
+        #POSTされたデータを取得
+        postdata=form.save(commit=False)
+        #ユーザー情報を設定
+        postdata.user=self.request.user
+        #保存
+        postdata.save()
+        
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:eventpostdone')
 
 
 class EventPostDoneView(TemplateView):
@@ -218,28 +236,71 @@ class EventPostDoneView(TemplateView):
     template_name='freeschool_eventpostdone.html'
 
 
-class MyEventListView(TemplateView):
+class MyEventListView(ListView):
     
     #freeschool_myeventlist.htmlをレンダリング（描写）する
     template_name='freeschool_myeventlist.html'
+    
+    #投稿されたイベントを投稿日時の降順（新しい順）に並べ替える
+    queryset=Event.objects.order_by('-created_at')
+    
+    #1ページに表示する件数
+    paginate_by=10
 
 
-class MyEventDetailView(TemplateView):
+class MyEventDetailView(DetailView):
     
     #freeschool_myeventdetail.htmlをレンダリング（描写）する
     template_name='freeschool_myeventdetail.html'
-
-
-class MyEventUpDateView(TemplateView):
     
-    #freeschool_myeventupdate.htmlをレンダリング（描写）する
+    #モデルを指定する
+    model=Event
+
+
+class MyEventUpDateView(UpdateView):
+    
+    #freeshool_myeventupdate.htmlをレンダリング（描写）する
     template_name='freeschool_myeventupdate.html'
-
-
-class MyEventDeleteCheckView(TemplateView):
     
-    #freeschool_myeventdeleteCheck.htmlをレンダリング（描写）する
+    #モデルを指定する
+    model=Event
+    
+    #フィールドを指定する
+    fields=('event_name',
+            'category',
+            'REP',
+            'email',
+            'phone_number',
+            'date',
+            'fee',
+            'place',
+            'sns_link',
+            'sns_name',
+            'image1',
+            'image2',
+            'image3',
+            'image4',
+            'image5',
+            'public_flag',
+            'detail_text',
+    )
+    
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:myeventupdate', kwargs={'pk': self.object.pk})
+
+
+class MyEventDeleteCheckView(DeleteView):
+    
+    #freeshool_myeventdeletecheck.htmlをレンダリング（描写）する
     template_name='freeschool_myeventdeletecheck.html'
+    
+    #モデルを指定する
+    model=Event
+    
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:myeventdeletedone')
 
 
 class MyEventDeleteDoneView(TemplateView):

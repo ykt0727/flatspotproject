@@ -3,5 +3,15 @@
 {% block contents %}
 掲載イベント一覧画面
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
-<a href="{% url 'freeschoolapp:myeventdetail' %}"><button>詳細</button></a>
-{% endblocks %}
+<br>
+{% for record in object_list %}
+{% if user.uu_id == record.user_id %}
+{{ record.id }}
+{{ record.event_name }}
+<a href="{% url 'freeschoolapp:myeventdetail' record.pk %}">詳細</a>
+<br>
+{% endif %}
+{% endfor %}
+
+{% include 'pagination.html' %}
+{% endblock %}

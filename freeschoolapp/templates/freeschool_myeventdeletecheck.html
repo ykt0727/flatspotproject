@@ -2,6 +2,10 @@
 {% block title %}掲載イベント削除確認画面{% endblock %}
 {% block contents %}
 掲載イベント削除確認画面
-<a href="{% url 'freeschoolapp:myeventdeletedone' %}"><button>はい</button></a>
-<a href="{% url 'freeschoolapp:myeventlist' %}"><button>いいえ</button></a>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">はい</button>
+    <a href="{% url 'freeschoolapp:myeventdetail' object.pk %}">いいえ</a>
+    <!-- いいえをボタンにすると挙動がおかしくなるので、cssでボタンの見た目にしたください -->
+</form>
 {% endblock %}
