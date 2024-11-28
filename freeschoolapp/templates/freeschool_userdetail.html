@@ -1,6 +1,18 @@
 {% extends 'freeschool_base.html' %}
 {% block title %}freeschool userdetail{% endblock %}
 {% block contents %}
-freeschool userdetail
-<button>完了</button>
+ユーザー詳細画面
+<br>
+ニックネーム
+{{ object.nickname }}
+<br>
+限定公開ページへのアクセスを許可
+<form method="post">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+        許可する
+        {{ field }}
+    {% endfor %}
+    <button type="submit">完了</button>
+</form>
 {% endblock %}

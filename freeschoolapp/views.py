@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView,ListView,DetailView,UpdateView,DeleteView
 from django.urls import reverse_lazy
+from studentapp.models import Student
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
 class BaseView(View):
@@ -40,17 +41,6 @@ class TopView(BaseView):
         context=self.get_context_data(**kwargs)
         return render(request,'freeschool_top.html',context)
 
-class MailSendView(TemplateView):
-    
-    #freeschool_passwordreset.htmlをレンダリング（描写）する
-    template_name='freeschool_mailsend.html'
-    
-
-class MailSendDoneView(TemplateView):
-    
-    #freeschool_mailsenddone.htmlをレンダリング（描写）する
-    template_name='freeschool_mailsenddone.html'
-
 
 class AccountView(TemplateView):
     
@@ -64,35 +54,39 @@ class AccountUpdateView(TemplateView):
     template_name='freeschool_accountupdate.html'
 
 
-class PasswordResetView(TemplateView):
-    
-    #freeschool_passwordreset.htmlをレンダリング（描写）する
-    template_name='freeschool_passwordreset.html'
-
-
-class PasswordResetDoneView(TemplateView):
-    
-    #freeschool_passwordresetdone.htmlをレンダリング（描写）する
-    template_name='freeschool_passwordresetdone.html'
-
-
-class UserSearchView(TemplateView):
+class UserSearchView(ListView):
     
     #freeschool_usersearch.htmlをレンダリング（描写）する
     template_name='freeschool_usersearch.html'
+    
+    #1ページに表示する件数
+    paginate_by=10
+    
+    #モデルを指定する
+    model=Student
+    
+    def get_queryset(self, **kwargs):
+        queryset=super().get_queryset(**kwargs)
+        query=self.request.GET.get('q','')
+
+        if query!='':
+            queryset=queryset.filter(nickname=query)
+
+        return queryset.order_by('-id')
 
 
-class UserDetailView(TemplateView):
+class UserDetailView(UpdateView):
     
     #freeschool_userdetail.htmlをレンダリング（描写）する
     template_name='freeschool_userdetail.html'
-    
-    
-class SessionTestView(TemplateView):
-    
-    #freeschool_sessiontest.htmlをレンダリング（描写）する
-    template_name='freeschool_sessiontest.html'
 
+    #モデルを指定する
+    model=Student
+    
+    #フィールドを指定する
+    fields=('is_view',)
+    
+    success_url=reverse_lazy('freeschoolapp:usersearch')
 
 class ClubPostView(BaseView,CreateView):
 

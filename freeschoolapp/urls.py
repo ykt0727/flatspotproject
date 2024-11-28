@@ -8,15 +8,10 @@ app_name='freeschoolapp'
 #URLパターンを登録するためのリスト
 urlpatterns=[
     path('top',views.TopView.as_view(),name='top'),
-    path('mailsend',views.MailSendView.as_view(),name='mailsend'),
-    path('mailsenddone',views.MailSendDoneView.as_view(),name='mailsenddone'),
     path('account',views.AccountView.as_view(),name='account'),
     path('accountupdate',views.AccountUpdateView.as_view(),name='accountupdate'),
-    path('passwordreset',views.PasswordResetView.as_view(),name='passwordreset'),
-    path('passwordresetdone',views.PasswordResetDoneView.as_view(),name='passwordresetdone'),
     path('usersearch',views.UserSearchView.as_view(),name='usersearch'),
-    path('userdetail',views.UserDetailView.as_view(),name='userdetail'),
-    path('sessiontest',views.SessionTestView.as_view(),name='sessiontest'),
+    path('userdetail/<int:pk>/',views.UserDetailView.as_view(),name='userdetail'),
     path('clubpost',views.ClubPostView.as_view(),name='clubpost'),
     path('clubpostdone',views.ClubPostDoneView.as_view(),name='clubpostdone'),
     path('myclublist',views.MyClubListView.as_view(),name='myclublist'),
