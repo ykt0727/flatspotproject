@@ -1,21 +1,37 @@
 {% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}サークル記事一覧画面{% endblock %}
+{% block css %}<link href="{% static 'css/student_list.css' %}" rel="stylesheet"/>{% endblock %}
 {% block contents %}
-    <!--レコードを格納されたobject_listからレコードを1行ずつrecordに取り出す-->
+
+    <!--画面タイトル-->
+    <div class="list-name">
+        <h3>サークル一覧</h3>
+    </div>
+
+    <!--ジャンル選択・絞込みボタン-->
+
+    <!--レコードを格納されたobject_listから
+        レコードを1行ずつrecordに取り出す-->
     {% for record in object_list %}
+
+        <!--サークル一覧-->
+        <div class="list-container">
+            <img src="{{ record.image1.url }}"
+            width="500" height="300">
+            <div class="list-content">
+                <p class="list-genre">{{ record.category }}</p>
+                <a href="{% url 'studentapp:clubdetail' record.pk %}"
+                    style="text-decoration:none;" class="list-title">
+                    {{ record.club_name }}
+                </a>
+                <div class="list-infomation">
+                    <p>掲載日: {{ record.created_at}}</p>
+                    <p>団体名: ●●フリースクール</p>
+                </div>
+            </div>
+        </div>
     
-        <a href="{% url 'studentapp:clubdetail' record.pk %}">{{ record.club_name }}</a>
-        <p>{{ record.club_name }}</p>
-        <img src="{{ record.image1.url }}"
-        class="bd-placeholder-img card-img-top"
-        width="100%" height="225"
-        xmlns="https://www.w3.org/2000/svg"
-        role="img" aria-label="Placeholder:Thumbnail"
-        preserveAspectRatio="xMidYMid slice"
-        focusable="false">
-        <p>{{ record.category }}<p>    
-        <p>{{ record.created_at}}<p>
     {% endfor %}
     {% include "pagination.html" %}
 

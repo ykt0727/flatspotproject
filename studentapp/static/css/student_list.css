@@ -1,0 +1,44 @@
+/*画面タイトルを中央に配置する*/
+.list-name {
+    text-align: center;
+}
+
+/*1つのサークルずつ表示する所にcssを指定する*/
+.list-container {
+    background-color: #ffe4e1;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 120px;
+    display: flex;
+}
+
+/*画像以外のサークル情報の範囲を指定*/
+.list-content {
+    width: 100%;
+}
+
+/*ジャンル*/
+.list-genre {
+    text-align: right;
+    font-size: large;
+    margin: 0px 0px 7px;
+}
+
+/*サークル名*/
+.list-title {
+    color: #ff69b4;
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+}
+/*サークル名にカーソルを合わせると色が変化する*/
+.list-title:hover {
+    color: #ff1493;
+}
+
+.list-infomation {
+    text-align: center;
+    margin-top:  60px;
+}
