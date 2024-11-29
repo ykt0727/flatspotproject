@@ -25,25 +25,25 @@
         </div>
     </nav>
 
-    <!--メニューバー-->
-    <ul class="nav justify-content-around" style="background-color: #ffc0cb">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'studentapp:clublist' %}"><font color="#000">サークル</font></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'studentapp:eventlist' %}"><font color="#000">イベント</font></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'studentapp:bloglist' %}"><font color="#000">ブログ</font></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'studentapp:contact' %}"><font color="#000">お問い合わせ</font></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'studentapp:about' %}"><font color="#000">このサイトについて</font></a>
-      </li>
-    </ul>
-
+    <!--ハンバーガーメニュー-->
+    <div class="nav">
+      <!-- ハンバーガーメニューの表示・非表示を切り替えるチェックボックス -->
+      <input id="drawer_input" class="drawer_hidden" type="checkbox">
+   
+      <!-- ハンバーガーアイコン -->
+      <label for="drawer_input" class="drawer_open"><span></span></label>
+   
+      <!-- メニュー -->
+      <nav class="nav_content">
+        <ul class="nav_list">
+          <li class="nav_item"><a href="{% url 'studentapp:clublist' %}">サークル</a></li>
+          <li class="nav_item"><a href="{% url 'studentapp:eventlist' %}">イベント</a></li>
+          <li class="nav_item"><a href="{% url 'studentapp:bloglist' %}">ブログ</a></li>
+          <li class="nav_item"><a href="{% url 'studentapp:contact' %}">お問い合わせ</a></li>
+          <li class="nav_item"><a href="{% url 'studentapp:about' %}">このサイトについて</a></li>
+        </ul>
+      </nav>
+    </div>
 
     <!--アカウント-->
     <!--ログインされている場合-->
@@ -111,6 +111,6 @@
               </ul>
           </div>
       </div>
-    </footer>           
+    </footer>
 </body>
 </html>
