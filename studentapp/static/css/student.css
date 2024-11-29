@@ -10,10 +10,11 @@
     width: 60px;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: fixed;
+    top: 17%;
     z-index: 100;
     cursor: pointer;
-    margin-left: 90%;
+    margin-left: 95%;
   }
  
   /* ハンバーガーメニューのアイコン */
@@ -58,26 +59,26 @@
    
   /* メニューのデザイン*/
   .nav_content {
-    width: 100%;
+    width:  35%;
     height: 100%;
     position: fixed;
     top: 0;
     left: 100%;
     z-index: 99;
-    background: #fff;
+    background: #ffc0cb;
     transition: 0s;
   }
  
   /* メニュー黒ポチを消す */
   .nav_list {
     list-style: none;
-    text-align: right;
+    text-align: left;
     margin-top: 60px;
   }
  
   /* アイコンがクリックされたらメニューを表示 */
   #drawer_input:checked ~ .nav_content {
-    left: 0;/* メニューを画面に入れる */
+    left: 65%;/* メニューを画面に入れる */
   }
 
 
