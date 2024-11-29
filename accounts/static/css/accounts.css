@@ -1,7 +1,10 @@
+/*背景色の指定*/
 body {
    background-color: #ffefd5;
  }
 
+ /*ユーザー登録完了画面*/
+ /*ユーザー登録完了画面のcss*/
  .singupdone {
    /*フォントサイズ変更*/
    font-size: 20px;
@@ -14,6 +17,7 @@ body {
    flex-flow: column;
  }
 
+ /*ユーザー登録完了画面のトップページへ戻るボタン*/
  .singupdonebutton {
    width: 200px;
    padding: 20px;
@@ -26,6 +30,7 @@ body {
    cursor: pointer;
    transition: background-color 0.3s ease;
  }
+ /*フォームの位置などの指定している*/
  form {
     display: flex;
     flex-flow: column;
@@ -33,82 +38,94 @@ body {
     align-items: center;
  }
  
+ /*ユーザー登録画面の新規登録ボタン*/
  .signup_button {
      width: 200px;
      padding: 10px;
      background-color: #ff69b4;
-     border: none;
-     border-radius: 25px;
+     border: none; /*ボタンのふちなしにする*/
+     border-radius: 25px; /*ボタンの角を丸くする*/
      color: #fff;
      font-size: 16px;
      font-weight: bold;
-     cursor: pointer;
-     transition: background-color 0.3s ease;
+     cursor: pointer; /*ボタンにカーソルを乗せるとポインターに変化する*/
+     transition: background-color 0.3s ease; /*下に記述しているhoverを可能にするために書いている*/
    }
 
+   /*ログイン画面*/
+   /*白い枠の位置等を指定している*/
    .login-form {
-    height: 100vh;
+    height: 100vh; /*ビューポートの高さ*/
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /*白い枠を左右中央寄せ*/
+    align-items: center; /*白い枠を上下中央で揃える*/
   }
 
+  /*白い枠をつけてログインフォームを分かりやすくしていて、
+  　白枠の中にある文字位置や枠の形等のcssを指定している*/
   .form-group {
     background-color: #fff;
     padding: 60px;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    border-radius: 20px; /*白い枠の角を丸くする*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /*白い枠に影をつけている*/
+    text-align: center; /*白い枠の要素を中央寄せする*/
   }
 
+  /*ラベルにカラーをつけている*/
   label {
     color: #ff69b4;
   }
 
+  /*入力フォームの大きさや色等を指定している*/
  input{
     width: 100%;
     padding: 10px ;
-    border: 2px solid #ffc0cb;
-    border-radius: 25px;
+    border: 2px solid #ffc0cb; /*フォームの枠にカラーをつけている*/
+    border-radius: 25px; /*フォームの枠を丸くしている*/
     font-size: 16px;
   }
 
+  /*入力フォームをクリックした時に枠が強調されるようにしている*/
   input:focus {
     outline: none;
-    border-color: #ff69b4;
-    box-shadow: 0 0 5px rgba(255, 192, 203, 0.5);
+    border-color: #ff69b4; /*クリックした時、フォーム枠のカラーをつけている*/
+    box-shadow: 0 0 5px rgba(255, 192, 203, 0.5); /*クリックした時にフォームに影をつけている*/
   }
 
+  /*ログイン画面のログインボタン*/
   .login-button {
     width: 200px;
     padding: 10px;
     background-color: #ff69b4;
-    border: none;
-    border-radius: 25px;
+    border: none; /*ボタンのふちなし*/
+    border-radius: 25px; /*ボタンの角を丸くしている*/
     color: #fff;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    cursor: pointer; /*ボタンにカーソルを乗せるとポインターに変化する*/
+    transition: background-color 0.3s ease; /*下に記述しているhoverを可能にするために書いている*/
   }
 
+  /*ログイン画面の新規作成ボタン*/
   .signup-button {
     width: 200px;
     padding: 10px;
     background-color: #ff69b4;
-    border: none;
-    border-radius: 25px;
+    border: none; /*ボタンのふちなし*/
+    border-radius: 25px; /*ボタンの角を丸くしている*/
     color: #fff;
     font-size: 16px;
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    cursor: pointer; /*ボタンにカーソルを乗せるとポインターに変化する*/
+    transition: background-color 0.3s ease; /*下に記述しているhoverを可能にするために書いている*/
   }
   
+  /*各ボタンにカーソルを合わせると色が変化する*/
   button:hover {
     background-color: #ff1493;
   }
 
+  /*ユーザー登録画面*/
   .labelandform {
     div {
       margin-bottom: 20px; /* 上下の要素との幅を調整 */
