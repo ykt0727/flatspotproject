@@ -80,6 +80,8 @@
     <!--各画面でコンテンツの設定をする-->
     {% block contents %}{% endblock %}
     
+    <a href="#top" id="topbutton"><button>一番上に戻る</button></a>
+
     <!--フリースクール情報等-->
     <footer class="footer">
       <div class="footer-main">
@@ -93,7 +95,6 @@
                   <li><a href="{% url 'studentapp:bloglist' %}">ブログ</a></li>
                   <li><a href="{% url 'studentapp:contact' %}">お問い合わせ</a></li>
                   <li><a href="{% url 'studentapp:about' %}">このサイトについて</a></li>
-                  <li><a href="#top"><button>一番上に戻る</button></a></li>
               </ul>
           </nav>
           <div class="footer-icon">
