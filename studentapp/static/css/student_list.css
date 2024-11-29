@@ -38,7 +38,15 @@
     color: #ff1493;
 }
 
+/*掲載日・団体名*/
 .list-infomation {
     text-align: center;
     margin-top:  60px;
+}
+
+@media screen and (max-width : 767px){
+    img {
+        width: 100%;
+        height: auto;
+    }    
 }
