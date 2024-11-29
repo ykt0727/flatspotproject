@@ -1,6 +1,10 @@
 from django.db import models
 #カスタムユーザーのサブクラスとして実装
 from accounts.models import CustomUser
+#サークル・イベント・ブログモデル
+from freeschoolapp.models import Club,Event,BlogPost
+#日付を取得する
+from django.utils import timezone
 
 class Student(models.Model):
 
@@ -33,3 +37,52 @@ class Student(models.Model):
    
     #配慮事項フィールド、テキスト形式で自由に入力できるようにする。
     consideration=models.TextField(blank=True,null=True)
+
+#ブログのいいね機能
+class LikeForBlogPost(models.Model):
+    #いいねの対象、元の投稿が削除されたらいいねも削除する
+    target=models.ForeignKey(BlogPost,on_delete=models.CASCADE)
+    #いいねしたユーザー
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    #いいねした日付
+    timestamp=models.DateTimeField(default=timezone.now)
+    #データベースの初期設定をするクラス
+    class Meta:
+        #同じユーザーが同じ記事に対していいねできないようにする
+        constraints = [
+            models.UniqueConstraint(fields=['target','user'], name='unique_like_for_blogpost')
+        ]
+        
+#サークルのいいね機能    
+class LikeForClub(models.Model):
+    #いいねの対象、元の投稿が削除されたらいいねも削除する
+    target=models.ForeignKey(Club,on_delete=models.CASCADE)
+    #いいねしたユーザー
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    #いいねした日付
+    timestamp=models.DateTimeField(default=timezone.now)
+    
+    #データベースの初期設定をするクラス
+    class Meta:
+        #同じユーザーが同じ記事に対していいねできないようにする
+        constraints = [
+            models.UniqueConstraint(fields=['target','user'], name='unique_like_for_clubpost')
+        ]
+        
+
+#イベントのイイネ機能
+class LikeForEvent(models.Model):
+    #いいねの対象、元の投稿が削除されたらいいねも削除する
+    target=models.ForeignKey(Event,on_delete=models.CASCADE)
+    #いいねしたユーザー
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    #いいねした日付
+    timestamp=models.DateTimeField(default=timezone.now)
+    
+        #データベースの初期設定をするクラス
+    class Meta:
+        #同じユーザーが同じ記事に対していいねできないようにする
+        constraints=[
+            models.UniqueConstraint(fields=['target','user'], name='unique_like_for_eventpost')
+        ]
+        

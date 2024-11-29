@@ -2,24 +2,78 @@
 {% block title %}{{ record.title }}{% endblock %}
 {% block contents %}
     <h1>{{ object.id }}</h1>
+    <a>{{ object.title }}</a>
+    <img src="{{ object.image1.url }}">
+    <!--画像2~5はあれば表示-->
+    {% if object.image2 %}
+        <p><img src="{{ object.image2.url }}"></p>
+    {% endif %}
+    {% if object.image3 %}
+        <p><img src="{{ object.image3.url }}"></p>
+    {% endif %}
+    {% if object.image4 %}
+        <p><img src="{{ object.image4.url }}"></p>
+    {% endif %}
+    {% if object.image5 %}
+        <p><img src="{{ object.image5.url }}"></p>
+    {% endif %}
 
-    <a>{{ record.title }}</a>
-    <img src="{{ record.image1.url }}">
-    {% if record.image2 %}
-        <p><img src="{{ record.image2.url }}"></p>
-    {% endif %}
-    {% if record.image3 %}
-        <p><img src="{{ record.image3.url }}"></p>
-    {% endif %}
-    {% if record.image4 %}
-        <p><img src="{{ record.image4.url }}"></p>
-    {% endif %}
-    {% if record.image5 %}
-        <p><img src="{{ record.image5.url }}"></p>
-    {% endif %}
+<p>{{ object.category }}<p>    
+<p>{{ object.created_at }}<p>
+<p>{{ object.detail_text }}</p>
 
-<p>{{ record.category }}<p>    
-<p>{{ record.created_at }}<p>
-<p>{{ record.detail_text }}</p>
+<!--いいねボタン関連の処理、ログインされていなければいいねボタンは表示しない-->
+{% if user.is_authenticated %}
+    <!--いいねボタンの表示-->
+    <button id="likebutton">
+    {% if user_has_liked %}
+    <!--イイネしていない場合-->
+        💗
+    <!--イイネしている場合-->
+    {% else %}
+        ♥
+    {% endif %}
+    </button>
+
+    <script>
+        //いいねボタンを指定
+        buttonElm=document.getElementById("likebutton");
+        
+        buttonElm.addEventListener('click', async function(event) {
+            event.preventDefault();
+            //リクエスト送信中ボタンを無効化する
+            buttonElm.disabled=true;
+        
+            try {
+                const response=await fetch("{% url 'studentapp:blogpostlike' pk=object.id %}",{
+                    method:'GET',
+                    headers:{
+                        'X-CSRFToken':'{{ csrf_token }}'
+                    }
+                });
+        
+                if(!response.ok){
+                    throw new Error('通信に失敗しました');
+                }
+        
+                const data=await response.json();
+        
+                if(data.liked) {
+                    buttonElm.textContent = "💗";
+                }else{
+                    buttonElm.textContent = "♥";
+                }
+            }catch(error) {
+                console.error('いいねが正常にできませんでした:', error);
+                // エラー処理（例：ユーザーにエラーメッセージを表示）
+            }finally{
+                buttonElm.disabled=false;
+            }
+        });
+    </script>
+
+
+
+{% endif %}
 
 {% endblock %}

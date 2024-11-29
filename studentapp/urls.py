@@ -19,9 +19,13 @@ urlpatterns=[
     #ブログ機能
     path('bloglist',views.BlogListView.as_view(),name='bloglist'),
     path('blogdetail/<int:pk>',views.BlogDetailView.as_view(),name='blogdetail'),
+        #いいね機能
+    path('blogpostlike/<int:pk>',views.LikeForBlogView.as_view(), name='blogpostlike'),
+    
     #お問い合わせ機能
     path('contact',views.ContactView.as_view(),name='contact'),
     path('contactdone',views.ContactDoneView.as_view(),name='contactdone'),
+    
     #このサイトについて
     path('about',views.AboutView.as_view(),name='about'),
 ]    

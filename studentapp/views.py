@@ -4,10 +4,13 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
 
+#JSONファイルを扱うためのファイル
+from django.http.response import JsonResponse
+
 from django.core.mail import EmailMessage
 
 #モデル、フォーム関連
-from .models import Student
+from .models import Student,LikeForBlogPost,LikeForClub,LikeForEvent
 from .forms import ClubRequestForm,EventRequestForm,ContactForm
 from freeschoolapp.models import BlogPost,Club,Event
 
@@ -325,7 +328,7 @@ class BlogListView(ListView):
     
 class BlogDetailView(DetailView):
     #student_blogdetail.htmlをレンダリング（描写）する
-    template_name='blogdetail.html'
+    template_name='student_blogdetail.html'
     #モデルを設定
     model=BlogPost
     
@@ -339,9 +342,41 @@ class BlogDetailView(DetailView):
             student=get_object_or_404(Student, user=self.request.user)
             # コンテキストに追加
             context['student']=student
-        
+            
+            # 現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
+            context['user_has_liked']=LikeForBlogPost.objects.filter(
+                target=self.object,
+                user=self.request.user
+            ).exists()
+            
         return context
-    
+
+#ブログのいいね機能のView
+class LikeForBlogView(View):
+    def get(self,request,*args,**kwargs):
+        #URLのパラメータからpkを取得
+        blog_id=self.kwargs.get('pk')      
+        
+        # 対象の投稿を取得
+        blog_post=get_object_or_404(BlogPost,pk=blog_id)
+
+        # 現在のユーザーがすでに「いいね」をしているか確認、ユーザーがまだ「いいね」をしていない場合にCreateにTrueが返ってくる
+        #まだユーザーがいいねをしていない場合は新たにいいねテーブルに追加
+        like,created=LikeForBlogPost.objects.get_or_create(
+            target=blog_post,
+            user=request.user
+        )
+
+        #ユーザーがすでにいいねしている場合、いいねを取り消す
+        if not created:
+            # 既存の「いいね」があれば削除
+            like.delete()
+            return JsonResponse({'liked':False})
+        
+        # ユーザーがまだいいねしていない場合、新たに「いいね」を追加
+        return JsonResponse({'liked':True})    
+
+
 class ContactView(FormView):
     template_name ='student_contact.html'
     form_class=ContactForm
@@ -393,8 +428,8 @@ class ContactDoneView(TemplateView):
     
     def get_context_data(self, **kwargs):
         # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
+        context=super().get_context_data(**kwargs)
+
         # 認証されたユーザーが学生かどうかを確認
         if self.request.user.is_authenticated and self.request.user.user_type=='student':
             #認証された学生に紐づくStudentデータを取得
@@ -416,6 +451,7 @@ class AboutView(TemplateView):
         return render(request,'student_about.html',context)
     
     def get_context_data(self, **kwargs):
+        
         # 親のメソッドを呼び出して元々のコンテキストデータを取得
         context = super().get_context_data(**kwargs)
         
