@@ -16,6 +16,7 @@ urlpatterns=[
     path('eventdetail/<int:pk>',views.EventDetailView.as_view(),name='eventdetail'),
     path('eventrequest/<int:event_id>/',views.EventRequestView.as_view(),name='eventrequest'),
     path('eventrequestdone',views.EventRequestDoneView.as_view(),name='eventrequestdone'),
+    
     #ブログ機能
     path('bloglist',views.BlogListView.as_view(),name='bloglist'),
     path('blogdetail/<int:pk>',views.BlogDetailView.as_view(),name='blogdetail'),
@@ -28,4 +29,7 @@ urlpatterns=[
     
     #このサイトについて
     path('about',views.AboutView.as_view(),name='about'),
+    
+    #マイページ機能
+    path('mypage',views.MypageView.as_view(),name='mypage')#アカウント情報表示   
 ]    

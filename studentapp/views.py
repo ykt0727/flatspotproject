@@ -376,7 +376,7 @@ class LikeForBlogView(View):
         # ユーザーがまだいいねしていない場合、新たに「いいね」を追加
         return JsonResponse({'liked':True})    
 
-
+#お問い合わせ
 class ContactView(FormView):
     template_name ='student_contact.html'
     form_class=ContactForm
@@ -421,7 +421,8 @@ class ContactView(FormView):
             context['student']=student
         
         return context
-    
+
+#お問い合わせ完了画面
 class ContactDoneView(TemplateView):
     #student_contactdone.htmlをレンダリング（描写）する
     template_name="student_contactdone.html"
@@ -463,3 +464,25 @@ class AboutView(TemplateView):
             context['student']=student
         
         return context
+
+#アカウント情報表示画面
+class MypageView(TemplateView):
+    template_name='student_mypage.html'
+    
+    #コンテキスト情報にログイン中のユーザーの情報、ログインしたユーザーがいいねした情報を格納
+    def get_context_data(self, **kwargs):
+        #もともとあるコンテキスト情報を取得（ログイン情報）
+        context=super().get_context_data(**kwargs)
+        
+        if self.request.user.is_authenticated and self.request.user.user_type=='student':
+            #認証ユーザーに紐づいているStudentの行を取得
+            student=Student.objects.get(user=self.request.user)
+            context['student']=student
+
+            #ユーザーがログインしているユーザーが
+            likeforblogposts=LikeForBlogPost.objects.filter(user=self.request.user).order_by('timestamp')
+            context['likeforblogposts']=likeforblogposts
+            #likeforevent=LikeForEvent.objects.filter().order_by('timestamp')
+            #likeforclub=LikeForClub.objects.filter().order_by('timestamp')
+            
+            return context
