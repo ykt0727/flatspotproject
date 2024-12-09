@@ -1,6 +1,8 @@
 from django import forms
 from django.core.mail.message import EmailMessage
 
+from .models import Student,CustomUser
+
 #サークル主催者に体験申請のメールを送るフォーム
 class ClubRequestForm(forms.Form):
     
@@ -62,14 +64,29 @@ class ContactForm(forms.Form):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         
-        self.fields['name'].widget.attrs['placeholder'] = 'お名前を入力してください'
-        self.fields['name'].widget.attrs['class'] = 'form-control'
+        self.fields['name'].widget.attrs['placeholder']='お名前を入力してください'
+        self.fields['name'].widget.attrs['class']='form-control'
         
-        self.fields['email'].widget.attrs['placeholder'] = 'メールアドレスを入力してください'
-        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['placeholder']='メールアドレスを入力してください'
+        self.fields['email'].widget.attrs['class']='form-control'
         
-        self.fields['title'].widget.attrs['placeholder'] = 'タイトルを入力してください'
-        self.fields['title'].widget.attrs['class'] = 'form-control'
+        self.fields['title'].widget.attrs['placeholder']='タイトルを入力してください'
+        self.fields['title'].widget.attrs['class']='form-control'
         
-        self.fields['message'].widget.attrs['placeholder'] = 'メッセージを入力してください'
-        self.fields['message'].widget.attrs['class'] = 'form-control'
+        self.fields['message'].widget.attrs['placeholder']='メッセージを入力してください'
+        self.fields['message'].widget.attrs['class']='form-control'
+
+#CustomUserを変更するフォーム
+class CustomUserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        #表示するフィールド
+        fields = ['login_id','phone_number']
+
+#Studentを変更するフォーム
+class StudentForm(forms.ModelForm):
+    class Meta:
+            model=Student
+            #表示するフィールド
+            fields=['nickname','is_guardian','gender', 'ent_year', 'date_of_birth','consideration']
+

@@ -1,8 +1,10 @@
-from django.shortcuts import render,get_object_or_404
-from django.views.generic import TemplateView,ListView,DetailView,FormView
+from django.shortcuts import render,get_object_or_404,redirect
+from django.views.generic import TemplateView,ListView,DetailView,FormView,UpdateView,DeleteView
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
+from django.contrib.auth import logout
+
 
 #JSONファイルを扱うためのファイル
 from django.http.response import JsonResponse
@@ -10,45 +12,35 @@ from django.http.response import JsonResponse
 from django.core.mail import EmailMessage
 
 #モデル、フォーム関連
-from .models import Student,LikeForBlogPost,LikeForClub,LikeForEvent
-from .forms import ClubRequestForm,EventRequestForm,ContactForm
+from .models import CustomUser,Student,LikeForBlogPost,LikeForClub,LikeForEvent
+from .forms import ClubRequestForm,EventRequestForm,ContactForm,CustomUserForm,StudentForm
 from freeschoolapp.models import BlogPost,Club,Event
 
-#ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
-class BaseView(View):
-    #テンプレートに使用するコンテキスト情報を設定する
-    def get_context_data(self, **kwargs):
-        #contextを初期化
-        context={}    
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証ユーザーに紐づいているStudentの行を取得
-            student=Student.objects.get(user=self.request.user)
+
+class TopView(View):
+    template_name = 'student_top.html'
+
+    def get_context_data(self, request):
+        """共通処理: コンテキストを生成"""
+        context = {}
+        if request.user.is_authenticated and request.user.user_type == 'student':
+            # 認証された学生に紐づく Student データを取得
+            student=get_object_or_404(Student, user=request.user)
             context['student']=student
+        else:
+            context['error']="学生として認証されていません"
         return context
 
-class TopView(BaseView):
-    #student_top.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_top.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_top.html',context)
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context   
+    def get(self, request, *args, **kwargs):
+        """GETリクエストの処理"""
+        context = self.get_context_data(request)
+        return render(request, self.template_name, context)
 
+    def post(self, request, *args, **kwargs):
+        """POSTリクエストの処理"""
+        context = self.get_context_data(request)
+        return render(request, self.template_name, context)
+        
 class ClubListView(ListView):
     #student_clublist.htmlをレンダリング（描写）する
     template_name=('student_clublist.html')
@@ -479,10 +471,58 @@ class MypageView(TemplateView):
             student=Student.objects.get(user=self.request.user)
             context['student']=student
 
-            #ユーザーがログインしているユーザーが
+            #ログインしているユーザーがいいねした記事を取得し、contextに格納する
             likeforblogposts=LikeForBlogPost.objects.filter(user=self.request.user).order_by('timestamp')
             context['likeforblogposts']=likeforblogposts
-            #likeforevent=LikeForEvent.objects.filter().order_by('timestamp')
-            #likeforclub=LikeForClub.objects.filter().order_by('timestamp')
+            #likeforevents=LikeForEvent.objects.filter(user=self.request.user).order_by('timestamp')
+            #context['likeforevents']=likeforevents
+            #likeforclubs=LikeForClub.objects.filter(user=self.request.user).order_by('timestamp')
+            #context['likeforclubs']=likeforclubs
             
             return context
+
+#アカウント情報変更画面、UpdateViewでは原則一つのモデルしか扱えないため、Viewを使用する。
+class MypageUpdateView(View):
+    def get(self, request, *args, **kwargs):
+        #フォームのインスタンスを作成
+        user_form=CustomUserForm(instance=request.user)
+        student_form=StudentForm(instance=request.user.student)
+        
+        # フォームをテンプレートに渡して表示
+        return render(request, 'student_mypageupdate.html', {
+            'user_form':user_form,
+            'student_form':student_form,
+        })
+    
+    def post(self, request, *args, **kwargs):
+        #CustomuserとStudentを変更するフォームを定義する
+        user_form=CustomUserForm(request.POST,instance=request.user)
+        student_form=StudentForm(request.POST,instance=request.user.student)
+        #バリデーションが通った場合のみデータベースに保存する
+        if user_form.is_valid() and student_form.is_valid():
+            user_form.save()
+            student_form.save()
+            return redirect('studentapp:mypage')
+        return render(request,'student_mypageupdate.html', {
+            'user_form':user_form,
+            'student_form':student_form,
+        })
+        
+#アカウント情報削除確認画面
+class MypageDeleteCheckView(TemplateView):
+    template_name="student_mypagedeletecheck.html"
+
+#アカウントを削除する処理
+class AccountDeleteView(View):
+    def post(self, request,*args,**kwargs):
+        # 認証されたユーザーを削除
+        user=request.user
+        logout(request)  #セッションを終了
+        user.delete()
+        # ログアウト後のリダイレクト先を指定
+        return redirect('studentapp:mypagedeletedone')
+    
+#アカウント削除完了画面
+class MypageDeleteDoneView(TemplateView):
+    template_name="student_mypagedeletedone.html"
+    

@@ -16,7 +16,7 @@
     <!--いいねしたブログ記事-->
     {% for likeforblogpost in likeforblogposts %}
         <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
-        <p><a href="{% url 'studentapp:blogdetail' likeforblog post.target.id %}">{{ likeforblogpost.target.title }}</a></p>
+        <p><a href="{% url 'studentapp:blogdetail' likeforblogpost.target.id %}">{{ likeforblogpost.target.title }}</a></p>
     {% endfor %}
     <!--いいねしたサークル記事-->
 
@@ -24,7 +24,6 @@
     <!--いいねしたイベント記事-->
 
 
-
-    <p><a href="#">アカウント情報を編集する</a></p>
-
+    <p><a href="{% url 'studentapp:mypageupdate' %}">アカウント情報を編集する</a></p>
+    <p><a href="{% url 'studentapp:mypagedeletecheck' %}">アカウントを削除する</a></p>
 {% endblock %}

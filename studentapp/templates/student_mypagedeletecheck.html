@@ -1,0 +1,13 @@
+{% load static %}
+{% block title %}アカウント削除の確認{% endblock %}
+{% block contents %}
+
+アカウントを削除してもよろしいですか？
+<!--postリクエストを利用したいのでformタグを使用する-->
+<form method="post" action="{% url 'studentapp:accountdelete' %}">
+    {% csrf_token %}
+    <button type="submit">削除する</button>
+    <a href="{% url 'studentapp:mypage' %}">キャンセル</a>
+</form>
+
+{% endblock %}
