@@ -1,0 +1,13 @@
+{% load static %}
+{% block title %}{{ freeschool.freeschool_name }}さんの情報{% endblock %}
+{% block contents %}
+    <p>ログインID{{ user.login_id }}</p>
+    <p>メールアドレス{{ user.email }}</p>
+    <p>電話番号{{ user.phone_number }}</p>
+    <p>フリースクール名{{ freeschool.freeschool_name}}</p>
+    <p>責任者名{{ freeschool.manager_name }}</p>
+    <p>住所{{ freeschool.address }}</p>
+
+
+    <p><a href="{% url 'freeschoolapp:mypageupdate' %}">アカウント情報を編集する</a></p>
+{% endblock %}

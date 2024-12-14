@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic.base import TemplateView
 from django.views import View
 from .models import CustomUser,FreeSchool,Club,Event,BlogPost
-from .forms import ClubPostForm,EventPostForm,BlogPostForm,ContactForm
+from .forms import ClubPostForm,EventPostForm,BlogPostForm,ContactForm,CustomUserForm,FreeSchoolForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView,ListView,DetailView,UpdateView,DeleteView,FormView
@@ -408,4 +408,47 @@ class ContactView(FormView):
 class ContactDoneView(TemplateView):
     #freeschool_contactdone.htmlをレンダリング（描写）する
     template_name='freeschool_contactdone.html'
+    
+#アカウント情報表示画面
+class MypageView(TemplateView):
+    template_name='freeschool_mypage.html'
+    
+    #コンテキスト情報にログイン中のユーザーの情報、ログインしたユーザーがいいねした情報を格納
+    def get_context_data(self, **kwargs):
+        #もともとあるコンテキスト情報を取得（ログイン情報）
+        context=super().get_context_data(**kwargs)
+        
+        if self.request.user.is_authenticated and self.request.user.user_type=='freeschool':
+            #認証ユーザーに紐づいているStudentの行を取得
+            freeschool=FreeSchool.objects.get(user=self.request.user)
+            context['freeschool']=freeschool
+            return context
+
+#アカウント情報変更画面、UpdateViewでは原則一つのモデルしか扱えないため、Viewを使用する。
+class MypageUpdateView(View):
+    def get(self, request, *args, **kwargs):
+        #フォームのインスタンスを作成
+        user_form=CustomUserForm(instance=request.user)
+        freeschool_form=FreeSchoolForm(instance=request.user.freeschool)
+        
+        # フォームをテンプレートに渡して表示
+        return render(request, 'freeschool_mypageupdate.html',{
+            'user_form':user_form,
+            'freeschool_form':freeschool_form,
+        })
+    
+    def post(self, request, *args, **kwargs):
+        #CustomuserとStudentを変更するフォームを定義する
+        user_form=CustomUserForm(request.POST,instance=request.user)
+        freeschool_form=FreeSchoolForm(request.POST,instance=request.user.freeschool)
+        #バリデーションが通った場合のみデータベースに保存する
+        if user_form.is_valid() and freeschool_form.is_valid():
+            user_form.save()
+            freeschool_form.save()
+            return redirect('freeschoolapp:mypage')
+        return render(request,'freeschool_mypageupdate.html',{
+            'user_form':user_form,
+            'freeschool_form':freeschool_form,
+        })
+        
 

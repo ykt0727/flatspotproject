@@ -1,0 +1,12 @@
+{% load static %}
+{% block title %}アカウント情報を変更する{% endblock %}
+{% block contents %}
+
+
+    <form method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ freeschool_form.as_p}}
+    <button type="submit">変更する</button>
+    </form>
+{% endblock %}

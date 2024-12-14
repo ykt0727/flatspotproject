@@ -1,5 +1,5 @@
 from django import forms
-from .models import Club,Event,BlogPost
+from .models import Club,Event,BlogPost,CustomUser,FreeSchool
 from django.core.mail.message import EmailMessage
 
 #サークル掲載フォーム
@@ -132,3 +132,17 @@ class ContactForm(forms.Form):
         
         self.fields['message'].widget.attrs['placeholder']='メッセージを入力してください'
         self.fields['message'].widget.attrs['class']='form-control'
+        
+#CustomUserを変更するフォーム
+class CustomUserForm(forms.ModelForm):
+    class Meta:
+        model=CustomUser
+        #表示するフィールド
+        fields = ['login_id','phone_number']
+
+#FreeSchoolを変更するフォーム
+class FreeSchoolForm(forms.ModelForm):
+    class Meta:
+            model=FreeSchool
+            #表示するフィールド
+            fields=['freeschool_name','address','manager_name']
