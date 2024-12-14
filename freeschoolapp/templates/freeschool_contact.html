@@ -1,6 +1,14 @@
 {% extends 'freeschool_base.html' %}
-{% block title %}フリースクール関係者お問い合わせ画面{% endblock %}
+{% load static %}
+{% block title %}お問い合わせ{% endblock %}
 {% block contents %}
-フリースクール関係者お問い合わせ画面
-<a href="{% url 'freeschoolapp:contactdone' %}"><button>送信</button></a>
+
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    {{ field.label_tag }}
+    {{ field }}
+    {% endfor %}
+    <button type="submit">送信する</button>
+</form>
 {% endblock %}

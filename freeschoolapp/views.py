@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views import View
 from .models import CustomUser,FreeSchool,Club,Event,BlogPost
-from .forms import ClubPostForm,EventPostForm,BlogPostForm
+from .forms import ClubPostForm,EventPostForm,BlogPostForm,ContactForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView,ListView,DetailView,UpdateView,DeleteView
+from django.views.generic import CreateView,ListView,DetailView,UpdateView,DeleteView,FormView
 from django.urls import reverse_lazy
 from studentapp.models import Student
+from django.core.mail import EmailMessage
+from django.contrib import messages
 
 #ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
 class BaseView(View):
@@ -53,7 +55,7 @@ class AccountUpdateView(TemplateView):
     #freeschool_accountupdate.htmlをレンダリング（描写）する
     template_name='freeschool_accountupdate.html'
 
-
+#ユーザー検索画面
 class UserSearchView(ListView):
     
     #freeschool_usersearch.htmlをレンダリング（描写）する
@@ -368,19 +370,42 @@ class MyBlogDeleteDoneView(TemplateView):
     template_name='freeschool_myblogdeletedone.html'
 
 
-class ContactView(BaseView):
-    #freeschool_contact.htmlをレンダリング(描写)する
-    def get(self, request, *args, **kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'freeschool_contact.html',context)
-    def post(self, request, *args, **kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'freeschool_contact.html',context)
-
-class ContactDoneView(TemplateView):
+class ContactView(FormView):
     
+    template_name ='freeschool_contact.html'
+    form_class=ContactForm
+    success_url=reverse_lazy('studentapp:contactdone')
+    
+    def form_valid(self, form):
+        name=form.cleaned_data['name']
+        email=form.cleaned_data['email']
+        title=form.cleaned_data['title']
+        message=form.cleaned_data['message']
+        
+        subject=f'お問い合わせ: {title}'
+        
+        message=\
+            f'送信者名: {name}\nメールアドレス:{email}\n タイトル{title}\n メッセージ:{message}'
+        
+        #送信元メールアドレス
+        from_email=email
+        #送信先のメールアドレス(システム管理者のメールアドレス)
+        to_list=['ymg2365013@stu.o-hara.ac.jp']
+        
+        message=EmailMessage(
+                            subject=subject,
+                            body=message,
+                            from_email=from_email,
+                            to=to_list,
+                        )
+        message.send()
+        messages.success(
+            self.request,'お問い合わせは正常に送信されました。')
+        
+        return super().form_valid(form)
+
+#お問い合わせ完了画面
+class ContactDoneView(TemplateView):
     #freeschool_contactdone.htmlをレンダリング（描写）する
     template_name='freeschool_contactdone.html'
 
