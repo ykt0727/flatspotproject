@@ -386,7 +386,7 @@ class ContactView(FormView):
             f'送信者名: {name}\nメールアドレス:{email}\n タイトル{title}\n メッセージ:{message}'
         
         #送信元メールアドレス
-        from_email='ymg2365013@stu.o-hara.ac.jp'
+        from_email=email
         #送信先のメールアドレス
         to_list=['ymg2365013@stu.o-hara.ac.jp']
         
@@ -401,18 +401,6 @@ class ContactView(FormView):
             self.request,'お問い合わせは正常に送信されました。')
         
         return super().form_valid(form)
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
 
 #お問い合わせ完了画面
 class ContactDoneView(TemplateView):
