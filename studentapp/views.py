@@ -80,8 +80,38 @@ class ClubDetailView(DetailView):
             student=get_object_or_404(Student, user=self.request.user)
             # コンテキストに追加
             context['student']=student
+            
+            #現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
+            context['user_has_liked']=LikeForClub.objects.filter(
+                target=self.object,
+                user=self.request.user
+            ).exists()
         
         return context
+
+#サークルのいいね機能のView
+class LikeForClubView(View):
+    def get(self,request,*args,**kwargs):
+        #URLのパラメータからpkを取得
+        club_id=self.kwargs.get('pk')      
+        # 対象の投稿を取得
+        club_post=get_object_or_404(Club,pk=club_id)
+
+        # 現在のユーザーがすでに「いいね」をしているか確認、ユーザーがまだ「いいね」をしていない場合にCreateにTrueが返ってくる
+        #まだユーザーがいいねをしていない場合は新たにいいねテーブルに追加
+        like,created=LikeForClub.objects.get_or_create(
+            target=club_post,
+            user=request.user
+        )
+
+        #ユーザーがすでにいいねしている場合、いいねを取り消す
+        if not created:
+            # 既存の「いいね」があれば削除
+            like.delete()
+            return JsonResponse({'liked':False})
+        
+        # ユーザーがまだいいねしていない場合、新たに「いいね」を追加
+        return JsonResponse({'liked':True})    
 
 class ClubRequestView(FormView):
     
@@ -187,7 +217,6 @@ class EventListView(ListView):
             student=get_object_or_404(Student, user=self.request.user)
             # コンテキストに追加
             context['student']=student
-        
         return context
     
 class EventDetailView(DetailView):
@@ -205,8 +234,39 @@ class EventDetailView(DetailView):
             student=get_object_or_404(Student, user=self.request.user)
             # コンテキストに追加
             context['student']=student
+            
+            #現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
+            context['user_has_liked']=LikeForEvent.objects.filter(
+                target=self.object,
+                user=self.request.user
+            ).exists()
+        
         
         return context
+    
+#イベントのいいね機能のView
+class LikeForEventView(View):
+    def get(self,request,*args,**kwargs):
+        #URLのパラメータからpkを取得
+        event_id=self.kwargs.get('pk')      
+        # 対象の投稿を取得
+        club_post=get_object_or_404(Event,pk=event_id)
+
+        # 現在のユーザーがすでに「いいね」をしているか確認、ユーザーがまだ「いいね」をしていない場合にCreateにTrueが返ってくる
+        #まだユーザーがいいねをしていない場合は新たにいいねテーブルに追加
+        like,created=LikeForEvent.objects.get_or_create(
+            target=club_post,
+            user=request.user
+        )
+
+        #ユーザーがすでにいいねしている場合、いいねを取り消す
+        if not created:
+            # 既存の「いいね」があれば削除
+            like.delete()
+            return JsonResponse({'liked':False})
+        
+        # ユーザーがまだいいねしていない場合、新たに「いいね」を追加
+        return JsonResponse({'liked':True})    
 
 class EventRequestView(FormView):
         
@@ -462,10 +522,10 @@ class MypageView(TemplateView):
             #ログインしているユーザーがいいねした記事を取得し、contextに格納する
             likeforblogposts=LikeForBlogPost.objects.filter(user=self.request.user).order_by('timestamp')
             context['likeforblogposts']=likeforblogposts
-            #likeforevents=LikeForEvent.objects.filter(user=self.request.user).order_by('timestamp')
-            #context['likeforevents']=likeforevents
-            #likeforclubs=LikeForClub.objects.filter(user=self.request.user).order_by('timestamp')
-            #context['likeforclubs']=likeforclubs
+            likeforevents=LikeForEvent.objects.filter(user=self.request.user).order_by('timestamp')
+            context['likeforevents']=likeforevents
+            likeforclubs=LikeForClub.objects.filter(user=self.request.user).order_by('timestamp')
+            context['likeforclubs']=likeforclubs
             
             return context
 

@@ -11,19 +11,34 @@
     <p>入学年度{{ student.ent_year }}</p>
     <p>性別{{ student.gender }}</p>
     <p>配慮事項(フリースクールにお伝えしたいこと){{ student.consideration }}</p>
-    
 
     <!--いいねしたブログ記事-->
+    <p>いいねしたブログ記事</p>
     {% for likeforblogpost in likeforblogposts %}
         <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
         <p><a href="{% url 'studentapp:blogdetail' likeforblogpost.target.id %}">{{ likeforblogpost.target.title }}</a></p>
+    {% else %}
+    <p>いいねしたブログ記事はありません</p>
     {% endfor %}
+    
     <!--いいねしたサークル記事-->
-
+    <p>いいねしたサークル記事</p>
+    {% for likeforclub in likeforclubs %}
+        <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
+        <p><a href="{% url 'studentapp:clubdetail' likeforclub.target.id %}">{{ likeforclub.target.club_name }}</a></p>
+    {% else %}
+    <p>いいねしたサークルはありません</p>
+    {% endfor %}
 
     <!--いいねしたイベント記事-->
-
-
+    <p>いいねすたイベント記事</p>
+    {% for likeforevent in likeforevents %}
+    <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
+    <p><a href="{% url 'studentapp:eventdetail' likeforevent.target.id %}">{{ likeforevent.target.event_name }}</a></p>
+    {% else %}
+    <p>いいねしたイベントはありません</p>
+    {% endfor %}
+    
     <p><a href="{% url 'studentapp:mypageupdate' %}">アカウント情報を編集する</a></p>
     <p><a href="{% url 'studentapp:mypagedeletecheck' %}">アカウントを削除する</a></p>
 {% endblock %}

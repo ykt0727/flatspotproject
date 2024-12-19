@@ -21,6 +21,56 @@
 <p>{{ object.created_at }}<p>
 <p>{{ object.detail_text }}</p>
 
+<!--いいねボタン関連の処理、ログインされていなければいいねボタンは表示しない-->
+{% if user.is_authenticated %}
+    <!--いいねボタンの表示-->
+    <button id="likebutton">
+    {% if user_has_liked %}
+    <!--イイネしていない場合-->
+        💗
+    <!--イイネしている場合-->
+    {% else %}
+        ♥
+    {% endif %}
+    </button>
+
+    <script>
+        //いいねボタンを指定
+        buttonElm=document.getElementById("likebutton");
+        
+        buttonElm.addEventListener('click',async function(event) {
+            event.preventDefault();
+            //リクエスト送信中ボタンを無効化する
+            buttonElm.disabled=true;
+            try {
+                const response=await fetch("{% url 'studentapp:eventlike' pk=object.id %}",{
+                    method:'GET',
+                    headers:{
+                        'X-CSRFToken':'{{ csrf_token }}'
+                    }
+                });
+        
+                if(!response.ok){
+                    throw new Error('通信に失敗しました');
+                }
+        
+                const data=await response.json();
+        
+                if(data.liked) {
+                    buttonElm.textContent = "💗";
+                }else{
+                    buttonElm.textContent = "♥";
+                }
+            }catch(error) {
+                console.error('いいねが正常にできませんでした:', error);
+                // エラー処理（例：ユーザーにエラーメッセージを表示）
+            }finally{
+                buttonElm.disabled=false;
+            }
+        });
+    </script>
+{% endif %}
+
 <a href="{% url 'studentapp:eventrequest' event_id=object.pk %}">参加申し込み</a>
 
 {% endblock %}

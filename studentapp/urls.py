@@ -11,11 +11,16 @@ urlpatterns=[
     path('clubdetail/<int:pk>',views.ClubDetailView.as_view(),name='clubdetail'),
     path('clubrequest/<int:club_id>/',views.ClubRequestView.as_view(),name='clubrequest'),
     path('clubrequestdone',views.ClubRequestDoneView.as_view(),name='clubrequestdone'),
+            #いいね機能
+    path('clublike/<int:pk>',views.LikeForClubView.as_view(), name='clublike'),
+    
     #イベント機能
     path('eventlist',views.EventListView.as_view(),name='eventlist'),
     path('eventdetail/<int:pk>',views.EventDetailView.as_view(),name='eventdetail'),
     path('eventrequest/<int:event_id>/',views.EventRequestView.as_view(),name='eventrequest'),
     path('eventrequestdone',views.EventRequestDoneView.as_view(),name='eventrequestdone'),
+            #いいね機能
+    path('eventlike/<int:pk>',views.LikeForEventView.as_view(), name='eventlike'),
     
     #ブログ機能
     path('bloglist',views.BlogListView.as_view(),name='bloglist'),
