@@ -2,6 +2,10 @@
 {% block title %}投稿ブログ記事削除確認画面{% endblock %}
 {% block contents %}
 投稿ブログ記事削除確認画面
-<a href="{% url 'freeschoolapp:myblogdeletedone' %}"><button>はい</button></a>
-<a href="{% url 'freeschoolapp:mybloglist' %}"><button>いいえ</button></a>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">はい</button>
+    <a href="{% url 'freeschoolapp:myblogdetail' object.pk %}">いいえ</a>
+    <!-- いいえをボタンにすると挙動がおかしくなるので、cssでボタンの見た目にしたください -->
+</form>
 {% endblock %}

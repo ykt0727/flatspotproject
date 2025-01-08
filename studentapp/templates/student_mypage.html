@@ -1,23 +1,24 @@
+{% extends 'student_base_anyone.html' %}
 {% load static %}
-{% block title %}{{ student.nickname }}さんの情報{% endblock %}
+{% block title %}{{ user.student.nickname }}さんの情報{% endblock %}
 {% block contents %}
     <p>ログインID{{ user.login_id }}</p>
     <p>メールアドレス{{ user.email }}</p>
     <p>電話番号{{ user.phone_number }}</p>
 
-    <p>ニックネーム{{ student.nickname }}</p>
+    <p>ニックネーム{{ user.student.nickname }}</p>
     <!--誕生日の表示にdateフィルターを使用している-->
-    <p>誕生日: {{ student.date_of_birth|date:"Y年m月d日" }}</p>
-    <p>入学年度{{ student.ent_year }}</p>
-    <p>性別{{ student.gender }}</p>
-    <p>配慮事項(フリースクールにお伝えしたいこと){{ student.consideration }}</p>
+    <p>誕生日: {{ user.student.date_of_birth|date:"Y年m月d日" }}</p>
+    <p>入学年度{{ user.student.ent_year }}</p>
+    <p>性別{{ user.student.gender }}</p>
+    <p>配慮事項(フリースクールにお伝えしたいこと){{ user.student.consideration }}</p>
 
     <!--いいねしたブログ記事-->
     <p>いいねしたブログ記事</p>
     {% for likeforblogpost in likeforblogposts %}
         <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
         <p><a href="{% url 'studentapp:blogdetail' likeforblogpost.target.id %}">{{ likeforblogpost.target.title }}</a></p>
-    {% else %}
+    {% empty %}
     <p>いいねしたブログ記事はありません</p>
     {% endfor %}
     
@@ -26,16 +27,16 @@
     {% for likeforclub in likeforclubs %}
         <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
         <p><a href="{% url 'studentapp:clubdetail' likeforclub.target.id %}">{{ likeforclub.target.club_name }}</a></p>
-    {% else %}
+    {% empty %}
     <p>いいねしたサークルはありません</p>
     {% endfor %}
 
     <!--いいねしたイベント記事-->
-    <p>いいねすたイベント記事</p>
+    <p>いいねしたイベント記事</p>
     {% for likeforevent in likeforevents %}
     <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
     <p><a href="{% url 'studentapp:eventdetail' likeforevent.target.id %}">{{ likeforevent.target.event_name }}</a></p>
-    {% else %}
+    {% empty %}
     <p>いいねしたイベントはありません</p>
     {% endfor %}
     

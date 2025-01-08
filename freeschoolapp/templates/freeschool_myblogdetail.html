@@ -1,8 +1,42 @@
+
 {% extends 'freeschool_base.html' %}
-{% block title %}投稿ブログ記事詳細画面{% endblock %}
+{% block title %}掲載イベント詳細画面{% endblock %}
 {% block contents %}
-投稿ブログ記事詳細画面
+掲載イベント詳細画面
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
-<a href="{% url 'freeschoolapp:myblogupdate' %}"><button>変更</button></a>
-<a href="{% url 'freeschoolapp:myblogdeletecheck' %}"><button>削除</button></a>
+<a href="{% url 'freeschoolapp:myblogupdate' object.id %}"><button>変更</button></a>
+<a href="{% url 'freeschoolapp:myblogdeletecheck' object.id %}"><button>削除</button></a>
+<br>
+ブログID
+{{ object.id }}
+ブログタイトル
+{{ object.title }}
+掲載日時
+{{ object.created_at }}
+ジャンル
+{{ object.category }}
+
+ブログの紹介画像①
+<p><img src="{{ object.image1.url }}"></p>
+ブログの紹介画像②
+{% if object.image2 %}
+<p><img src="{{ object.image2.url }}"></p>
+{% endif %}
+ブログの紹介画像③
+{% if object.image3 %}
+<p><img src="{{ object.image3.url }}"></p>
+{% endif %}
+ブログの紹介画像④
+{% if object.image4 %}
+<p><img src="{{ object.image4.url }}"></p>
+{% endif %}
+ブログの紹介画像⑤
+{% if object.image5 %}
+<p><img src="{{ object.image5.url }}"></p>
+{% endif %}
+ブログの紹介文
+{{ object.detail_text }}
+公開状況
+{{ object.public_flag }}
+
 {% endblock %}

@@ -8,8 +8,10 @@ app_name='freeschoolapp'
 #URLパターンを登録するためのリスト
 urlpatterns=[
     path('top',views.TopView.as_view(),name='top'),
+    
+    #アカウント情報リンク(削除予定)
     path('account',views.AccountView.as_view(),name='account'),
-    path('accountupdate',views.AccountUpdateView.as_view(),name='accountupdate'),
+    
     #マイページ機能
     path('mypage',views.MypageView.as_view(),name='mypage'),#アカウント情報表示
     path('mypageupdate',views.MypageUpdateView.as_view(),name='mypageupdate'),#アカウント情報変更
@@ -36,9 +38,9 @@ urlpatterns=[
     path('blogpost',views.BlogPostView.as_view(),name='blogpost'),
     path('blogpostcheck',views.BlogPostCheckView.as_view(),name='blogpostcheck'),
     path('mybloglist',views.MyBlogListView.as_view(),name='mybloglist'),
-    path('myblogdetail',views.MyBlogDetailView.as_view(),name='myblogdetail'),
-    path('myblogupdate',views.MyBlogUpDateView.as_view(),name='myblogupdate'),
-    path('myblogdeletecheck',views.MyBlogDeleteCheckView.as_view(),name='myblogdeletecheck'),
+    path('myblogdetail/<int:pk>',views.MyBlogDetailView.as_view(),name='myblogdetail'),
+    path('myblogupdate/<int:pk>',views.MyBlogUpDateView.as_view(),name='myblogupdate'),
+    path('myblogdeletecheck/<int:pk>',views.MyBlogDeleteCheckView.as_view(),name='myblogdeletecheck'),
     path('myblogdeletedone',views.MyBlogDeleteDoneView.as_view(),name='myblogdeletedone'),
     #お問い合わせ機能
     path('contact',views.ContactView.as_view(),name='contact'),

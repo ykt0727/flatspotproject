@@ -1,16 +1,24 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
+
+    <!--ブラウザの表示領域を設定-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}{% endblock %}</title>
+    <!--bootstrap5.3のリンク-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <!--共通部分のcss-->
     <link href="{% static 'css/student.css' %}"  rel="stylesheet" />
+    <!--継承先で追加でcssファイルを使用するときに使う-->
     {% block css %}{% endblock %}
 </head>
+
 <body>
     <!--タイトル-->
     <nav class="navbar navbar-expand-lg" style="background-color: #ffefd5;">
@@ -24,7 +32,7 @@
           </a>
         </div>
     </nav>
-
+      
     <!--ハンバーガーメニュー-->
     <div class="nav">
       <!-- ハンバーガーメニューの表示・非表示を切り替えるチェックボックス -->
@@ -53,7 +61,7 @@
         <div class="dropdown">
           <div class="account-button">
             <button class="login-signup-button dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                {{ student.nickname }}
+                {{ user.student.nickname }}
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -71,6 +79,13 @@
             </button>
         </a>
       </div>
+    {% endif %}
+    
+    <!--各画面でデータベース更新があった場合、meesagesを表示する-->
+    {% if messages %}
+    {% for message in messages %}
+      <p class="messages">{{ message }}</p>
+    {% endfor %}
     {% endif %}
 
 
@@ -97,21 +112,6 @@
                   <li><a href="{% url 'studentapp:about' %}">このサイトについて</a></li>
               </ul>
           </nav>
-          <div class="footer-icon">
-              <p>関連SNS</p>
-              <ul class="footer-sns">
-                  <li>
-                      <a href="https://x.com/?lang=ja" target="_blank">
-                      <img src="{% static 'img/logo-white.png' %}" alt="X" width="40" height="40">
-                      </a>
-                  </li>
-                  <li>
-                      <a href="https://www.instagram.com/?locale=ja_JP" target="_blank">
-                      <img src="{% static 'img/Instagram_Glyph_White.png' %}" alt="Instagram" width="40" height="40">
-                      </a>
-                  </li>
-              </ul>
-          </div>
       </div>
     </footer>
 </body>

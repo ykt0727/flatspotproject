@@ -32,28 +32,9 @@ class BaseView(View):
             context['freeschool']=freeschool
         return context
 
-class TopView(BaseView):
+class TopView(TemplateView):
     #freeschool_top.htmlをレンダリング（描写）する
-    def get(self, request, *args, **kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'freeschool_top.html',context)
-    def post(self, request, *args, **kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'freeschool_top.html',context)
-
-
-class AccountView(TemplateView):
-    
-    #freeschool_account.htmlをレンダリング（描写）する
-    template_name='freeschool_account.html'
-
-
-class AccountUpdateView(TemplateView):
-    
-    #freeschool_accountupdate.htmlをレンダリング（描写）する
-    template_name='freeschool_accountupdate.html'
+    template_name='freeschool_top.html'
 
 #ユーザー検索画面
 class UserSearchView(ListView):
@@ -91,7 +72,6 @@ class UserDetailView(UpdateView):
     success_url=reverse_lazy('freeschoolapp:usersearch')
 
 class ClubPostView(BaseView,CreateView):
-
     #サークル掲載情報登録画面を表示
     template_name='freeschool_clubpost.html'
     #フォームとモデルを指定する
@@ -305,7 +285,7 @@ class MyEventDeleteDoneView(TemplateView):
     template_name='freeschool_myeventdeletedone.html'
 
 
-class BlogPostView(BaseView,CreateView):
+class BlogPostView(CreateView):
     #ブログ記事投稿画面を表示
     template_name='freeschool_blogpost.html'
     #フォームとモデルを指定する(必須)
@@ -340,29 +320,63 @@ class BlogPostCheckView(TemplateView):
     template_name='freeschool_blogpostcheck.html'
 
 
-class MyBlogListView(TemplateView):
+class MyBlogListView(ListView):
     
     #freeschool_mybloglist.htmlをレンダリング（描写）する
     template_name='freeschool_mybloglist.html'
     
+    #投稿されたイベントを投稿日時の降順（新しい順）に並べ替える
+    queryset=BlogPost.objects.order_by('-created_at')
     
-class MyBlogDetailView(TemplateView):
+    #1ページに表示する件数
+    paginate_by=10   
+    
+class MyBlogDetailView(DetailView):
     
     #freeschool_myblogdetail.htmlをレンダリング（描写）する
     template_name='freeschool_myblogdetail.html'
     
+    model=BlogPost
+    
 
-class MyBlogUpDateView(TemplateView):
+class MyBlogUpDateView(UpdateView):
     
     #freeschool_myblogupdate.htmlをレンダリング（描写）する
     template_name='freeschool_myblogupdate.html'
+    #モデルを指定する
+    model=BlogPost
+    
+    #フィールドを指定する
+    fields=('title',
+            'category',
+            'image1',
+            'image2',
+            'image3',
+            'image4',
+            'image5',
+            'public_flag',
+            'detail_text',
+    )
+    
+        
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:myeventupdate', kwargs={'pk': self.object.pk})
 
 
-class MyBlogDeleteCheckView(TemplateView):
+class MyBlogDeleteCheckView(DeleteView):
     
     #freeschool_myblogdeletecheck.htmlをレンダリング（描写）する
     template_name='freeschool_myblogdeletecheck.html'
     
+    #モデルを指定する
+    model=BlogPost
+    
+    def get_success_url(self):
+        #成功後の遷移先URL
+        return reverse_lazy('freeschoolapp:myeventdeletedone')
+
+
     
 class MyBlogDeleteDoneView(TemplateView):
     
@@ -401,7 +415,7 @@ class ContactView(FormView):
         message.send()
         messages.success(
             self.request,'お問い合わせは正常に送信されました。')
-        
+            
         return super().form_valid(form)
 
 #お問い合わせ完了画面
@@ -450,5 +464,11 @@ class MypageUpdateView(View):
             'user_form':user_form,
             'freeschool_form':freeschool_form,
         })
+
+#削除予定
+class AccountView(TemplateView):
+    template_name="freeschool_account.html"
+    
+
         
 

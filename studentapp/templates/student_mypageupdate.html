@@ -1,8 +1,7 @@
+{% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}アカウント情報を変更する{% endblock %}
 {% block contents %}
-
-
     <form method="post">
         {% csrf_token %}
         {{ user_form.as_p }}

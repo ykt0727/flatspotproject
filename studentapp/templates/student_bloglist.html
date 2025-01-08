@@ -1,6 +1,8 @@
 {% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}ブログ記事一覧画面{% endblock %}
+<!--リスト用のcssを割り当てる-->
+{% block css %}<link href="{% static 'css/student_list.css' %}" rel="stylesheet"/>{% endblock %}
 {% block contents %}
     <!--レコードを格納されたobject_listからレコードを1行ずつrecordに取り出す-->
     {% for record in object_list %}

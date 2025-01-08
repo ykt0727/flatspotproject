@@ -17,29 +17,8 @@ from .forms import ClubRequestForm,EventRequestForm,ContactForm,CustomUserForm,S
 from freeschoolapp.models import BlogPost,Club,Event
 
 
-class TopView(View):
+class TopView(TemplateView):
     template_name = 'student_top.html'
-
-    def get_context_data(self, request):
-        """共通処理: コンテキストを生成"""
-        context = {}
-        if request.user.is_authenticated and request.user.user_type == 'student':
-            # 認証された学生に紐づく Student データを取得
-            student=get_object_or_404(Student, user=request.user)
-            context['student']=student
-        else:
-            context['error']="学生として認証されていません"
-        return context
-
-    def get(self, request, *args, **kwargs):
-        """GETリクエストの処理"""
-        context = self.get_context_data(request)
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
-        """POSTリクエストの処理"""
-        context = self.get_context_data(request)
-        return render(request, self.template_name, context)
         
 class ClubListView(ListView):
     #student_clublist.htmlをレンダリング（描写）する
@@ -50,19 +29,6 @@ class ClubListView(ListView):
     queryset=Club.objects.order_by('created_at')
     #1ページに表示するレコードの件数を設定
     paginate_by=5
-    
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
     
     
 class ClubDetailView(DetailView):
@@ -76,10 +42,6 @@ class ClubDetailView(DetailView):
         
         # 認証されたユーザーが学生かどうかを確認
         if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
             
             #現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
             context['user_has_liked']=LikeForClub.objects.filter(
@@ -168,35 +130,11 @@ class ClubRequestView(FormView):
         email.send()
         
         return super().form_valid(form)
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
     
 class ClubRequestDoneView(TemplateView):
     #student_clubrequestdone.htmlをレンダリング（描写）する 
     template_name="student_clubrequestdone.html"
 
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
     
 class EventListView(ListView):
     #student_eventlist.htmlをレンダリング（描写）する
@@ -207,17 +145,6 @@ class EventListView(ListView):
     queryset=Event.objects.order_by('created_at')
     #1ページに表示するレコードの件数を設定
     paginate_by=5
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        return context
     
 class EventDetailView(DetailView):
     #student_eventdetail.htmlをレンダリング（描写）する
@@ -230,18 +157,11 @@ class EventDetailView(DetailView):
         
         # 認証されたユーザーが学生かどうかを確認
         if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-            
             #現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
             context['user_has_liked']=LikeForEvent.objects.filter(
                 target=self.object,
                 user=self.request.user
             ).exists()
-        
-        
         return context
     
 #イベントのいいね機能のView
@@ -323,36 +243,10 @@ class EventRequestView(FormView):
         email.send()
         
         return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
     
 class EventRequestDoneView(TemplateView):
     #student_eventrequestdone.htmlをレンダリング（描写）する 
     template_name="student_eventrequestdone.html"
-
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
     
 #ブログ記事一覧
 class BlogListView(ListView):
@@ -365,19 +259,7 @@ class BlogListView(ListView):
     
     #1ページに表示するレコードの件数を設定
     paginate_by=5
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
         
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
-    
 class BlogDetailView(DetailView):
     #student_blogdetail.htmlをレンダリング（描写）する
     template_name='student_blogdetail.html'
@@ -389,12 +271,7 @@ class BlogDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         
         # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-            
+        if self.request.user.is_authenticated and self.request.user.user_type=='student':    
             # 現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
             context['user_has_liked']=LikeForBlogPost.objects.filter(
                 target=self.object,
@@ -466,44 +343,9 @@ class ContactView(FormView):
 class ContactDoneView(TemplateView):
     #student_contactdone.htmlをレンダリング（描写）する
     template_name="student_contactdone.html"
-    
-    def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context=super().get_context_data(**kwargs)
-
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
      
 class AboutView(TemplateView):
-    #student_about.htmlをレンダリング（描写）する
-    def get(self, request, *args,**kwargs):
-        #getリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_about.html',context)
-    def post(self, request, *args,**kwargs):
-        #postリクエスト用の処理
-        context=self.get_context_data(**kwargs)
-        return render(request,'student_about.html',context)
-    
-    def get_context_data(self, **kwargs):
-        
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
-        context = super().get_context_data(**kwargs)
-        
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証された学生に紐づくStudentデータを取得
-            student=get_object_or_404(Student, user=self.request.user)
-            # コンテキストに追加
-            context['student']=student
-        
-        return context
+    template_name="student_about.html"
 
 #アカウント情報表示画面
 class MypageView(TemplateView):
@@ -515,10 +357,6 @@ class MypageView(TemplateView):
         context=super().get_context_data(**kwargs)
         
         if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #認証ユーザーに紐づいているStudentの行を取得
-            student=Student.objects.get(user=self.request.user)
-            context['student']=student
-
             #ログインしているユーザーがいいねした記事を取得し、contextに格納する
             likeforblogposts=LikeForBlogPost.objects.filter(user=self.request.user).order_by('timestamp')
             context['likeforblogposts']=likeforblogposts
