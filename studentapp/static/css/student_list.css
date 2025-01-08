@@ -44,9 +44,40 @@
     margin-top:  60px;
 }
 
-@media screen and (max-width : 767px){
+/*スマホ用のcss*/
+@media screen and (max-width: 767px) {
+    .list-container {
+        margin: 20px 10px; /* スマホ画面では余白を少なく */
+        padding: 20px; 
+        flex-direction: column; /* 縦並びに変更 */
+        align-items: center; /* 水平方向中央揃え (オプション) */
+    }
+
+    /* 画像のサイズを調整 */
     img {
         width: 100%;
         height: auto;
-    }    
+        object-fit: cover; /* アスペクト比を維持 */
+        border-radius: 10px; /* 画像の角を丸める */
+    }
+
+    /* サークル名と情報を縦に並べる */
+    .list-content {
+        text-align: left; /*テキストを左揃え*/
+    }
+
+    /* サークル名のフォントサイズを小さく */
+    .list-title {
+        font-size: 24px;
+    }
+
+    /* 掲載日・団体名のマージンを調整*/
+    .list-infomation {
+        margin-top: 20px;
+    }
+
+    /*ジャンルを調整*/
+    .list-genre {
+        font-size: medium;
+    }
 }
