@@ -1,0 +1,18 @@
+#menu {
+    float: left; /* 左側に配置する */
+    width: 15%;
+    height: 300vh;
+    padding-left: 1%;
+    border-right:1px solid #000000;
+}
+
+#contents {
+    float: right; /* 右側に配置する */
+    width: 85%;
+    height: 100vh;
+    padding-left: 1%;
+}
+
+.menu_item {
+padding-bottom: 5px;
+}
