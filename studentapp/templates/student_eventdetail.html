@@ -1,3 +1,4 @@
+{% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}{{ object.event_name }}{% endblock %}
 {% block contents %}
@@ -20,15 +21,14 @@
 <p>{{ object.category }}<p>    
 <p>{{ object.created_at }}<p>
 <p>{{ object.detail_text }}</p>
-
 <!--いいねボタン関連の処理、ログインされていなければいいねボタンは表示しない-->
 {% if user.is_authenticated %}
     <!--いいねボタンの表示-->
     <button id="likebutton">
     {% if user_has_liked %}
-    <!--イイネしていない場合-->
-        💗
     <!--イイネしている場合-->
+        💗
+    <!--イイネしていない場合-->
     {% else %}
         ♥
     {% endif %}

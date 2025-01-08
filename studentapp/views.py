@@ -128,6 +128,7 @@ class ClubRequestView(FormView):
             headers={'Content-Type':'text/html'},  
         )
         email.send()
+        messages.success(self.request, "送信が完了しました。")
         
         return super().form_valid(form)
     
@@ -241,7 +242,7 @@ class EventRequestView(FormView):
             headers={'Content-Type':'text/html'},  
         )
         email.send()
-        
+        messages.success(self.request, "送信が完了しました。")
         return super().form_valid(form)
     
 class EventRequestDoneView(TemplateView):
@@ -388,7 +389,9 @@ class MypageUpdateView(View):
         if user_form.is_valid() and student_form.is_valid():
             user_form.save()
             student_form.save()
+            messages.success(request, "アカウント情報が更新されました。")
             return redirect('studentapp:mypage')
+        
         return render(request,'student_mypageupdate.html', {
             'user_form':user_form,
             'student_form':student_form,
@@ -405,6 +408,7 @@ class AccountDeleteView(View):
         user=request.user
         logout(request)  #セッションを終了
         user.delete()
+        messages.success(request, "アカウントが正常に削除されました。")
         # ログアウト後のリダイレクト先を指定
         return redirect('studentapp:mypagedeletedone')
     
