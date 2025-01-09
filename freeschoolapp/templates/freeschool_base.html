@@ -14,10 +14,18 @@
         <!--利用者がフリースクール関係者の場合のみ表示-->
         {% if user.user_type == 'freeschool' %}
         <h1>{{ freeschool.freeschool_name }}</h1>
-        <div id="contents">{% block contents %}{% endblock %}</div>
+        <div id="contents">
+            {% for message in messages %}
+            <div {% if message.tags %}class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% block contents %}{% endblock %}
+        </div>
         {% endif %}
     {% endif %}
     <div id="menu">
+        <a href="{% url 'freeschoolapp:top' %}">メインメニュー</a>
         <!--サークルタブ-->
         <div onclick="obj=document.getElementById('openclub').style; obj.display=(obj.display=='none')?'block':'none';">
             <a class="menu_item" style="cursor:pointer;">サークル▼</a>
@@ -57,7 +65,7 @@
             <a class="menu_item" style="cursor:pointer;">アカウント▼</a>
         </div>
         <div id="openaccount" style="display:none;clear:both;">
-            <a class="menu_item" href="{% url 'freeschoolapp:account' %}">・アカウント情報</a>
+            <a class="menu_item" href="{% url 'freeschoolapp:mypage' %}">・アカウント情報</a>
             <br>
             <a class="menu_item" href="{% url 'accounts:logout' %}">・ログアウト</a>
         </div>

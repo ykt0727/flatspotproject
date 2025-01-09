@@ -1,13 +1,37 @@
-{% load static %}
+{% extends 'freeschool_base.html' %}
 {% block title %}{{ freeschool.freeschool_name }}さんの情報{% endblock %}
 {% block contents %}
-    <p>ログインID{{ user.login_id }}</p>
-    <p>メールアドレス{{ user.email }}</p>
-    <p>電話番号{{ user.phone_number }}</p>
-    <p>フリースクール名{{ freeschool.freeschool_name}}</p>
-    <p>責任者名{{ freeschool.manager_name }}</p>
-    <p>住所{{ freeschool.address }}</p>
-
-
+<div class="detail">
+    <table>
+        <tbody>
+            <tr>
+                <th>ログインID</th>
+                <td>{{ user.login_id }}</td>
+            </tr>
+            <tr>
+                <th>メールアドレス</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>電話番号</th>
+                <td>{{ user.phone_number }}</td>
+            </tr>
+            <tr>
+                <th>フリースクール名</th>
+                <td>{{ freeschool.freeschool_name}}</td>
+            </tr>
+            <tr>
+                <th>責任者名</th>
+                <td>{{ freeschool.manager_name }}</td>
+            </tr>
+            <tr>
+                <th>住所</th>
+                <td>{{ freeschool.address }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
     <p><a href="{% url 'freeschoolapp:mypageupdate' %}">アカウント情報を編集する</a></p>
+</div>
 {% endblock %}

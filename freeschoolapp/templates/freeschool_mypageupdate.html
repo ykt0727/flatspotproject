@@ -1,12 +1,23 @@
-{% load static %}
+{% extends 'freeschool_base.html' %}
+{% load widget_tweaks %}
 {% block title %}アカウント情報を変更する{% endblock %}
 {% block contents %}
-
-
-    <form method="post">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ freeschool_form.as_p}}
-    <button type="submit">変更する</button>
-    </form>
+<a href="{% url 'freeschoolapp:top' %}"><button>メインメニューへ戻る</button></a>
+<form method="post" class="form">
+    {% csrf_token %}
+    {% for field in user_form %}
+        {{ field.label_tag }}<br>
+        {{ field|add_class:'field' }}
+        <br><br>
+        {{ field.errors }}
+    {% endfor %}
+    {% for field in freeschool_form %}
+        {{ field.label_tag }}<br>
+        {{ field|add_class:'field' }}
+        <br><br>
+        {{ field.errors }}
+    {% endfor %}
+        <button type="submit">変更する</button>
+    </div>
+</form>
 {% endblock %}

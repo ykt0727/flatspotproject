@@ -1,12 +1,20 @@
 {% extends 'freeschool_base.html' %}
+{% load widget_tweaks %}
 {% block title %}ブログ記事投稿画面{% endblock %}
 {% block contents %}
+<a href="{% url 'freeschoolapp:top' %}"><button>メインメニューへ戻る</button></a>
 ブログ記事投稿画面
 <!--画像を送信する際はenctypeが必要-->
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="form">
     {% csrf_token %}
-    {{ post_form.as_p }}
-    <button type="submit">投稿する</button>
+    {% for field in post_form %}
+        {{ field.label_tag }}<br>
+        {{ field|add_class:'field' }}
+        <br><br>
+        {{ field.errors }}
+    {% endfor %}
+        <button type="submit">掲載する</button>
+    </div>
 </form>
-<a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
 {% endblock %}
+

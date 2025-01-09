@@ -69,6 +69,10 @@ class UserDetailView(UpdateView):
     #フィールドを指定する
     fields=('is_view',)
     
+    def form_valid(self, form):
+        messages.success(self.request, "閲覧権限を変更しました")
+        return super().form_valid(form)
+    
     success_url=reverse_lazy('freeschoolapp:usersearch')
 
 class ClubPostView(BaseView,CreateView):
@@ -92,6 +96,7 @@ class ClubPostView(BaseView,CreateView):
         postdata.user=self.request.user
         #保存
         postdata.save()
+        messages.success(self.request, "サークル情報を投稿しました")
         
         return super().form_valid(form)
     
@@ -154,6 +159,10 @@ class MyClubUpDateView(UpdateView):
             'detail_text',
     )
     
+    def form_valid(self, form):
+        messages.success(self.request, "サークル情報を更新しました")
+        return super().form_valid(form)
+    
     def get_success_url(self):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myclubupdate', kwargs={'pk': self.object.pk})
@@ -165,6 +174,10 @@ class MyClubDeleteCheckView(DeleteView):
     
     #モデルを指定する
     model=Club
+    
+    def form_valid(self, form):
+        messages.success(self.request, "サークル情報を削除しました")
+        return super().form_valid(form)
     
     def get_success_url(self):
         #成功後の遷移先URL
@@ -198,6 +211,7 @@ class EventPostView(BaseView,CreateView):
         postdata.user=self.request.user
         #保存
         postdata.save()
+        messages.success(self.request, "イベント情報を投稿しました")
         
         return super().form_valid(form)
     
@@ -261,6 +275,10 @@ class MyEventUpDateView(UpdateView):
             'detail_text',
     )
     
+    def form_valid(self, form):
+        messages.success(self.request, "イベント情報を更新しました")
+        return super().form_valid(form)
+    
     def get_success_url(self):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myeventupdate', kwargs={'pk': self.object.pk})
@@ -273,6 +291,10 @@ class MyEventDeleteCheckView(DeleteView):
     
     #モデルを指定する
     model=Event
+    
+    def form_valid(self, form):
+        messages.success(self.request, "イベント情報を削除しました")
+        return super().form_valid(form)
     
     def get_success_url(self):
         #成功後の遷移先URL
@@ -306,7 +328,8 @@ class BlogPostView(CreateView):
         postdata.user=self.request.user
         #保存
         postdata.save()
-       
+        messages.success(self.request, "ブログ情報を投稿しました")
+
         return super().form_valid(form)
  
     def get_success_url(self):
@@ -358,10 +381,13 @@ class MyBlogUpDateView(UpdateView):
             'detail_text',
     )
     
+    def form_valid(self, form):
+        messages.success(self.request, "ブログ情報を更新しました")
+        return super().form_valid(form)
         
     def get_success_url(self):
         #成功後の遷移先URL
-        return reverse_lazy('freeschoolapp:myeventupdate', kwargs={'pk': self.object.pk})
+        return reverse_lazy('freeschoolapp:myblogupdate', kwargs={'pk': self.object.pk})
 
 
 class MyBlogDeleteCheckView(DeleteView):
@@ -371,6 +397,10 @@ class MyBlogDeleteCheckView(DeleteView):
     
     #モデルを指定する
     model=BlogPost
+    
+    def form_valid(self, form):
+        messages.success(self.request, "ブログを削除しました")
+        return super().form_valid(form)
     
     def get_success_url(self):
         #成功後の遷移先URL
@@ -440,6 +470,7 @@ class MypageView(TemplateView):
 
 #アカウント情報変更画面、UpdateViewでは原則一つのモデルしか扱えないため、Viewを使用する。
 class MypageUpdateView(View):
+    
     def get(self, request, *args, **kwargs):
         #フォームのインスタンスを作成
         user_form=CustomUserForm(instance=request.user)
@@ -455,6 +486,8 @@ class MypageUpdateView(View):
         #CustomuserとStudentを変更するフォームを定義する
         user_form=CustomUserForm(request.POST,instance=request.user)
         freeschool_form=FreeSchoolForm(request.POST,instance=request.user.freeschool)
+        messages.success(self.request, "アカウント情報を更新しました")
+        
         #バリデーションが通った場合のみデータベースに保存する
         if user_form.is_valid() and freeschool_form.is_valid():
             user_form.save()
@@ -464,6 +497,10 @@ class MypageUpdateView(View):
             'user_form':user_form,
             'freeschool_form':freeschool_form,
         })
+        
+    def form_valid(self, form):
+        messages.success(self.request, "アカウント情報を更新しました")
+        return super().form_valid(form)
 
 #削除予定
 class AccountView(TemplateView):

@@ -1,18 +1,21 @@
 {% extends 'freeschool_base.html' %}
+{% load widget_tweaks %}
 {% block title %}管理サークル情報変更画面{% endblock %}
 {% block contents %}
 管理サークル情報変更画面
 <a href="{% url 'freeschoolapp:myclubdetail' object.id %}"><button>管理サークル詳細画面に戻る</button></a>
-<form method="POST">
+<form method="POST" class="form">
     {% csrf_token %}
     {% for field in form.visible_fields %}
-        <label>{{ field.label }}</label>
-        {{ field }}
+        {{ field.label }}
+        <br>
+        {{ field|add_class:'field' }}
+        <br><br>
         {{ field.errors }}
         {{ field.help_text }}
     {% endfor %}
     {% for field in form.hidden_fields %}
-      {{ field }}
+        {{ field }}
     {% endfor %}
     <button type="submit">変更する</button>
 </form>

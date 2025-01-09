@@ -1,7 +1,22 @@
 {% extends 'freeschool_base.html' %}
+{% load widget_tweaks %}
 {% block title %}投稿ブログ記事内容変更画面{% endblock %}
 {% block contents %}
 投稿ブログ記事内容変更画面
 <a href="{% url 'freeschoolapp:mybloglist' %}"><button>投稿ブログ一覧に戻る</button></a>
-<a href="{% url 'freeschoolapp:myblogupdate' %}"><button>変更</button></a>
+<form method="POST" class="form">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+        {{ field.label }}
+        <br>
+        {{ field|add_class:'field' }}
+        <br><br>
+        {{ field.errors }}
+        {{ field.help_text }}
+    {% endfor %}
+    {% for field in form.hidden_fields %}
+        {{ field }}
+    {% endfor %}
+    <button type="submit">変更する</button>
+</form>
 {% endblock %}

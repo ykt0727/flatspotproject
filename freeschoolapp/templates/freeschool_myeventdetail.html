@@ -5,50 +5,99 @@
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
 <a href="{% url 'freeschoolapp:myeventupdate' object.id %}"><button>変更</button></a>
 <a href="{% url 'freeschoolapp:myeventdeletecheck' object.id %}"><button>削除</button></a>
-<br>
-イベントID
-{{ object.id }}
-イベント名
-{{ object.event_name }}
-掲載日時
-{{ object.created_at }}
-ジャンル
-{{ object.category }}
-代表者名
-{{ object.REP }}
-メールアドレス
-{{ object.email }}
-電話番号
-{{ object.phone_number }}
-日時
-{{ object.date }}
-参加費
-{{ object.fee }}
-活動場所
-{{ object.place }}
-SNSリンク
-{{ object.sns_link }}
-イベントの紹介画像①
-<p><img src="{{ object.image1.url }}"></p>
-イベントの紹介画像②
-{% if object.image2 %}
-<p><img src="{{ object.image2.url }}"></p>
-{% endif %}
-イベントの紹介画像③
-{% if object.image3 %}
-<p><img src="{{ object.image3.url }}"></p>
-{% endif %}
-イベントの紹介画像④
-{% if object.image4 %}
-<p><img src="{{ object.image4.url }}"></p>
-{% endif %}
-イベントの紹介画像⑤
-{% if object.image5 %}
-<p><img src="{{ object.image5.url }}"></p>
-{% endif %}
-イベントの紹介文
-{{ object.detail_text }}
-公開状況
-{{ object.public_flag }}
-
+<br><br>
+<div class="detail">
+    <table>
+        <tbody>
+            <tr>
+                <th>イベントID</th>
+                <td>{{ object.id }}</td>
+            </tr>
+            <tr>
+                <th>イベント名</th>
+                <td>{{ object.event_name }}</td>
+            </tr>
+            <tr>
+                <th>掲載日時</th>
+                <td>{{ object.created_at }}</td>
+            </tr>
+            <tr>
+                <th>ジャンル</th>
+                <td>{{ object.category }}</td>
+            </tr>
+            <tr>
+                <th>代表者名</th>
+                <td>{{ object.REP }}</td>
+            </tr>
+            <tr>
+                <th>メールアドレス</th>
+                <td>{{ object.email }}</td>
+            </tr>
+            <tr>
+                <th>電話番号</th>
+                <td>{{ object.phone_number }}</td>
+            </tr>
+            <tr>
+                <th>日時</th>
+                <td>{{ object.date }}</td>
+            </tr>
+            <tr>
+                <th>参加費</th>
+                <td>{{ object.fee }}</td>
+            </tr>
+            <tr>
+                <th>活動場所</th>
+                <td>{{ object.place }}</td>
+            </tr>
+            <tr>
+                <th>SNSリンク</th>
+                <td>{{ object.sns_link }}</td>
+            </tr>
+            <tr>
+                <th>サークルの紹介画像①</th>
+                <td><img src="{{ object.image1.url }}" width="400" height="300"></td>
+            </tr>
+            <tr>
+                <th>サークルの紹介画像②</th>
+                <td>
+                    {% if object.image2 %}
+                        <img src="{{ object.image2.url }}" width="400" height="300">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>サークルの紹介画像③</th>
+                <td>
+                    {% if object.image3 %}
+                        <img src="{{ object.image3.url }}" width="400" height="300">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>サークルの紹介画像④</th>
+                <td>
+                    {% if object.image4 %}
+                        <img src="{{ object.image4.url }}" width="400" height="300">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>サークルの紹介画像⑤</th>
+                <td>
+                    {% if object.image5 %}
+                        <img src="{{ object.image5.url }}" width="400" height="300">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>イベントの紹介文</th>
+                <td>{{ object.detail_text }}</td>
+            </tr>
+            <tr>
+                <th>公開状況</th>
+                <td>{{ object.public_flag }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 {% endblock %}

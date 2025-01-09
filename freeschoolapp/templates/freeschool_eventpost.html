@@ -1,10 +1,18 @@
 {% extends 'freeschool_base.html' %}
+{% load widget_tweaks %}
 {% block title %}イベント掲載情報入力画面{% endblock %}
 {% block contents %}
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューへ戻る</button></a>
 イベント掲載情報入力画面
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="form">
     {% csrf_token %}
-    {{ eventpost_form.as_p }}
-    <button type="submit">掲載する</button>
+    {% for field in eventpost_form %}
+        {{ field.label_tag }}<br>
+        {{ field|add_class:'field' }}
+        <br><br>
+        {{ field.errors }}
+    {% endfor %}
+        <button type="submit">掲載する</button>
+    </div>
+</form>
 {% endblock %}

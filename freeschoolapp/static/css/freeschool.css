@@ -1,7 +1,7 @@
 #menu {
     float: left; /* 左側に配置する */
     width: 15%;
-    height: 300vh;
+    height: 100%;
     padding-left: 1%;
     border-right:1px solid #000000;
 }
@@ -14,5 +14,30 @@
 }
 
 .menu_item {
-padding-bottom: 5px;
+    padding-bottom: 5px;
 }
+
+.form {
+    padding-left: 300px;
+}
+
+.field {
+    padding-right: 100px;
+}
+
+.detail {
+    padding-left: 200px;
+}
+
+/* 表の線を表示する */
+table {
+    border: 1px solid #000;
+  }
+  
+  table th {
+    border: 1px solid #000;
+  }
+  
+  table td {
+    border: 1px solid #000;
+  }
