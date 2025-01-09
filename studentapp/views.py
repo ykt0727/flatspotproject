@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.core.exceptions import PermissionDenied
 
 
 #JSONファイルを扱うためのファイル
@@ -30,6 +31,18 @@ class ClubListView(ListView):
     #1ページに表示するレコードの件数を設定
     paginate_by=5
     
+    def get_queryset(self):
+        # 認証済みの場合
+        if self.request.user.is_authenticated and self.request.user.user_type == 'student':
+            #閲覧権限がある場合
+            if self.request.user.student.is_view:
+                return Club.objects.order_by('created_at')
+            else:
+                return Club.objects.filter(public_flag=True).order_by('created_at')
+        # それ以外の場合、publicの投稿のみ表示する。
+        return Club.objects.filter(public_flag=True).order_by('created_at')
+    
+    
     
 class ClubDetailView(DetailView):
     template_name='student_clubdetail.html'
@@ -37,19 +50,31 @@ class ClubDetailView(DetailView):
     model=Club
 
     def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
+        # 親クラスのコンテキストデータを取得
         context = super().get_context_data(**kwargs)
         
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            
-            #現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
-            context['user_has_liked']=LikeForClub.objects.filter(
+        # 認証済みで学生の場合
+        if self.request.user.is_authenticated and self.request.user.user_type == 'student':
+            # 「いいね」済みかどうか判定
+            context['user_has_liked'] = LikeForClub.objects.filter(
                 target=self.object,
                 user=self.request.user
             ).exists()
-        
+
+            # 閲覧権限のチェック
+            if not self.request.user.student.is_view:
+                # 権限がない場合、publicの投稿以外は表示しない
+                if not self.object.public_flag:
+                    raise PermissionDenied("このサークルを閲覧する権限がありません。")
+        else:
+            # 未認証ユーザーはpublicの投稿だけ許可
+            if not self.object.public_flag:
+                raise PermissionDenied("このサークルを閲覧する権限がありません。")
+
         return context
+    
+    
+    
 
 #サークルのいいね機能のView
 class LikeForClubView(View):
@@ -112,6 +137,11 @@ class ClubRequestView(FormView):
         subject='サークルに体験申請が来ました！'
         body=f'<h1>新しい体験申請がありました！</h1>'
         body+=f'<p><strong>申請者のメールアドレス:</strong> {sender_email}</p>'
+        body+=f'<p>{self.request.user.student.nickname}さん</p>'
+        if self.request.user.student.is_guardian:
+            body+=f'<p>保護者の方からのメッセージです。</p>'
+        body+=f'<p>性別:{self.request.user.student.gender}</p>'
+        body+=f'<p>配慮事項:{self.request.user.student.consideration}</p>'
         body+=f'<p><strong>メッセージ:</strong></p><p>{message}</p>'
         
         # メール送信
@@ -142,27 +172,45 @@ class EventListView(ListView):
     template_name=('student_eventlist.html')
     #モデルを指定
     model=Event
-    #モデルBlogPostのオブジェクトにquerysetを適用
-    queryset=Event.objects.order_by('created_at')
-    #1ページに表示するレコードの件数を設定
-    paginate_by=5
+
+    def get_queryset(self):
+        # 認証済みの場合
+        if self.request.user.is_authenticated and self.request.user.user_type == 'student':
+            #閲覧権限がある場合
+            if self.request.user.student.is_view:
+                return Event.objects.order_by('created_at')
+            else:
+                return Event.objects.filter(public_flag=True).order_by('created_at')
+        # それ以外の場合、publicの投稿のみ表示する。
+        return Event.objects.filter(public_flag=True).order_by('created_at')
     
 class EventDetailView(DetailView):
-    #student_eventdetail.htmlをレンダリング（描写）する
-    template_name='student_eventdetail.html'
-    #モデルを設定
-    model=Event
+    # student_eventdetail.htmlをレンダリング（描写）する
+    template_name = 'student_eventdetail.html'
+    model = Event
+
     def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
+        # 親クラスのコンテキストデータを取得
         context = super().get_context_data(**kwargs)
         
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
-            context['user_has_liked']=LikeForEvent.objects.filter(
+        # 認証済みで学生の場合
+        if self.request.user.is_authenticated and self.request.user.user_type == 'student':
+            # 「いいね」済みかどうか判定
+            context['user_has_liked'] = LikeForEvent.objects.filter(
                 target=self.object,
                 user=self.request.user
             ).exists()
+
+            # 閲覧権限のチェック
+            if not self.request.user.student.is_view:
+                # 権限がない場合、publicの投稿以外は表示しない
+                if not self.object.public_flag:
+                    raise PermissionDenied("このイベントを閲覧する権限がありません。")
+        else:
+            # 未認証ユーザーはpublicの投稿だけ許可
+            if not self.object.public_flag:
+                raise PermissionDenied("このイベントを閲覧する権限がありません。")
+
         return context
     
 #イベントのいいね機能のView
@@ -226,6 +274,12 @@ class EventRequestView(FormView):
         subject='【ふらっとすぽっと】イベント参加申請が来ました！'
         body=f'<h1>新しい申請がありました！</h1>'
         body+=f'<p><strong>申請者のメールアドレス:</strong> {sender_email}</p>'
+        body+=f'<p>{self.request.user.student.nickname}さん</p>'
+        if self.request.user.student.is_guardian:
+            body+=f'<p>保護者の方からのメッセージです。</p>'
+        body+=f'<p>性別:{self.request.user.student.gender}</p>'
+        body+=f'<p>配慮事項:{self.request.user.student.consideration}</p>'
+        
         body+=f'<p><strong>メッセージ:</strong></p><p>{message}</p>'
         
         # メール送信
@@ -255,11 +309,19 @@ class BlogListView(ListView):
     template_name=('student_bloglist.html')
     #モデルを指定
     model=BlogPost
-    #モデルBlogPostのオブジェクトにquerysetを適用
-    queryset=BlogPost.objects.order_by('created_at')
-    
     #1ページに表示するレコードの件数を設定
     paginate_by=5
+    
+    def get_queryset(self):
+        # 認証済みの場合
+        if self.request.user.is_authenticated and self.request.user.user_type == 'student':
+            #閲覧権限がある場合
+            if self.request.user.student.is_view:
+                return BlogPost.objects.order_by('created_at')
+            else:
+                return BlogPost.objects.filter(public_flag=True).order_by('created_at')
+        # それ以外の場合、publicの投稿のみ表示する。
+        return BlogPost.objects.filter(public_flag=True).order_by('created_at')
         
 class BlogDetailView(DetailView):
     #student_blogdetail.htmlをレンダリング（描写）する
@@ -268,18 +330,29 @@ class BlogDetailView(DetailView):
     model=BlogPost
     
     def get_context_data(self, **kwargs):
-        # 親のメソッドを呼び出して元々のコンテキストデータを取得
+        # 親クラスのコンテキストデータを取得
         context = super().get_context_data(**kwargs)
         
-        # 認証されたユーザーが学生かどうかを確認
-        if self.request.user.is_authenticated and self.request.user.user_type=='student':    
-            # 現在のユーザーがこの投稿に「いいね」しているかを確認、.exists()でTrueかFalseを返す
-            context['user_has_liked']=LikeForBlogPost.objects.filter(
+        # 認証済みで学生の場合
+        if self.request.user.is_authenticated and self.request.user.user_type == 'student':
+            # 「いいね」済みかどうか判定
+            context['user_has_liked'] = LikeForBlogPost.objects.filter(
                 target=self.object,
                 user=self.request.user
             ).exists()
-            
+
+            # 閲覧権限のチェック
+            if not self.request.user.student.is_view:
+                # 権限がない場合、publicの投稿以外は表示しない
+                if not self.object.public_flag:
+                    raise PermissionDenied("このブログを閲覧する権限がありません。")
+        else:
+            # 未認証ユーザーはpublicの投稿だけ許可
+            if not self.object.public_flag:
+                raise PermissionDenied("このブログを閲覧する権限がありません。")
+
         return context
+    
 
 #ブログのいいね機能のView
 class LikeForBlogView(View):
@@ -396,7 +469,7 @@ class MypageUpdateView(View):
             'user_form':user_form,
             'student_form':student_form,
         })
-        
+    
 #アカウント情報削除確認画面
 class MypageDeleteCheckView(TemplateView):
     template_name="student_mypagedeletecheck.html"

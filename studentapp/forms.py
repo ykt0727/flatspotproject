@@ -3,6 +3,8 @@ from django.core.mail.message import EmailMessage
 
 from .models import Student,CustomUser
 
+import datetime
+
 #サークル主催者に体験申請のメールを送るフォーム
 class ClubRequestForm(forms.Form):
     
@@ -82,11 +84,42 @@ class CustomUserForm(forms.ModelForm):
         model = CustomUser
         #表示するフィールド
         fields = ['login_id','phone_number']
+        labels={
+           'login_id':'ログインID',
+           'phone_number':'電話番号',
+        }
+    
 
 #Studentを変更するフォーム
 class StudentForm(forms.ModelForm):
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(
+            attrs={'type': 'date'}  # HTML5のカレンダー入力を有効化
+        ),
+        label="誕生日"
+    )
     class Meta:
-            model=Student
-            #表示するフィールド
-            fields=['nickname','is_guardian','gender', 'ent_year', 'date_of_birth','consideration']
+        model=Student
+        #表示するフィールド
+        fields=['nickname','is_guardian','gender', 'ent_year', 'date_of_birth','consideration']
+        labels={
+           'nickname':'ニックネーム',
+           'is_guardian':'保護者',
+           'gender':'性別',
+           'ent_year':'入学年度',
+           'date_of_birth':'誕生日',
+           'considerration':'配慮事項',
+        }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # 現在の年月日を取得
+        dt = datetime.datetime.now()
+        now_month = dt.month
+        now_year = dt.year if now_month >= 4 else dt.year - 1
+        
+        # 入学年度の選択肢生成（過去2年から今年まで）
+        ent_year_choices = [(year, f"{year}年") for year in range(now_year - 2, now_year + 1)]
+        self.fields['ent_year'].widget = forms.Select(choices=ent_year_choices)
+        
