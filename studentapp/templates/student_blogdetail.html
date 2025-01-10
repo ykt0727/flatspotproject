@@ -1,80 +1,124 @@
 {% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}{{ record.title }}{% endblock %}
+{% block css %}<link href="{% static 'css/student_detail.css' %}" rel="stylesheet"/>{% endblock %}
 {% block contents %}
-    <h1>{{ object.id }}</h1>
-    <a>{{ object.title }}</a>
-    <img src="{{ object.image1.url }}">
-    <!--画像2~5はあれば表示-->
-    {% if object.image2 %}
-        <p><img src="{{ object.image2.url }}"></p>
-    {% endif %}
-    {% if object.image3 %}
-        <p><img src="{{ object.image3.url }}"></p>
-    {% endif %}
-    {% if object.image4 %}
-        <p><img src="{{ object.image4.url }}"></p>
-    {% endif %}
-    {% if object.image5 %}
-        <p><img src="{{ object.image5.url }}"></p>
-    {% endif %}
 
-<p>{{ object.category }}<p>    
-<p>{{ object.created_at }}<p>
-<p>{{ object.detail_text }}</p>
+<!--一覧画面へ戻るリンク-->
+<a href="{% url 'studentapp:bloglist' %}" id="Link-Back">
+    ブログ記事一覧へ
+</a>
 
-<!--いいねボタン関連の処理、ログインされていなければいいねボタンは表示しない-->
-{% if user.is_authenticated %}
-    <!--いいねボタンの表示-->
-    <button id="likebutton">
-    {% if user_has_liked %}
-    <!--イイネしている場合-->
-        💗
-    <!--イイネしていない場合-->
-    {% else %}
-        ♥
-    {% endif %}
-    </button>
+    <!--ブログ名を表示-->
+    <div>
+        <p class="detail-name">{{ object.title }}</p>
+    </div>
 
-    <script>
-        //いいねボタンを指定
-        buttonElm=document.getElementById("likebutton");
-        
-        buttonElm.addEventListener('click', async function(event) {
-            event.preventDefault();
-            //リクエスト送信中ボタンを無効化する
-            buttonElm.disabled=true;
-        
-            try {
-                const response=await fetch("{% url 'studentapp:blogpostlike' pk=object.id %}",{
-                    method:'GET',
-                    headers:{
-                        'X-CSRFToken':'{{ csrf_token }}'
+    <div class="carouselRange">
+        <!--カルーセル-->
+        <div id="carouselClubDetail" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!--ページを開いて1枚目に表示する画像-->
+                <div class="carousel-item active">
+                    <img src="{{ object.image1.url }}" class="carouselImg" alt="写真1">
+                </div>
+                <!--もし2枚目がある場合、画像を表示する-->
+                {% if object.image2 %}
+                <div class="carousel-item">
+                    <img src="{{ object.image2.url }}" class="carouselImg" alt="写真2">
+                </div>
+                {% endif %}
+                <!--もし3枚目がある場合、画像を表示する-->
+                {% if object.image3 %}
+                <div class="carousel-item">
+                    <img src="{{ object.image3.url }}" class="carouselImg" alt="写真3">
+                </div>
+                {% endif %}
+                <!--もし4枚目がある場合、画像を表示する-->
+                {% if object.image4 %}
+                <div class="carousel-item">
+                    <img src="{{ object.image4.url }}" class="carouselImg" alt="写真4">
+                </div>
+                {% endif %}
+                <!--もし5枚目がある場合、画像を表示する-->
+                {% if object.image5 %}
+                <div class="carousel-item">
+                    <img src="{{ object.image5.url }}" class="carouselImg" alt="写真5">
+                </div>
+                {% endif %}
+            </div>
+
+            <!--左側(前の画像へ戻る)カルーセルボタン-->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselClubDetail" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+            </button>
+            <!--右側(次の画像へ進む)カルーセルボタン-->
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselClubDetail" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+<!--紹介文・本文を表示する-->
+<p class="detailText">{{ object.detail_text }}</p>
+
+<div class="detail-JC">
+    <!--ジャンルを表示する-->
+    <p class="detailCategory">{{ object.category }}</p>
+</div>
+
+<div class="detail-GR">
+    <!--いいねボタン関連の処理、ログインされていなければいいねボタンは表示しない-->
+    {% if user.is_authenticated %}
+        <!--いいねボタンの表示-->
+        <button id="likebutton">
+        {% if user_has_liked %}
+        <!--イイネしている場合-->
+            💗
+        <!--イイネしていない場合-->
+        {% else %}
+            ♥
+        {% endif %}
+        </button>
+
+        <script>
+            //いいねボタンを指定
+            buttonElm=document.getElementById("likebutton");
+            
+            buttonElm.addEventListener('click', async function(event) {
+                event.preventDefault();
+                //リクエスト送信中ボタンを無効化する
+                buttonElm.disabled=true;
+            
+                try {
+                    const response=await fetch("{% url 'studentapp:blogpostlike' pk=object.id %}",{
+                        method:'GET',
+                        headers:{
+                            'X-CSRFToken':'{{ csrf_token }}'
+                        }
+                    });
+            
+                    if(!response.ok){
+                        throw new Error('通信に失敗しました');
                     }
-                });
-        
-                if(!response.ok){
-                    throw new Error('通信に失敗しました');
+            
+                    const data=await response.json();
+            
+                    if(data.liked) {
+                        buttonElm.textContent = "💗";
+                    }else{
+                        buttonElm.textContent = "♥";
+                    }
+                }catch(error) {
+                    console.error('いいねが正常にできませんでした:', error);
+                    // エラー処理（例：ユーザーにエラーメッセージを表示）
+                }finally{
+                    buttonElm.disabled=false;
                 }
-        
-                const data=await response.json();
-        
-                if(data.liked) {
-                    buttonElm.textContent = "💗";
-                }else{
-                    buttonElm.textContent = "♥";
-                }
-            }catch(error) {
-                console.error('いいねが正常にできませんでした:', error);
-                // エラー処理（例：ユーザーにエラーメッセージを表示）
-            }finally{
-                buttonElm.disabled=false;
-            }
-        });
-    </script>
-
-
-
-{% endif %}
-
+            });
+        </script>
+    {% endif %}
+</div>
 {% endblock %}
