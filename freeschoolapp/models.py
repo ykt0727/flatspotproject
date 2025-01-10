@@ -30,9 +30,10 @@ class Club(models.Model):
     
     #ジャンル
     category_choices=[
-        ('kari1','仮1'),
-        ('kari2','仮2'),
-        ('kari3','仮3'),
+        ('culture','文化'),
+        ('sports','運動'),
+        ('study','勉強'),
+        ('others','その他'),
     ]
     
     category=models.CharField(max_length=20,choices=category_choices)
@@ -91,9 +92,10 @@ class Event(models.Model):
     
     #ジャンル
     category_choices=[
-        ('kari1','仮1'),
-        ('kari2','仮2'),
-        ('kari3','仮3'),
+        ('culture','文化'),
+        ('sports','運動'),
+        ('study','勉強'),
+        ('others','その他'),
     ]
     
     category=models.CharField(max_length=20,choices=category_choices)
