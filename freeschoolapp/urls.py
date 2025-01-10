@@ -9,9 +9,6 @@ app_name='freeschoolapp'
 urlpatterns=[
     path('top',views.TopView.as_view(),name='top'),
     
-    #アカウント情報リンク(削除予定)
-    path('account',views.AccountView.as_view(),name='account'),
-    
     #マイページ機能
     path('mypage',views.MypageView.as_view(),name='mypage'),#アカウント情報表示
     path('mypageupdate',views.MypageUpdateView.as_view(),name='mypageupdate'),#アカウント情報変更
