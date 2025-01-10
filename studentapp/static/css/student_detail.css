@@ -1,0 +1,85 @@
+/*一覧へ戻るリンク*/
+#Link-Back{
+    color: #ff69b4;
+    padding-left: 20px;
+}
+
+/*サークル名・イベント名・ブログタイトル名*/
+.detail-name{
+    /*中央寄せ*/
+    text-align: center;
+    padding-top: 20px;
+    /*テキストサイズ*/
+    font-size: 40px;
+    /*テキストを太字にする*/
+    font-weight: bold;
+}
+
+/*カルーセル*/
+.carouselRange {
+    text-align: center;
+}
+
+/*カルーセルで表示する写真*/
+.carouselImg{
+    /*横*/
+    width: 550px;
+    /*縦*/
+    height: 350px;
+    /*余白*/
+    padding: 30px;
+}
+
+/*サークル・イベントの紹介文・ブログ本文*/
+.detailText{
+    /*自動改行*/
+    overflow-wrap: break-word;
+    /*横の余白・縦の余白*/
+    margin: 20px 60px;
+}
+
+/*ジャンル・作成日付の範囲をまとめて指定*/
+.detail-JC{
+    /*右側に余白*/
+    padding-right: 60px;
+}
+
+/*ジャンル*/
+.detailCategory{
+    /*右寄せ*/
+    text-align: right;
+}
+
+/*作成日時*/
+.detailCreated{
+    text-align: right;
+}
+
+/*SNSリンクを含めて指定*/
+.detail-SNS{
+    font-size: 17px;
+    text-align: center;
+    padding: 10px;
+}
+
+/*リンクのみに指定*/
+#Link-SNS{
+    color: #ff69b4;
+}
+
+/*いいねボタン・参加申し込みリンクの範囲をまとめて指定*/
+.detail-GR{
+    text-align: center;
+}
+
+/*参加申し込みリンク*/
+#request-link{
+    color: #ff69b4;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+/*参加申し込みリンクにカーソルを合わせた時の指定*/
+#request-link:hover{
+    color: #ff1493;
+}
