@@ -11,30 +11,16 @@ from studentapp.models import Student
 from django.core.mail import EmailMessage
 from django.contrib import messages
 
-#ベースのビュー、ログイン中のユーザーの、FreeSchoolモデルに格納されている情報を取得する
-class BaseView(View):
+class TopView(TemplateView):
+    #freeschool_top.htmlをレンダリング（描写）する
+    template_name='freeschool_top.html'
     
-    #すべてのメソッドにログイン必須を適用
-    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         # ログイン済みで user_type が 'freeschool' であるか確認
         if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
             # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
-            return redirect('login')#ログインページや別のページにリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
         return super().dispatch(self.request,*args,**kwargs)
-    #テンプレートに使用するコンテキスト情報を設定する
-    def get_context_data(self, **kwargs):
-        #contextを初期化
-        context={}    
-        if self.request.user.is_authenticated and self.request.user.user_type=='freeschool':
-            #認証ユーザーに紐づいているFreeSchoolの行を取得
-            freeschool=FreeSchool.objects.get(user=self.request.user)
-            context['freeschool']=freeschool
-        return context
-
-class TopView(TemplateView):
-    #freeschool_top.htmlをレンダリング（描写）する
-    template_name='freeschool_top.html'
 
 #ユーザー検索画面
 class UserSearchView(ListView):
@@ -57,6 +43,12 @@ class UserSearchView(ListView):
 
         return queryset.order_by('-id')
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class UserDetailView(UpdateView):
     
@@ -74,6 +66,13 @@ class UserDetailView(UpdateView):
         return super().form_valid(form)
     
     success_url=reverse_lazy('freeschoolapp:usersearch')
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class ClubPostView(CreateView):
     #サークル掲載情報登録画面を表示
@@ -104,12 +103,24 @@ class ClubPostView(CreateView):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:clubpostdone')
     
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class ClubPostDoneView(TemplateView):
     
     #freeschool_clubpostdone.htmlをレンダリングする（描写）する
     template_name='freeschool_clubpostdone.html'
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
    
 class MyClubListView(ListView):
     
@@ -122,6 +133,12 @@ class MyClubListView(ListView):
     #1ページに表示する件数
     paginate_by=10
     
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyClubDetailView(DetailView):
     
@@ -130,6 +147,13 @@ class MyClubDetailView(DetailView):
     
     #モデルを指定する
     model=Club
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 class MyClubUpDateView(UpdateView):
     
@@ -167,6 +191,13 @@ class MyClubUpDateView(UpdateView):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myclubupdate', kwargs={'pk': self.object.pk})
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
+    
 class MyClubDeleteCheckView(DeleteView):
     
     #freeshool_myclubdeletecheck.htmlをレンダリング（描写）する
@@ -182,14 +213,27 @@ class MyClubDeleteCheckView(DeleteView):
     def get_success_url(self):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myclubdeletedone')
-
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyClubDeleteDoneView(TemplateView):
     
     #freeshool_myclubderetedoneview.htmlをレンダリング（描写）する
     template_name='freeschool_myclubdeletedone.html'
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
-class EventPostView(BaseView,CreateView):
+class EventPostView(CreateView):
 
     #イベント掲載情報登録画面を表示
     template_name='freeschool_eventpost.html'
@@ -219,12 +263,24 @@ class EventPostView(BaseView,CreateView):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:eventpostdone')
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class EventPostDoneView(TemplateView):
     
     #freshool_eventpostdone.htmlをレンダリング（描写）する
     template_name='freeschool_eventpostdone.html'
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyEventListView(ListView):
     
@@ -237,6 +293,12 @@ class MyEventListView(ListView):
     #1ページに表示する件数
     paginate_by=10
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyEventDetailView(DetailView):
     
@@ -246,6 +308,12 @@ class MyEventDetailView(DetailView):
     #モデルを指定する
     model=Event
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyEventUpDateView(UpdateView):
     
@@ -283,6 +351,12 @@ class MyEventUpDateView(UpdateView):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myeventupdate', kwargs={'pk': self.object.pk})
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyEventDeleteCheckView(DeleteView):
     
@@ -300,12 +374,24 @@ class MyEventDeleteCheckView(DeleteView):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myeventdeletedone')
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyEventDeleteDoneView(TemplateView):
     
     #freeschool_myeventdeletedone.htmlをレンダリング（描写）する
     template_name='freeschool_myeventdeletedone.html'
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class BlogPostView(CreateView):
     #ブログ記事投稿画面を表示
@@ -336,12 +422,24 @@ class BlogPostView(CreateView):
         # 成功後の遷移先URL
         return reverse_lazy('freeschoolapp:blogpost')
     
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class BlogPostCheckView(TemplateView):
     
     #freeschool_blogpostcheck.htmlをレンダリング（描写）する
     template_name='freeschool_blogpostcheck.html'
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyBlogListView(ListView):
     
@@ -352,7 +450,14 @@ class MyBlogListView(ListView):
     queryset=BlogPost.objects.order_by('-created_at')
     
     #1ページに表示する件数
-    paginate_by=10   
+    paginate_by=10
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 class MyBlogDetailView(DetailView):
     
@@ -361,6 +466,12 @@ class MyBlogDetailView(DetailView):
     
     model=BlogPost
     
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyBlogUpDateView(UpdateView):
     
@@ -389,6 +500,12 @@ class MyBlogUpDateView(UpdateView):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myblogupdate', kwargs={'pk': self.object.pk})
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class MyBlogDeleteCheckView(DeleteView):
     
@@ -406,13 +523,24 @@ class MyBlogDeleteCheckView(DeleteView):
         #成功後の遷移先URL
         return reverse_lazy('freeschoolapp:myeventdeletedone')
 
-
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 class MyBlogDeleteDoneView(TemplateView):
     
     #freeschool_myblogdeeltedone.htmlをレンダリング（描写）する
     template_name='freeschool_myblogdeletedone.html'
 
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 class ContactView(FormView):
     
@@ -447,11 +575,25 @@ class ContactView(FormView):
             self.request,'お問い合わせは正常に送信されました。')
             
         return super().form_valid(form)
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 #お問い合わせ完了画面
 class ContactDoneView(TemplateView):
     #freeschool_contactdone.htmlをレンダリング（描写）する
     template_name='freeschool_contactdone.html'
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 #アカウント情報表示画面
 class MypageView(TemplateView):
@@ -467,6 +609,13 @@ class MypageView(TemplateView):
             freeschool=FreeSchool.objects.get(user=self.request.user)
             context['freeschool']=freeschool
             return context
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 #アカウント情報変更画面、UpdateViewでは原則一つのモデルしか扱えないため、Viewを使用する。
 class MypageUpdateView(View):
@@ -501,3 +650,14 @@ class MypageUpdateView(View):
     def form_valid(self, form):
         messages.success(self.request, "アカウント情報を更新しました")
         return super().form_valid(form)
+    
+    def dispatch(self, *args, **kwargs):
+        # ログイン済みで user_type が 'freeschool' であるか確認
+        if not(self.request.user.is_authenticated and self.request.user.user_type=='freeschool'):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
+
+class LoginErrorView(TemplateView):
+    #freeschool_loginerror.htmlをレンダリング（描写）する
+    template_name='freeschool_loginerror.html'

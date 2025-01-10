@@ -41,5 +41,7 @@ urlpatterns=[
     path('myblogdeletedone',views.MyBlogDeleteDoneView.as_view(),name='myblogdeletedone'),
     #お問い合わせ機能
     path('contact',views.ContactView.as_view(),name='contact'),
-    path('contactdone',views.ContactDoneView.as_view(),name='contactdone')
+    path('contactdone',views.ContactDoneView.as_view(),name='contactdone'),
+    #エラーページ
+    path('loginerror',views.LoginErrorView.as_view(),name='loginerror'),
 ]
