@@ -75,7 +75,7 @@ class UserDetailView(UpdateView):
     
     success_url=reverse_lazy('freeschoolapp:usersearch')
 
-class ClubPostView(BaseView,CreateView):
+class ClubPostView(CreateView):
     #サークル掲載情報登録画面を表示
     template_name='freeschool_clubpost.html'
     #フォームとモデルを指定する
@@ -501,11 +501,3 @@ class MypageUpdateView(View):
     def form_valid(self, form):
         messages.success(self.request, "アカウント情報を更新しました")
         return super().form_valid(form)
-
-#削除予定
-class AccountView(TemplateView):
-    template_name="freeschool_account.html"
-    
-
-        
-
