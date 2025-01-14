@@ -5,7 +5,7 @@ app_name='studentapp'
 
 #URLパターンを登録するためのリスト
 urlpatterns=[
-    path('',views.TopView.as_view(),name='top'),
+    path('top',views.TopView.as_view(),name='top'),
     
     #サークル機能
     path('clublist',views.ClubListView.as_view(),name='clublist'),
