@@ -1,0 +1,26 @@
+/*タイトルを含めたテキストに指定*/
+.TopA {
+    text-align: center;
+}
+
+/*各リンクにまとめて指定*/
+.TopLink {
+    text-align: center;
+}
+
+li {
+    /*リストスタイルを削除する
+    例）・サークルページへ
+        ↑これ　　　　　　　　　*/
+    list-style: none;
+ }
+
+/*リンクのデザイン*/
+#ChoiceLink {
+    color: #ff69b4;
+    font-size: 25px;
+}
+
+#ChoiceLink:hover {
+    color: #ff1493;
+}
