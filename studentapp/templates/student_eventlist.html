@@ -9,28 +9,34 @@
         <h3>イベント一覧</h3>
     </div>
 
-    <!--レコードを格納されたobject_listから
-        レコードを1行ずつrecordに取り出す-->
-    {% for record in object_list %}
+    {% if object_list %}
+        <!--object_listにデータがある場合-->
 
-        <!--イベント一覧-->
-        <div class="list-container">
-            <img src="{{ record.image1.url }}"
-            width="500" height="300">
-            <div class="list-content">
-                <p class="list-genre">{{ record.get_category_display }}</p>
-                <a href="{% url 'studentapp:eventdetail' record.pk %}"
-                    style="text-decoration:none;" class="list-title">
-                    {{ record.event_name }}
-                </a>
-                <div class="list-infomation">
-                    <p>掲載日: {{ record.created_at }}</p>
-                    <p>団体名: {{ record.user.freeschool.freeschool_name }}</p>
+        <!--レコードを格納されたobject_listから
+            レコードを1行ずつrecordに取り出す-->
+        {% for record in object_list %}
+
+            <!--イベント一覧-->
+            <div class="list-container">
+                <img src="{{ record.image1.url }}"
+                width="500" height="300">
+                <div class="list-content">
+                    <p class="list-genre">{{ record.get_category_display }}</p>
+                    <a href="{% url 'studentapp:eventdetail' record.pk %}"
+                        style="text-decoration:none;" class="list-title">
+                        {{ record.event_name }}
+                    </a>
+                    <div class="list-infomation">
+                        <p>掲載日: {{ record.created_at }}</p>
+                        <p>団体名: {{ record.user.freeschool.freeschool_name }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-
+        {% endfor %}
+    {% else %}
+        <!--object_listが空だった場合-->
+        <p class="ListNone">イベントが掲載されていません</p>
+    {% endif %}
     {% include "pagination.html" %}
 
 {% endblock %}

@@ -9,25 +9,33 @@
         <h3>ブログ記事一覧</h3>
     </div>
 
-    <!--レコードを格納されたobject_listからレコードを1行ずつrecordに取り出す-->
-    {% for record in object_list %}
+    {% if object_list %}
+        <!--object_listにデータがある場合-->
 
-        <!--ブログ一覧-->
-        <div class="list-container">
-            <img src="{{ record.image1.url }}"
-            width="500" height="300">
-            <div class="list-content">
-                <p class="list-genre">{{ record.category }}</p>
-                <a href="{% url 'studentapp:blogdetail' record.pk %}"
-                    style="text-decoration:none;" class="list-title">
-                    {{ record.title }}
-                </a>
-                <div class="list-infomation">
-                    <p>掲載日: {{ record.created_at }}</p>
+        <!--レコードを格納されたobject_listから
+            レコードを1行ずつrecordに取り出す-->
+        {% for record in object_list %}
+
+            <!--ブログ一覧-->
+            <div class="list-container">
+                <img src="{{ record.image1.url }}"
+                width="500" height="300">
+                <div class="list-content">
+                    <p class="list-genre">{{ record.category }}</p>
+                    <a href="{% url 'studentapp:blogdetail' record.pk %}"
+                        style="text-decoration:none;" class="list-title">
+                        {{ record.title }}
+                    </a>
+                    <div class="list-infomation">
+                        <p>掲載日: {{ record.created_at }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <!--object_listが空だった場合-->
+        <p class="ListNone">ブログ記事が掲載されていません</p>
+    {% endif %}
     {% include "pagination.html" %}
 {% endblock %}
