@@ -4,14 +4,20 @@
 管理サークル一覧画面
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
 <br>
-{% for record in object_list %}
-{% if user.uu_id == record.user_id %}
-{{ record.id }}
-{{ record.club_name }}
-<a href="{% url 'freeschoolapp:myclubdetail' record.pk %}">詳細</a>
-<br>
-{% endif %}
-{% endfor %}
+{% if object_list %}
+    {% for record in object_list %}
+        {% if user.uu_id == record.user_id %}
+            {{ record.id }}
+            {{ record.club_name }}
+            <a href="{% url 'freeschoolapp:myclubdetail' record.pk %}">詳細</a>
+            <br>
+        {% endif %}
+    {% endfor %}
 
-{% include 'pagination.html' %}
+    {% include 'pagination.html' %}
+{% else %}
+<br>
+管理しているサークルはありません
+{% endif %}
+
 {% endblock %}
