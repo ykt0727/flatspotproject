@@ -4,14 +4,20 @@
 投稿ブログ記事一覧画面
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
 <br>
-{% for record in object_list %}
-{% if user.uu_id == record.user_id %}
-{{ record.id }}
-{{ record.title }}
-<a href="{% url 'freeschoolapp:myblogdetail' record.pk %}">詳細</a>
-<br>
-{% endif %}
-{% endfor %}
+{% if object_list %}
+    {% for record in object_list %}
+        {% if user.uu_id == record.user_id %}
+            {{ record.id }}
+            {{ record.title }}
+            <a href="{% url 'freeschoolapp:myblogdetail' record.pk %}">詳細</a>
+            <br>
+        {% endif %}
+    {% endfor %}
 
-{% include 'pagination.html' %}
+    {% include 'pagination.html' %}
+{% else %}
+<br>
+投稿されているブログ記事はありません
+{% endif %}
+
 {% endblock %}
