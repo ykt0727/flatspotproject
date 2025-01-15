@@ -33,10 +33,26 @@ class SignupForm(forms.ModelForm):
         password=cleaned_data.get("password")
         #パスワード(再確認)
         confirm_password=cleaned_data.get("confirm_password")
+        
+        login_id = cleaned_data.get("login_id")
+        email = cleaned_data.get("email")
+        phone_number = cleaned_data.get("phone_number")
 
         if password!=confirm_password:
             raise forms.ValidationError("パスワードが一致しません。")
+        
+        if CustomUser.objects.filter(login_id=login_id).exists():
+            self.add_error('login_id', "このIDは既に使用されています。")
+
+        if CustomUser.objects.filter(email=email).exists():
+            self.add_error('email', "このメールアドレスは既に登録されています。")
+
+        if CustomUser.objects.filter(phone_number=phone_number).exists():
+            self.add_error('phone_number', "この電話番号は既に登録されています。")
+
+        
         return cleaned_data
+    
 
 #不登校生徒用のサインアップフォーム
 class StudentSignupForm(forms.ModelForm):
