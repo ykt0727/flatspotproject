@@ -160,28 +160,9 @@ class MyClubUpDateView(UpdateView):
     #freeshool_myclubupdate.htmlをレンダリング（描写）する
     template_name='freeschool_myclubupdate.html'
     
-    #モデルを指定する
+    #フォームとモデルを指定する
     model=Club
-    
-    #フィールドを指定する
-    fields=('club_name',
-            'category',
-            'REP',
-            'email',
-            'phone_number',
-            'date',
-            'fee',
-            'place',
-            'sns_link',
-            'sns_name',
-            'image1',
-            'image2',
-            'image3',
-            'image4',
-            'image5',
-            'public_flag',
-            'detail_text',
-    )
+    form_class=ClubPostForm
     
     def form_valid(self, form):
         messages.success(self.request, "サークル情報を更新しました")
@@ -320,28 +301,10 @@ class MyEventUpDateView(UpdateView):
     #freeshool_myeventupdate.htmlをレンダリング（描写）する
     template_name='freeschool_myeventupdate.html'
     
-    #モデルを指定する
+    #フォームとモデルを指定する
     model=Event
+    form_class=EventPostForm
     
-    #フィールドを指定する
-    fields=('event_name',
-            'category',
-            'REP',
-            'email',
-            'phone_number',
-            'date',
-            'fee',
-            'place',
-            'sns_link',
-            'sns_name',
-            'image1',
-            'image2',
-            'image3',
-            'image4',
-            'image5',
-            'public_flag',
-            'detail_text',
-    )
     
     def form_valid(self, form):
         messages.success(self.request, "イベント情報を更新しました")
@@ -428,6 +391,7 @@ class BlogPostView(CreateView):
             # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
             return redirect('freeschoolapp:loginerror')#ログインページや別のページにリダイレクト
         return super().dispatch(self.request,*args,**kwargs)
+    
 
 class BlogPostCheckView(TemplateView):
     
@@ -480,17 +444,7 @@ class MyBlogUpDateView(UpdateView):
     #モデルを指定する
     model=BlogPost
     
-    #フィールドを指定する
-    fields=('title',
-            'category',
-            'image1',
-            'image2',
-            'image3',
-            'image4',
-            'image5',
-            'public_flag',
-            'detail_text',
-    )
+    form_class = BlogPostForm
     
     def form_valid(self, form):
         messages.success(self.request, "ブログ情報を更新しました")
