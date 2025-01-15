@@ -18,7 +18,7 @@
             <img src="{{ record.image1.url }}"
             width="500" height="300">
             <div class="list-content">
-                <p class="list-genre">{{ record.category }}</p>
+                <p class="list-genre">{{ record.get_category_display }}</p>
                 <a href="{% url 'studentapp:eventdetail' record.pk %}"
                     style="text-decoration:none;" class="list-title">
                     {{ record.event_name }}
