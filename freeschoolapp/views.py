@@ -475,7 +475,7 @@ class MyBlogDeleteCheckView(DeleteView):
     
     def get_success_url(self):
         #成功後の遷移先URL
-        return reverse_lazy('freeschoolapp:myeventdeletedone')
+        return reverse_lazy('freeschoolapp:myblogdeletedone')
 
     def dispatch(self, *args, **kwargs):
         # ログイン済みで user_type が 'freeschool' であるか確認
