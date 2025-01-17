@@ -48,6 +48,11 @@ class StudentSignupView(View):
         user_form= SignupForm(request.POST)
         student_form=StudentSignupForm(request.POST)
         
+        # エラーが発生した場合のログ出力
+        if not user_form.is_valid() or not student_form.is_valid():     
+            print(user_form.errors)    
+            print(student_form.errors)
+        
         #バリデーションチェックを通った場合のみ処理する
         if user_form.is_valid() and student_form.is_valid():
             

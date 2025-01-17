@@ -64,6 +64,7 @@ body {
   /*白い枠をつけてログインフォームを分かりやすくしていて、
   　白枠の中にある文字位置や枠の形等のcssを指定している*/
   .form-group {
+    width: 320px;
     background-color: #fff;
     padding: 60px;
     border-radius: 20px; /*白い枠の角を丸くする*/

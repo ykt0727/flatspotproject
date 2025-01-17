@@ -12,8 +12,15 @@
         <div class="form-group">
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% if form.errors %}
+                    正しいログインIDとパスワードを入力してください。大文字と小文字は区別されます。
+                {% endif %}
+                <label>ログインID:</label>
+                {{ form.username }}
                 <br>
+                <label>パスワード:</label>
+                {{ form.password }}
+                <br><br>
                 <button type="submit" class="login-button">ログイン</button>
             </form>
             <br>

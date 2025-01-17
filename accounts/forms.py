@@ -21,7 +21,7 @@ class SignupForm(forms.ModelForm):
         fields=['login_id','email','phone_number','password']
         #画面に表示するラベルを設定する
         labels={
-            'login_id':'ID',
+            'login_id':'ログインID',
             'email':'メールアドレス',
             'phone_number':'電話番号',
         }
@@ -49,7 +49,6 @@ class SignupForm(forms.ModelForm):
 
         if CustomUser.objects.filter(phone_number=phone_number).exists():
             self.add_error('phone_number', "この電話番号は既に登録されています。")
-
         
         return cleaned_data
     
@@ -93,6 +92,14 @@ class StudentSignupForm(forms.ModelForm):
         
         #性別のラジオボタン、選択肢はStudenモデルから持ってきた
         self.fields['gender'].widget=forms.RadioSelect(choices=Student.GENDER_CHOICES)
+    
+    def clean(self):
+        cleaned_data=super().clean()
+        nickname = cleaned_data.get("nickname")
+        
+        if Student.objects.filter(nickname=nickname).exists():
+            self.add_error('nickname', "このニックネームは既に使用されています。")
+        return cleaned_data
         
             
 #フリースクール関係者用のサインアップフォーム(現時点だと使う必要なし)

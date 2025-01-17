@@ -12,7 +12,7 @@ class Student(models.Model):
     user=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     
     #ニックネームを定義する
-    nickname=models.CharField(max_length=25)
+    nickname=models.CharField(unique=True,max_length=25)
     
     #保護者フラグ、デフォルトはFalse
     is_guardian=models.BooleanField(default=False)

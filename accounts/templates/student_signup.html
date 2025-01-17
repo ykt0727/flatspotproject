@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<link rel="stylesheet" href="{% static "css/accounts.css"%}">
+<link rel="stylesheet" href="{% static 'css/accounts.css'%}">
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -18,14 +18,17 @@
             <label for="id_login_id">ID</label>
             {{ user_form.login_id}} 
         </div>
+        <div style="color:red;">{{ user_form.errors.login_id }}</div>
         <div>
             <label for="id_email">メールアドレス</label>
             {{ user_form.email }}
         </div>
+        <div style="color:red;">{{ user_form.errors.email }}</div>
         <div>
             <label for="id_phone_number">電話番号</label>
             {{ user_form.phone_number }}
         </div>
+        <div style="color:red;">{{ user_form.errors.phone_number }}</div>
         <div>
             <label for="id_password">パスワード</label>
             {{ user_form.password }}
@@ -38,6 +41,7 @@
             <label for="id_nickname">ニックネーム</label>
             {{ student_form.nickname }}
         </div>
+        <div style="color:red;">{{ student_form.errors.nickname }}</div>
         <div class="gender_radio">
             <label for="id_gender_label">性別</label> 
             <div id="id_gender"> </div>
