@@ -1,8 +1,11 @@
 {% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}イベント体験申請画面{% endblock %}
+{% block css %}<link href="{% static 'css/student_request.css' %}" rel="stylesheet"/>{% endblock %}
 {% block contents %}
-    <p>※ログイン中のユーザーの情報、ここで入力した内容がイベント管理者に送信されます</p>
+
+<div class="request-info">
+    <p class="request-accounts">※ログイン中のユーザーの情報、ここで入力した内容がイベント管理者に送信されます</p>
     <!--メールを送信するフォーム-->
     <form method="POST">
         {% csrf_token %}
@@ -10,9 +13,11 @@
         <p>
             {{field.label }}
             {{ field }}
+        </p>
         {% endfor %}
     
-        <button type="submit">イベント申請者にメールを送る</button>
-    </form>   
+        <button type="submit" class="request-button">イベント申請者にメールを送る</button>
+    </form>
+</div>
 
 {% endblock %}

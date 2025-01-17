@@ -1,0 +1,35 @@
+/*参加申請する情報の範囲全体に指定*/
+.request-info {
+    text-align: center;/*中央寄せ*/
+}
+
+/*アカウント情報の範囲に指定*/
+.request-accounts {
+    padding-bottom: 30px;/*下に余白を入れる*/
+}
+
+/*メッセージ入力フォームに指定*/
+.form-control {
+    width: 800px;/*表示する横幅*/
+    margin: 0 auto;/*上下の余白０と左右の余白をauto指定*/
+  }
+
+/*クラブ申請者にメールを送るボタンに指定*/
+.request-button {
+    width: 220px;
+    padding: 10px;
+    background-color: #ff69b4;
+    border: none; /*ボタンのふちなし*/
+    border-radius: 25px; /*ボタンの角を丸くしている*/
+    color: #fff;/*フォントの色*/
+    font-size: 16px;/*フォントの大きさ*/
+    font-weight: bold;/*フォントを太字にする*/
+    cursor: pointer; /*ボタンにカーソルを乗せるとポインターに変化する*/
+    transition: background-color 0.3s ease; /*下に記述しているhoverを可能にするために書いている*/
+}
+
+/*クラブ申請者にメールを送るボタンに
+カーソルを合わせると色が変化する*/
+.request-button:hover {
+    background-color: #ff1493;
+}

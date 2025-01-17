@@ -1,14 +1,20 @@
 {% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}お問い合わせ{% endblock %}
+{% block css %}<link href="{% static 'css/student_request.css' %}" rel="stylesheet"/>{% endblock %}
 {% block contents %}
 
-<form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-    {{ field.label_tag }}
-    {{ field }}
-    {% endfor %}
-    <button type="submit">送信する</button>
-</form>
+<div class="request-info">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+            {{ field.label_tag }}
+            {{ field }}
+        </p>
+        {% endfor %}
+        
+        <button type="submit" class="request-button">送信する</button>
+    </form>
+</div>
 {% endblock %}

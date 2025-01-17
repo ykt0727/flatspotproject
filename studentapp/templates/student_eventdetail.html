@@ -139,7 +139,7 @@
     {% if user.is_authenticated %}
         <!--利用者が不登校生徒の場合のみ表示-->
         {% if user.user_type == 'student' %}
-        <a href="{% url 'studentapp:clubrequest' club_id=object.pk %}" id="request-link">参加申し込み</a>
+        <a href="{% url 'studentapp:eventrequest' event_id=object.pk %}" id="request-link">参加申し込み</a>
         {% endif %}
     {% else %}
         <a data-bs-toggle="modal" data-bs-target="#exampleModal" 
