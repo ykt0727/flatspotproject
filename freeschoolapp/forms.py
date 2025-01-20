@@ -95,6 +95,8 @@ class EventPostForm(forms.ModelForm):
 
 
 class BlogPostForm(forms.ModelForm):
+    
+    title=forms.CharField(required=True)
     class Meta:
         model=BlogPost
         #表示するフィールド
@@ -109,6 +111,27 @@ class BlogPostForm(forms.ModelForm):
                 'public_flag',
                 'detail_text',
                 ]
+        
+        labels={
+                'title':'タイトル',
+                'category':'カテゴリー',
+                'image1':'画像1',
+                'image2':'画像2',
+                'image3':'画像3',
+                'image4':'画像4',
+                'image5':'画像5',
+                'public_flag':'公開状況',
+                'detail_text':'記事内容',
+        }
+    
+    # def clean(self):
+    #     cleaned_data=super().clean()
+    #     title=cleaned_data.get("title")
+        
+    #     if title and len(title)>10:
+    #         self.add_error('title', 'タイトルを入力してください')
+            
+    #     return cleaned_data
 
 #お問い合わせフォーム
 class ContactForm(forms.Form):
