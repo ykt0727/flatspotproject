@@ -4,7 +4,7 @@
 {% block contents %}
 管理サークル情報変更画面
 <a href="{% url 'freeschoolapp:myclubdetail' object.id %}"><button>管理サークル詳細画面に戻る</button></a>
-<form method="POST" class="form">
+<form method="POST" enctype="multipart/form-data" class="form">
     {% csrf_token %}
     {% for field in form.visible_fields %}
         {{ field.label }}
