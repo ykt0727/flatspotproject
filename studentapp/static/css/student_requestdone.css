@@ -1,0 +1,41 @@
+/*「送信が完了しました」部分に指定*/
+.doneText {
+    font-size: 35px;/*フォントサイズ*/
+    font-weight: bold;/*フォントを太字にする*/
+    color: #ff6b6b;/*フォントに色を指定*/
+    height: 200px;/*要素の高さ*/
+
+    /*中央寄せにする*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*ボタンにまとめて指定*/
+.requestDone {
+    padding: 15px 15px;/*余白を設定*/
+    /*ボタンが均等に配置する*/
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/*サークル一覧に戻るボタンと
+トップページに戻るボタンに指定*/
+.donepage-btn {
+    width: 220px;
+    padding: 10px;
+    background-color: #ff69b4;
+    border: none; /*ボタンのふちなし*/
+    border-radius: 25px; /*ボタンの角を丸くしている*/
+    color: #fff;/*フォントの色*/
+    font-size: 16px;/*フォントの大きさ*/
+    font-weight: bold;/*フォントを太字にする*/
+    cursor: pointer; /*ボタンにカーソルを乗せるとポインターに変化する*/
+    transition: background-color 0.3s ease; /*下に記述しているhoverを可能にするために書いている*/
+}
+
+/*サークル一覧に戻るボタンとトップページに戻るボタンに
+カーソルを合わせると色が変化する*/
+.donepage-btn:hover {
+    background-color: #ff1493;
+}

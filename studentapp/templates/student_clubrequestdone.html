@@ -1,8 +1,21 @@
 {% extends 'student_base_anyone.html' %}
 {% load static %}
 {% block title %}サークル体験申請送信完了画面{% endblock %}
+{% block css %}<link href="{% static 'css/student_requestdone.css' %}" rel="stylesheet"/>{% endblock %}
 {% block contents %}
-サークル体験申請送信完了画面
-<a href="{% url 'studentapp:clublist' %}"><button>サークル一覧に戻る</button></a>
-<a href="{% url 'studentapp:top' %}"><button>トップページに戻る</button></a>
+<p class="doneText">
+    送信が完了しました
+</p>
+<div class="requestDone">
+    <a href="{% url 'studentapp:clublist' %}">
+        <button class="donepage-btn">
+            サークル一覧に戻る
+        </button>
+    </a>
+    <a href="{% url 'studentapp:top' %}">
+        <button class="donepage-btn">
+            トップページに戻る
+        </button>
+    </a>
+</div>
 {% endblock %}
