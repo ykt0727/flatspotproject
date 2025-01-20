@@ -2,44 +2,74 @@
 {% load static %}
 {% block title %}{{ user.student.nickname }}さんの情報{% endblock %}
 {% block contents %}
-    <p>ログインID{{ user.login_id }}</p>
-    <p>メールアドレス{{ user.email }}</p>
-    <p>電話番号: 
-        {% if user.phone_number %}
-            {% with user.phone_number|slice:":3" as prefix %}
-                {% if prefix == '+81' %}
-                    0{{ user.phone_number|slice:3 }}
-                {% else %}
-                    {{ user.phone_number }}
-                {% endif %}
-            {% endwith %}
-        {% else %}
-            電話番号未設定
-        {% endif %}
-    </p>
-    <p>ニックネーム{{ user.student.nickname }}</p>
-    <!--誕生日の表示にdateフィルターを使用している-->
-    <p>誕生日: {{ user.student.date_of_birth|date:"Y年m月d日" }}</p>
-    <p>入学年度{{ user.student.ent_year }}</p>
-    <p>性別: 
-        {% if user.student.gender == 'male' %}
-            男性
-        {% elif user.student.gender == 'female' %}
-            女性
-        {% else %}
-            その他
-        {% endif %}
-    </p>
-    <p>配慮事項(フリースクールにお伝えしたいこと){{ user.student.consideration }}</p>
+    <table>
+        <tbody>
+            <tr>
+                <th>ログインID</th>
+                <td>{{ user.login_id }}</td>
+            </tr>
 
-    <!--いいねしたブログ記事-->
-    <h2>いいねしたブログ記事</h2>
-    {% for likeforblogpost in likeforblogposts %}
-        <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
-        <p><a href="{% url 'studentapp:blogdetail' likeforblogpost.target.id %}">{{ likeforblogpost.target.title }}</a></p>
-    {% empty %}
-    <p>いいねしたブログ記事はありません</p>
-    {% endfor %}
+            <tr>
+                <th>メールアドレス</th>
+                <td>{{ user.email }}</td>
+            </tr>
+
+            <!--異常フロー確認必須（確認次第コメント削除）-->
+            <tr>
+                <th>電話番号</th> 
+
+                            {% if user.phone_number %}
+                            {% with user.phone_number|slice:":3" as prefix %}
+                                {% if prefix == '+81' %}
+                                    <td>0{{ user.phone_number|slice:3 }}</td>
+                                {% else %}
+                                    <td>{{ user.phone_number }}</td>
+                                {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            <th>電話番号未設定</th>
+                        {% endif %}
+            </tr>
+
+            <tr>
+                <th>ニックネーム</th>
+                <td>{{ user.student.nickname }}</td>
+            </tr>
+
+            <!--誕生日の表示にdateフィルターを使用している-->
+            <tr>
+                <th>誕生日</th>
+                <td>{{ user.student.date_of_birth|date:"Y年m月d日" }}</td>
+            </tr>
+
+            <tr>
+                <th>入学年度</th>
+                <td>{{ user.student.ent_year }}</tr>
+            </tr>
+
+            <!--異常フロー確認必須（確認次第コメント削除）-->
+            <tr>
+            <th>性別</th>
+                
+                <td>
+                    {% if user.student.gender == 'male' %}
+                        男性
+                    {% elif user.student.gender == 'female' %}
+                        女性
+                    {% else %}
+                        その他
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th>配慮事項(フリースクールにお伝えしたいこと)</th>
+                <td>{{ user.student.consideration }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
     
     <!--いいねしたサークル記事-->
     <h2>いいねしたサークル記事</h2>
@@ -50,16 +80,31 @@
     <p>いいねしたサークルはありません</p>
     {% endfor %}
 
+
+    <!--いいねしたブログ記事-->
+    <h2>いいねしたブログ記事</h2>
+    <br>
+    {% for likeforblogpost in likeforblogposts %}
+        <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
+        <p><a href="{% url 'studentapp:blogdetail' likeforblogpost.target.id %}">{{ likeforblogpost.target.title }}</a></p>
+    {% empty %}
+    <p>いいねしたブログ記事はありません</p>
+    {% endfor %}
+
+
     <!--いいねしたイベント記事-->
     <h2>いいねしたイベント記事</h2>
+    <br>
     {% for likeforevent in likeforevents %}
-    <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
-    <p><a href="{% url 'studentapp:eventdetail' likeforevent.target.id %}">{{ likeforevent.target.event_name }}</a></p>
+        <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
+        <p><a href="{% url 'studentapp:eventdetail' likeforevent.target.id %}">{{ likeforevent.target.event_name }}</a></p>
     {% empty %}
     <p>いいねしたイベントはありません</p>
     {% endfor %}
-    
+
+
     <h2>アカウント</h2>
     <p><a href="{% url 'studentapp:mypageupdate' %}">アカウント情報を編集する</a></p>
     <p><a href="{% url 'studentapp:mypagedeletecheck' %}">アカウントを削除する</a></p>
+
 {% endblock %}
