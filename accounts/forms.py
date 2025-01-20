@@ -47,8 +47,9 @@ class SignupForm(forms.ModelForm):
         if CustomUser.objects.filter(email=email).exists():
             self.add_error('email', "このメールアドレスは既に登録されています。")
 
-        if CustomUser.objects.filter(phone_number=phone_number).exists():
-            self.add_error('phone_number', "この電話番号は既に登録されています。")
+        if phone_number!=None:
+            if CustomUser.objects.filter(phone_number=phone_number).exists():
+                self.add_error('phone_number', "この電話番号は既に登録されています。")
         
         return cleaned_data
     
