@@ -159,3 +159,25 @@ body {
       display: flex; /* ラジオボタンをラベルの下に移動する */
     }
   }
+
+  /*必須項目に必須のマークを付ける*/
+  .required::after {
+    content: "必須";
+    color: #ffffff;
+    background: #cc0000;
+    font-size: 0.8em;
+    padding: 0.3em;
+    border-radius: 0.5em;
+    margin-left:1em;
+    }
+  
+  /*任意項目に任意のマークを付ける*/
+  .optional::after {
+    content: "任意";
+    color: #ffffff;
+    background: #0000cc;
+    font-size: 0.8em;
+    padding: 0.3em;
+    border-radius: 0.5em;
+    margin-left:1em;
+  }

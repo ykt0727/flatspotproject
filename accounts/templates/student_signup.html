@@ -15,53 +15,53 @@
         <!-- {{ user_form.as_p }}
         {{ student_form.as_p }} 変更する前につかってたやつ-->
         <div>
-            <label for="id_login_id">ID</label>
+            <label for="id_login_id" class="required">ログインID</label>
             {{ user_form.login_id}} 
         </div>
         <div style="color:red;">{{ user_form.errors.login_id }}</div>
         <div>
-            <label for="id_email">メールアドレス</label>
+            <label for="id_email" class="required">メールアドレス</label>
             {{ user_form.email }}
         </div>
         <div style="color:red;">{{ user_form.errors.email }}</div>
         <div>
-            <label for="id_phone_number">電話番号</label>
+            <label for="id_phone_number" class="optional">電話番号</label>
             {{ user_form.phone_number }}
         </div>
         <div style="color:red;">{{ user_form.errors.phone_number }}</div>
         <div>
-            <label for="id_password">パスワード</label>
+            <label for="id_password" class="required">パスワード</label>
             {{ user_form.password }}
         </div>
         <div>
-            <label for="id_confirm_password">パスワード（確認）</label>
+            <label for="id_confirm_password" class="required">パスワード（確認）</label>
             {{ user_form.confirm_password }}
         </div>
         <div>
-            <label for="id_nickname">ニックネーム</label>
+            <label for="id_nickname" class="required">ニックネーム</label>
             {{ student_form.nickname }}
         </div>
         <div style="color:red;">{{ student_form.errors.nickname }}</div>
         <div class="gender_radio">
-            <label for="id_gender_label">性別</label> 
+            <label for="id_gender_label">性別<span style="color:black;">（選択）</span></label> 
             <div id="id_gender"> </div>
             {{ student_form.gender }}  <!-- ラジオボタンを表示 -->
             {{ student_form.gender.errors }} <!-- バリデーションエラー表示 -->
         </div>
         <div>
-            <label for="id_ent_year">入学年度</label>
+            <label for="id_ent_year">入学年度<span style="color:black;">（選択）</span></label>
             {{ student_form.ent_year }}
         </div>
         <div>
-            <label for="id_is_guardian">保護者の方はチェックしてください</label>
+            <label for="id_is_guardian">保護者の方はチェック<br>してください<span style="color:black;">（選択）</span></label>
             {{ student_form.is_guardian }}
         </div>
         <div>
-            <label for="id_date_of_birth">生年月日</label>
+            <label for="id_date_of_birth" class="required">生年月日</label>
             {{ student_form.date_of_birth }}
         </div>
         <div>
-            <label for="id_consideration">考慮事項</label>
+            <label for="id_consideration" class="optional">考慮事項</label>
             {{ student_form.consideration }}
         </div>
     </div>
