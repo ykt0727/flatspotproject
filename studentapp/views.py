@@ -172,6 +172,8 @@ class EventListView(ListView):
     template_name=('student_eventlist.html')
     #モデルを指定
     model=Event
+    #1ページに表示するレコードの件数を設定
+    paginate_by=5
 
     def get_queryset(self):
         # 認証済みの場合
