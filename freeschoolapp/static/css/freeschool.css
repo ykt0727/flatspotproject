@@ -29,15 +29,29 @@
     padding-left: 200px;
 }
 
-/* 表の線を表示する */
+/* テーブルの見た目 */
 table {
     border: 1px solid #000;
+    width: 66%;
+    table-layout: fixed;
   }
   
   table th {
     border: 1px solid #000;
+    width: 20%;
   }
   
   table td {
     border: 1px solid #000;
+    width: 50%;
+    word-break: break-all;
+    overflow-wrap : break-word;
   }
+
+.cssbutton {
+    border: solid 2px #000;
+    padding: 2px 5px;
+    text-decoration:none;
+    color: #000;
+    background-color: #f0f0f0; 
+}

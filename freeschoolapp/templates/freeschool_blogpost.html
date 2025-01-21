@@ -7,11 +7,11 @@
 <!--画像を送信する際はenctypeが必要-->
 <form method="post" enctype="multipart/form-data" class="form">
     {% csrf_token %}
-    <!-- {% for field in post_form %}
+    {% for field in post_form %}
         {{ field.label_tag }}<br>
         {{ field|add_class:'field' }}
         <br><br>
-    {% endfor %} -->
+    {% endfor %}
         <!-- <div>
             <label for="id_title">タイトル:</label>
         </div>
@@ -71,14 +71,14 @@
         <div>
             <label for="id_detail_text">記事内容:</label>
         </div>
-
         <div>
             {{ post_form.detail_text }}
-        </div> -->
-
-        <div>
-            {{ post_form.as_p }}
         </div>
+        <br> -->
+
+        <!-- <div>
+            {{ post_form.as_p }}
+        </div> -->
         
     <div>
         <button type="submit">掲載する</button>

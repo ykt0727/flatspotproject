@@ -2,7 +2,7 @@
 {% block title %}掲載イベント詳細画面{% endblock %}
 {% block contents %}
 掲載イベント詳細画面
-<a href="{% url 'freeschoolapp:top' %}"><button>メインメニューに戻る</button></a>
+<a href="{% url 'freeschoolapp:myeventlist' %}"><button>掲載イベント一覧に戻る</button></a>
 <a href="{% url 'freeschoolapp:myeventupdate' object.id %}"><button>変更</button></a>
 <a href="{% url 'freeschoolapp:myeventdeletecheck' object.id %}"><button>削除</button></a>
 <br><br>
@@ -23,7 +23,17 @@
             </tr>
             <tr>
                 <th>ジャンル</th>
-                <td>{{ object.category }}</td>
+                <td>
+                    {% if object.category == 'culture' %}
+                        文化
+                    {% elif object.category == 'sports' %}
+                        運動
+                    {% elif object.category == 'study' %}
+                        勉強
+                    {% else %}
+                        その他
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>代表者名</th>
@@ -54,11 +64,11 @@
                 <td>{{ object.sns_link }}</td>
             </tr>
             <tr>
-                <th>サークルの紹介画像①</th>
+                <th>イベントの紹介画像①</th>
                 <td><img src="{{ object.image1.url }}" width="400" height="300"></td>
             </tr>
             <tr>
-                <th>サークルの紹介画像②</th>
+                <th>イベントの紹介画像②</th>
                 <td>
                     {% if object.image2 %}
                         <img src="{{ object.image2.url }}" width="400" height="300">
@@ -66,7 +76,7 @@
                 </td>
             </tr>
             <tr>
-                <th>サークルの紹介画像③</th>
+                <th>イベントの紹介画像③</th>
                 <td>
                     {% if object.image3 %}
                         <img src="{{ object.image3.url }}" width="400" height="300">
@@ -74,7 +84,7 @@
                 </td>
             </tr>
             <tr>
-                <th>サークルの紹介画像④</th>
+                <th>イベントの紹介画像④</th>
                 <td>
                     {% if object.image4 %}
                         <img src="{{ object.image4.url }}" width="400" height="300">
@@ -82,7 +92,7 @@
                 </td>
             </tr>
             <tr>
-                <th>サークルの紹介画像⑤</th>
+                <th>イベントの紹介画像⑤</th>
                 <td>
                     {% if object.image5 %}
                         <img src="{{ object.image5.url }}" width="400" height="300">
@@ -95,7 +105,13 @@
             </tr>
             <tr>
                 <th>公開状況</th>
-                <td>{{ object.public_flag }}</td>
+                <td>
+                    {% if object.public_flag %}
+                        公開
+                    {% else %}
+                        非公開
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>

@@ -23,7 +23,17 @@
             </tr>
             <tr>
                 <th>ジャンル</th>
-                <td>{{ object.category }}</td>
+                <td>
+                    {% if object.category == 'culture' %}
+                        文化
+                    {% elif object.category == 'sports' %}
+                        運動
+                    {% elif object.category == 'study' %}
+                        勉強
+                    {% else %}
+                        その他
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>代表者名</th>
@@ -95,7 +105,13 @@
             </tr>
             <tr>
                 <th>公開状況</th>
-                <td>{{ object.public_flag }}</td>
+                <td>
+                    {% if object.public_flag %}
+                        公開
+                    {% else %}
+                        非公開
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>

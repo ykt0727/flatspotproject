@@ -96,7 +96,7 @@ class EventPostForm(forms.ModelForm):
 
 class BlogPostForm(forms.ModelForm):
     
-    title=forms.CharField(required=True)
+    # title=forms.CharField(required=True)
     class Meta:
         model=BlogPost
         #表示するフィールド
@@ -113,15 +113,15 @@ class BlogPostForm(forms.ModelForm):
                 ]
         
         labels={
-                'title':'タイトル',
-                'category':'カテゴリー',
-                'image1':'画像1',
-                'image2':'画像2',
-                'image3':'画像3',
-                'image4':'画像4',
-                'image5':'画像5',
-                'public_flag':'公開状況',
-                'detail_text':'記事内容',
+            'title':'ブログタイトル',
+            'category':'ジャンル',
+            'image1':'画像1',
+            'image2':'画像2',
+            'image3':'画像3',
+            'image4':'画像4',
+            'image5':'画像5',
+            'public_flag':'公開状況',
+            'detail_text':'記事内容',
         }
     
     # def clean(self):

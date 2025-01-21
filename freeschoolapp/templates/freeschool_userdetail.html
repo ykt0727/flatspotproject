@@ -14,8 +14,7 @@
         <!--フォームをすべて出力-->
         {{ form.as_p }}
     {% endfor %}
-    <a href="{% url 'freeschoolapp:usersearch' %}">戻る</a>
-    <!-- 戻るをボタンにすると挙動がおかしくなるので、cssでボタンの見た目にしたください -->
+    <a href="{% url 'freeschoolapp:usersearch' %}" class="cssbutton">戻る</a>
     <button type="submit">完了</button>
 </form>
 {% endblock %}
