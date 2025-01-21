@@ -2,6 +2,10 @@
 {% block title %}管理サークル削除確認画面{% endblock %}
 {% block contents %}
 管理サークル削除確認画面
+<br>
+サークル名:{{ object.club_name }}
+<br>
+このサークルを削除しますか?
 <form method="post">
     {% csrf_token %}
     <button type="submit">はい</button>

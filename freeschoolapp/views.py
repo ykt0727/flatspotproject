@@ -589,10 +589,10 @@ class MypageUpdateView(View):
         #CustomuserとStudentを変更するフォームを定義する
         user_form=CustomUserForm(request.POST,instance=request.user)
         freeschool_form=FreeSchoolForm(request.POST,instance=request.user.freeschool)
-        messages.success(self.request, "アカウント情報を更新しました")
         
         #バリデーションが通った場合のみデータベースに保存する
         if user_form.is_valid() and freeschool_form.is_valid():
+            messages.success(self.request, "アカウント情報を更新しました")
             user_form.save()
             freeschool_form.save()
             return redirect('freeschoolapp:mypage')
@@ -600,10 +600,6 @@ class MypageUpdateView(View):
             'user_form':user_form,
             'freeschool_form':freeschool_form,
         })
-        
-    def form_valid(self, form):
-        messages.success(self.request, "アカウント情報を更新しました")
-        return super().form_valid(form)
     
     def dispatch(self, *args, **kwargs):
         # ログイン済みで user_type が 'freeschool' であるか確認

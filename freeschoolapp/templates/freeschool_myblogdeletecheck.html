@@ -2,6 +2,10 @@
 {% block title %}投稿ブログ記事削除確認画面{% endblock %}
 {% block contents %}
 投稿ブログ記事削除確認画面
+<br>
+ブログ記事タイトル:{{ object.title }}
+<br>
+このブログ記事を削除しますか?
 <form method="post">
     {% csrf_token %}
     <button type="submit">はい</button>
