@@ -71,8 +71,9 @@
     </table>
 
     
+    
     <!--いいねしたサークル記事-->
-    <h2>いいねしたサークル記事</h2>
+    <h2>いいねしたサークル</h2>
     {% for likeforclub in likeforclubs %}
         <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
         <p><a href="{% url 'studentapp:clubdetail' likeforclub.target.id %}">{{ likeforclub.target.club_name }}</a></p>
@@ -93,7 +94,7 @@
 
 
     <!--いいねしたイベント記事-->
-    <h2>いいねしたイベント記事</h2>
+    <h2>いいねしたイベント</h2>
     <br>
     {% for likeforevent in likeforevents %}
         <!--外部キーであるtargetで関連テーブルのデータを取得できる-->
