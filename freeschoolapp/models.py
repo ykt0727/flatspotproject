@@ -2,8 +2,8 @@ from django.db import models
 
 #カスタムユーザーのサブクラスとして実装
 from accounts.models import CustomUser
-#電話番号フィールド
-from phonenumber_field.modelfields import PhoneNumberField
+#電話番号のバリデーター
+from django.core.validators import RegexValidator
 
 class FreeSchool(models.Model):
 
@@ -45,13 +45,21 @@ class Club(models.Model):
     email=models.EmailField(null=False)
     
     #電話番号
-    phone_number=PhoneNumberField(null=False,region='JP')
+    phone_number = models.CharField(
+        max_length=11,
+        validators=[
+            RegexValidator(regex=r"^\d+$", message="電話番号は半角数字11桁以内で入力してください。")
+        ],
+        unique=False,
+        blank=False,
+        null=False,
+    )
     
     #日時
     date=models.CharField(max_length=30,null=False)
     
     #参加費
-    fee=models.IntegerField(null=False)
+    fee=models.PositiveIntegerField(null=False)
     
     #場所
     place=models.CharField(max_length=50,null=False)
@@ -73,7 +81,7 @@ class Club(models.Model):
     public_flag=models.BooleanField(default=True)
     
     #サークルの紹介文
-    detail_text=models.TextField(blank=True,null=True)
+    detail_text=models.TextField(max_length=1000,blank=True,null=True)
     
     #作成日時
     created_at=models.DateTimeField(auto_now_add=True)
@@ -107,13 +115,21 @@ class Event(models.Model):
     email=models.EmailField(null=False)
     
     #電話番号
-    phone_number=PhoneNumberField(null=False,region='JP')
+    phone_number = models.CharField(
+        max_length=11,
+        validators=[
+            RegexValidator(regex=r"^\d+$", message="電話番号は半角数字11桁以内で入力してください。")
+        ],
+        unique=False,
+        blank=False,
+        null=False,
+    )
     
     #日時
     date=models.CharField(max_length=30,null=False)
     
     #参加費
-    fee=models.IntegerField(null=False)
+    fee=models.PositiveIntegerField(null=False)
     
     #場所
     place=models.CharField(max_length=50,null=False)
@@ -135,7 +151,7 @@ class Event(models.Model):
     public_flag=models.BooleanField(default=True)
     
     #イベントの紹介文
-    detail_text=models.TextField(blank=True,null=True)
+    detail_text=models.TextField(max_length=1000,blank=True,null=True)
     
     #作成日時
     created_at=models.DateTimeField(auto_now_add=True)
@@ -168,8 +184,8 @@ class BlogPost(models.Model):
     #公開状況
     public_flag=models.BooleanField(default=True)
    
-    #サークルの紹介文
-    detail_text=models.TextField(blank=True,null=True)
+    #ブログ記事本文
+    detail_text=models.TextField(max_length=1000,blank=True,null=True)
  
     #作成日時
     created_at=models.DateTimeField(auto_now_add=True)

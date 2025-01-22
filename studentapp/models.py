@@ -36,7 +36,7 @@ class Student(models.Model):
     date_of_birth=models.DateField()
    
     #配慮事項フィールド、テキスト形式で自由に入力できるようにする。
-    consideration=models.TextField(blank=True,null=True)
+    consideration=models.TextField(max_length=1000,blank=True,null=True)
 
 #ブログのいいね機能
 class LikeForBlogPost(models.Model):

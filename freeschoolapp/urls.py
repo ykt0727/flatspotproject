@@ -42,6 +42,6 @@ urlpatterns=[
     #お問い合わせ機能
     path('contact',views.ContactView.as_view(),name='contact'),
     path('contactdone',views.ContactDoneView.as_view(),name='contactdone'),
-    #エラーページ
+    #フリースクールアカウント以外でアクセスしようとした時のエラーページ
     path('loginerror',views.LoginErrorView.as_view(),name='loginerror'),
 ]

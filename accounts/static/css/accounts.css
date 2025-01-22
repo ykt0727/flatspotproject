@@ -181,3 +181,16 @@ body {
     border-radius: 0.5em;
     margin-left:1em;
   }
+
+  .button {
+    width: 200px;
+    padding: 10px;
+    background-color: #ff69b4;
+    border: none; /*ボタンのふちなしにする*/
+    border-radius: 25px; /*ボタンの角を丸くする*/
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer; /*ボタンにカーソルを乗せるとポインターに変化する*/
+    transition: background-color 0.3s ease; /*下に記述しているhoverを可能にするために書いている*/
+  }

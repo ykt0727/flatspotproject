@@ -4,10 +4,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
 #UUIDフィールド
 import uuid
-#電話番号フィールド
-from phonenumber_field.modelfields import PhoneNumberField
 #日付を取得する
 from django.utils import timezone
+#電話番号のバリデーター
+from django.core.validators import RegexValidator
 
 #カスタムユーザーのマネージャー
 class CustomUserManager(BaseUserManager):
@@ -63,8 +63,16 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     #メールフィールド
     email=models.EmailField(unique=True)
     
-    #電話番号フィールド、phonenumbersパッケージを使用する
-    phone_number=PhoneNumberField(unique=True,null=True,blank=True,region='JP')
+    #電話番号フィールド
+    phone_number=models.CharField(
+        max_length=11,
+        validators=[
+            RegexValidator(regex=r"^\d+$", message="電話番号は半角数字11桁以内で入力してください。")
+        ],
+        unique=True,
+        blank=True,
+        null=True,
+    )
     
     #利用者種別の選択肢
     user_type_choices=(

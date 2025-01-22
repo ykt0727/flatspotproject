@@ -20,6 +20,13 @@ from freeschoolapp.models import BlogPost,Club,Event
 
 class TopView(TemplateView):
     template_name = 'student_top.html'
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
         
 class ClubListView(ListView):
     #student_clublist.htmlをレンダリング（描写）する
@@ -42,7 +49,12 @@ class ClubListView(ListView):
         # それ以外の場合、publicの投稿のみ表示する。
         return Club.objects.filter(public_flag=True).order_by('created_at')
     
-    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 class ClubDetailView(DetailView):
     template_name='student_clubdetail.html'
@@ -73,7 +85,12 @@ class ClubDetailView(DetailView):
 
         return context
     
-    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 
 #サークルのいいね機能のView
@@ -162,10 +179,23 @@ class ClubRequestView(FormView):
         
         return super().form_valid(form)
     
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
+    
 class ClubRequestDoneView(TemplateView):
     #student_clubrequestdone.htmlをレンダリング（描写）する 
     template_name="student_clubrequestdone.html"
 
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 class EventListView(ListView):
     #student_eventlist.htmlをレンダリング（描写）する
@@ -185,6 +215,13 @@ class EventListView(ListView):
                 return Event.objects.filter(public_flag=True).order_by('created_at')
         # それ以外の場合、publicの投稿のみ表示する。
         return Event.objects.filter(public_flag=True).order_by('created_at')
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 class EventDetailView(DetailView):
     # student_eventdetail.htmlをレンダリング（描写）する
@@ -214,6 +251,13 @@ class EventDetailView(DetailView):
                 raise PermissionDenied("このイベントを閲覧する権限がありません。")
 
         return context
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 #イベントのいいね機能のView
 class LikeForEventView(View):
@@ -301,9 +345,23 @@ class EventRequestView(FormView):
         messages.success(self.request, "送信が完了しました。")
         return super().form_valid(form)
     
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
+    
 class EventRequestDoneView(TemplateView):
     #student_eventrequestdone.htmlをレンダリング（描写）する 
     template_name="student_eventrequestdone.html"
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 #ブログ記事一覧
 class BlogListView(ListView):
@@ -324,6 +382,13 @@ class BlogListView(ListView):
                 return BlogPost.objects.filter(public_flag=True).order_by('created_at')
         # それ以外の場合、publicの投稿のみ表示する。
         return BlogPost.objects.filter(public_flag=True).order_by('created_at')
+        
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
         
 class BlogDetailView(DetailView):
     #student_blogdetail.htmlをレンダリング（描写）する
@@ -355,6 +420,12 @@ class BlogDetailView(DetailView):
 
         return context
     
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 #ブログのいいね機能のView
 class LikeForBlogView(View):
@@ -414,14 +485,35 @@ class ContactView(FormView):
             self.request,'お問い合わせは正常に送信されました。')
         
         return super().form_valid(form)
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 #お問い合わせ完了画面
 class ContactDoneView(TemplateView):
     #student_contactdone.htmlをレンダリング（描写）する
     template_name="student_contactdone.html"
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
      
 class AboutView(TemplateView):
     template_name="student_about.html"
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 #アカウント情報表示画面
 class MypageView(TemplateView):
@@ -442,6 +534,13 @@ class MypageView(TemplateView):
             context['likeforclubs']=likeforclubs
             
             return context
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 #アカウント情報変更画面、UpdateViewでは原則一つのモデルしか扱えないため、Viewを使用する。
 class MypageUpdateView(View):
@@ -471,10 +570,24 @@ class MypageUpdateView(View):
             'user_form':user_form,
             'student_form':student_form,
         })
+        
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
     
 #アカウント情報削除確認画面
 class MypageDeleteCheckView(TemplateView):
     template_name="student_mypagedeletecheck.html"
+    
+    def dispatch(self, *args, **kwargs):
+        # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
+        if not(not self.request.user.is_authenticated or (self.request.user.is_authenticated and self.request.user.user_type=='student')):
+            # 条件を満たさない場合はアクセス拒否または別ページへリダイレクト
+            return redirect('studentapp:logouturge')#ログアウトページにリダイレクト
+        return super().dispatch(self.request,*args,**kwargs)
 
 #アカウントを削除する処理
 class AccountDeleteView(View):
@@ -490,4 +603,7 @@ class AccountDeleteView(View):
 #アカウント削除完了画面
 class MypageDeleteDoneView(TemplateView):
     template_name="student_mypagedeletedone.html"
-    
+
+class LogoutUrgeView(TemplateView):
+    #freeschool_logouturge.htmlをレンダリング（描写）する
+    template_name='student_logouturge.html'

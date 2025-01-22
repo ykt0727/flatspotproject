@@ -41,5 +41,7 @@ urlpatterns=[
     path('mypageupdate',views.MypageUpdateView.as_view(),name='mypageupdate'),#アカウント情報変更
     path('mypagedeletecheck',views.MypageDeleteCheckView.as_view(),name='mypagedeletecheck'),#アカウント情報削除確認画面
     path('accountdelete',views.AccountDeleteView.as_view(),name='accountdelete'),#アカウントを削除する処理
-    path('mypagedeletedone',views.MypageDeleteDoneView.as_view(),name='mypagedeletedone')#アカウント削除完了画面
+    path('mypagedeletedone',views.MypageDeleteDoneView.as_view(),name='mypagedeletedone'),#アカウント削除完了画面
+    #フリースクールアカウントかadminでアクセスしようとした時のエラーページ
+    path('logouturge',views.LogoutUrgeView.as_view(),name='logouturge'),
 ]    
