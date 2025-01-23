@@ -25,6 +25,13 @@ class SignupForm(forms.ModelForm):
             'email':'メールアドレス',
             'phone_number':'電話番号',
         }
+    
+    # パスワードのバリデーション
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8:
+            raise forms.ValidationError("パスワードは8文字以上である必要があります。")
+        return password
 
     #バリデーションを実行
     def clean(self):
@@ -39,7 +46,7 @@ class SignupForm(forms.ModelForm):
         phone_number = cleaned_data.get("phone_number")
 
         if password!=confirm_password:
-            raise forms.ValidationError("パスワードが一致しません。")
+            self.add_error('confirm_password',"パスワードが一致しません。")
         
         if CustomUser.objects.filter(login_id=login_id).exists():
             self.add_error('login_id', "このIDは既に使用されています。")

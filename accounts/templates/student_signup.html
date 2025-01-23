@@ -33,10 +33,12 @@
             <label for="id_password" class="required">パスワード</label>
             {{ user_form.password }}
         </div>
+        <div style="color:red;">{{ user_form.errors.password }}</div>
         <div>
             <label for="id_confirm_password" class="required">パスワード（確認）</label>
             {{ user_form.confirm_password }}
         </div>
+        <div style="color:red;">{{ user_form.errors.confirm_password }}</div>
         <div>
             <label for="id_nickname" class="required">ニックネーム</label>
             {{ student_form.nickname }}
