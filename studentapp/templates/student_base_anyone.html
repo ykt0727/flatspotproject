@@ -81,11 +81,11 @@
     {% endif %}
     
     <!--各画面でデータベース更新があった場合、meesagesを表示する-->
-    {% if messages %}
     {% for message in messages %}
-      <p class="messages">{{ message }}</p>
+      <div class="messagetext">
+          {{ message }}
+      </div>
     {% endfor %}
-    {% endif %}
 
 
     <!--各画面でヘッダーの設定をする-->

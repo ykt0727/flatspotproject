@@ -152,3 +152,16 @@ button:hover {
       }
   }
 }
+
+/*メッセージの見た目*/
+.messagetext {
+  font-size: 35px;/*フォントサイズ*/
+  font-weight: bold;/*フォントを太字にする*/
+  color: #ff6b6b;/*フォントに色を指定*/
+  height: 200px;/*要素の高さ*/
+
+  /*中央寄せにする*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
