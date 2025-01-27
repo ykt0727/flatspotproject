@@ -15,7 +15,6 @@
     {% if user.is_authenticated %}
         <!--利用者がフリースクール関係者の場合のみ表示-->
         {% if user.user_type == 'freeschool' %}
-        <h1>{{ freeschool.freeschool_name }}</h1>
         <div id="contents">
             {% for message in messages %}
             <div {% if message.tags %}class="{{ message.tags }}"{% endif %}>
