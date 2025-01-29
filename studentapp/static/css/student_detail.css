@@ -44,6 +44,11 @@
     padding-right: 60px;
 }
 
+.detailitem{
+    /*左側に余白*/
+    padding-left: 60px;
+}
+
 /*ジャンル*/
 .detailCategory{
     /*右寄せ*/
@@ -53,6 +58,7 @@
 /*作成日時*/
 .detailCreated{
     text-align: right;
+    padding-right: 60px;
 }
 
 /*SNSリンクを含めて指定*/

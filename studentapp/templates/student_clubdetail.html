@@ -61,16 +61,31 @@
         </div>
     </div>
 
+<div class="detailitem">
+    <!--ジャンルを表示する-->
+    <p>ジャンル : {{ object.get_category_display }}</p>
+
+    <!--代表者を表示する-->
+    <p>代表者 : {{ object.REP }}</p>
+
+    <!--電話番号を表示する-->
+    <p>TEL : {{ object.phone_number }}</p>
+
+    <!--日時を表示する-->
+    <p>活動日時 : {{ object.date }}</p>
+
+    <!--活動場所を表示する-->
+    <p>活動場所 : {{ object.place }}</p>
+
+    <!--参加費を表示する-->
+    <p>参加費 : {{ object.fee }}円</p>
+</div>
+
 <!--紹介文・本文を表示する-->
 <p class="detailText">{{ object.detail_text }}</p>
 
-<div class="detail-JC">
-    <!--ジャンルを表示する-->
-    <p class="detailCategory">{{ object.get_category_display }}</p>
-
-    <!--作成日時を表示する-->
-    <p class="detailCreated">{{ object.created_at }}</p>
-</div>
+<!--作成日時を表示する-->
+<p class="detailCreated">{{ object.created_at }}</p>
 
 <div class="detail-SNS">
     <!--SNSのリンクを表示する-->
