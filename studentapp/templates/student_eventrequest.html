@@ -16,8 +16,15 @@
         </p>
         {% endfor %}
     
-        <button type="submit" class="request-button">イベント申請者にメールを送る</button>
+        <button type="submit" class="request-button" id="submitButton">イベント申請者にメールを送る</button>
     </form>
+
+    <script>
+        document.getElementById("submitButton").addEventListener("click", function() {
+            document.getElementById("submitButton").disabled = true;
+        });
+    </script>    
+
 </div>
 
 {% endblock %}

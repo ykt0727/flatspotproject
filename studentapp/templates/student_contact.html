@@ -14,7 +14,14 @@
         </p>
         {% endfor %}
         
-        <button type="submit" class="request-button">送信する</button>
+        <button type="submit" class="request-button" id="submitButton">送信する</button>
     </form>
+
+    <script>
+        document.getElementById("submitButton").addEventListener("click", function() {
+            document.getElementById("submitButton").disabled = true;
+        });
+    </script>
+
 </div>
 {% endblock %}
