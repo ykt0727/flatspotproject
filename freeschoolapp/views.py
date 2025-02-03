@@ -128,8 +128,10 @@ class MyClubListView(ListView):
     template_name='freeschool_myclublist.html'
     
     #投稿されたサークルを投稿日時の降順（新しい順）に並べ替える
-    queryset=Club.objects.order_by('-created_at')
-    
+    def get_queryset(self):
+        # ユーザーの `uu_id` を使って、関連するサークルを取得
+        return Club.objects.filter(user_id=self.request.user.uu_id).order_by('-created_at')
+
     #1ページに表示する件数
     paginate_by=10
     
