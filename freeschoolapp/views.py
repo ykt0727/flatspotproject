@@ -271,7 +271,9 @@ class MyEventListView(ListView):
     template_name='freeschool_myeventlist.html'
     
     #投稿されたイベントを投稿日時の降順（新しい順）に並べ替える
-    queryset=Event.objects.order_by('-created_at')
+    def get_queryset(self):
+        # ユーザーの `uu_id` を使って、関連するイベントを取得
+        return Event.objects.filter(user_id=self.request.user.uu_id).order_by('-created_at')
     
     #1ページに表示する件数
     paginate_by=10
@@ -412,8 +414,10 @@ class MyBlogListView(ListView):
     #freeschool_mybloglist.htmlをレンダリング（描写）する
     template_name='freeschool_mybloglist.html'
     
-    #投稿されたイベントを投稿日時の降順（新しい順）に並べ替える
-    queryset=BlogPost.objects.order_by('-created_at')
+    #投稿されたブログ記事を投稿日時の降順（新しい順）に並べ替える
+    def get_queryset(self):
+        # ユーザーの `uu_id` を使って、関連するブログ記事を取得
+        return BlogPost.objects.filter(user_id=self.request.user.uu_id).order_by('-created_at')
     
     #1ページに表示する件数
     paginate_by=10
