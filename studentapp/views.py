@@ -153,6 +153,7 @@ class ClubRequestView(FormView):
         # メールの内容をビューで動的に設定
         subject='【ふらっとすぽっと】サークルに体験申請が来ました！'
         body=f'<h1>新しい体験申請がありました！</h1>'
+        body+=f'<p>申請のあったサークル:{club.club_name}</p>'
         body+=f'<p><strong>申請者のメールアドレス:</strong> {sender_email}</p>'
         body+=f'<p>{self.request.user.student.nickname}さん</p>'
         if self.request.user.student.is_guardian:
@@ -324,6 +325,7 @@ class EventRequestView(FormView):
         # メールの内容をビューで動的に設定
         subject='【ふらっとすぽっと】イベント参加申請が来ました！'
         body=f'<h1>新しい申請がありました！</h1>'
+        body+=f'<p>申請のあったイベント:{event.event_name}</p>'
         body+=f'<p><strong>申請者のメールアドレス:</strong> {sender_email}</p>'
         body+=f'<p>{self.request.user.student.nickname}さん</p>'
         if self.request.user.student.is_guardian:
