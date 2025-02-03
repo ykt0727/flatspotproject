@@ -151,13 +151,18 @@ class ClubRequestView(FormView):
         message=form.cleaned_data['message']
         
         # メールの内容をビューで動的に設定
-        subject='サークルに体験申請が来ました！'
+        subject='【ふらっとすぽっと】サークルに体験申請が来ました！'
         body=f'<h1>新しい体験申請がありました！</h1>'
         body+=f'<p><strong>申請者のメールアドレス:</strong> {sender_email}</p>'
         body+=f'<p>{self.request.user.student.nickname}さん</p>'
         if self.request.user.student.is_guardian:
             body+=f'<p>保護者の方からのメッセージです。</p>'
-        body+=f'<p>性別:{self.request.user.student.gender}</p>'
+        if self.request.user.student.gender == 'male':
+            body+=f'<p>性別:男性</p>'
+        elif self.request.user.student.gender == 'female':
+            body+=f'<p>性別:女性</p>'
+        elif self.request.user.student.gender == 'unknown':
+            body+=f'<p>性別:不明</p>'
         body+=f'<p>配慮事項:{self.request.user.student.consideration}</p>'
         body+=f'<p><strong>メッセージ:</strong></p><p>{message}</p>'
         
@@ -323,7 +328,12 @@ class EventRequestView(FormView):
         body+=f'<p>{self.request.user.student.nickname}さん</p>'
         if self.request.user.student.is_guardian:
             body+=f'<p>保護者の方からのメッセージです。</p>'
-        body+=f'<p>性別:{self.request.user.student.gender}</p>'
+        if self.request.user.student.gender == 'male':
+            body+=f'<p>性別:男性</p>'
+        elif self.request.user.student.gender == 'female':
+            body+=f'<p>性別:女性</p>'
+        elif self.request.user.student.gender == 'unknown':
+            body+=f'<p>性別:不明</p>'
         body+=f'<p>配慮事項:{self.request.user.student.consideration}</p>'
         
         body+=f'<p><strong>メッセージ:</strong></p><p>{message}</p>'

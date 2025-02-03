@@ -43,12 +43,12 @@ class ClubPostForm(forms.ModelForm):
             'image3':'画像3',
             'image4':'画像4',
             'image5':'画像5',
-            'public_flag':'公開状況',
+            'public_flag':'全てのユーザーに公開する',
             'detail_text':'サークルの紹介文',
         }
 
 
-#サークル掲載フォーム
+#イベント掲載フォーム
 class EventPostForm(forms.ModelForm):
     class Meta:
         model=Event
@@ -89,7 +89,7 @@ class EventPostForm(forms.ModelForm):
             'image3':'画像3',
             'image4':'画像4',
             'image5':'画像5',
-            'public_flag':'公開状況',
+            'public_flag':'全てのユーザーに公開する',
             'detail_text':'イベントの紹介文',
         }
 
@@ -120,7 +120,7 @@ class BlogPostForm(forms.ModelForm):
             'image3':'画像3',
             'image4':'画像4',
             'image5':'画像5',
-            'public_flag':'公開状況',
+            'public_flag':'全てのユーザーに公開する',
             'detail_text':'記事内容',
         }
     
@@ -161,11 +161,22 @@ class CustomUserForm(forms.ModelForm):
     class Meta:
         model=CustomUser
         #表示するフィールド
-        fields = ['login_id','phone_number']
+        fields=['login_id','phone_number']
+        
+        #ラベル名を設定する
+        labels={'login_id':'ログインID',
+                'phone_number':'電話番号'
+        }
 
 #FreeSchoolを変更するフォーム
 class FreeSchoolForm(forms.ModelForm):
     class Meta:
-            model=FreeSchool
-            #表示するフィールド
-            fields=['freeschool_name','address','manager_name']
+        model=FreeSchool
+        #表示するフィールド
+        fields=['freeschool_name','address','manager_name']
+            
+        #ラベル名を設定する
+        labels={'freeschool_name':'フリースクール名',
+                'address':'住所',
+                'manager_name':'代表者名'
+        }

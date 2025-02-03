@@ -9,11 +9,10 @@
 </head>
 <body class="signup_body">
     <form method="POST" class="student_signup">
+    <a href="{% url 'studentapp:top' %}" class="upperlefttopbutton2">トップページに戻る</a>
     <p>新規登録するアカウントの情報を入力してください</p>
     {% csrf_token %}
     <div class="labelandform">
-        <!-- {{ user_form.as_p }}
-        {{ student_form.as_p }} 変更する前につかってたやつ-->
         <div>
             <label for="id_login_id" class="required">ログインID</label>
             {{ user_form.login_id}} 

@@ -11,4 +11,5 @@
     <a href="{% url 'freeschoolapp:userdetail' object.pk %}">詳細</a>
     <br>
 {% endfor %}
+{% include 'pagination.html' %}
 {% endblock %}

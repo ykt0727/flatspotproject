@@ -108,7 +108,7 @@ class StudentForm(forms.ModelForm):
            'gender':'性別',
            'ent_year':'入学年度',
            'date_of_birth':'誕生日',
-           'considerration':'配慮事項',
+           'consideration':'配慮事項',
         }
 
     def __init__(self, *args, **kwargs):

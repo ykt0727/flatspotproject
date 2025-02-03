@@ -194,3 +194,11 @@ body {
     cursor: pointer; /*ボタンにカーソルを乗せるとポインターに変化する*/
     transition: background-color 0.3s ease; /*下に記述しているhoverを可能にするために書いている*/
   }
+
+.upperlefttopbutton1 {
+  margin-right: 170px;
+}
+
+.upperlefttopbutton2 {
+  margin-right: 900px;
+}

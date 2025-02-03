@@ -1,7 +1,7 @@
 {% extends 'freeschool_base.html' %}
 {% block title %}掲載ブログ詳細画面{% endblock %}
 {% block contents %}
-掲載ブログ詳細画面
+投稿ブログ記事詳細画面
 <a href="{% url 'freeschoolapp:mybloglist' %}"><button>投稿ブログ記事一覧に戻る</button></a>
 <a href="{% url 'freeschoolapp:myblogupdate' object.id %}"><button>変更</button></a>
 <a href="{% url 'freeschoolapp:myblogdeletecheck' object.id %}"><button>削除</button></a>
@@ -75,9 +75,9 @@
                 <th>公開状況</th>
                 <td>
                     {% if object.public_flag %}
-                        公開
+                        全てのユーザーに公開中
                     {% else %}
-                        非公開
+                        限定公開
                     {% endif %}
                 </td>
             </tr>

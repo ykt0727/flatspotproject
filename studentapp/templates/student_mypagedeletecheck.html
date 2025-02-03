@@ -8,7 +8,7 @@
 <form method="post" action="{% url 'studentapp:accountdelete' %}">
     {% csrf_token %}
     <button type="submit">削除する</button>
-    <a href="{% url 'studentapp:mypage' %}">キャンセル</a>
+    <a href="{% url 'studentapp:mypage' %}" class="cssbutton">キャンセル</a>
 </form>
 
 {% endblock %}
