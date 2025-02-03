@@ -21,8 +21,15 @@
                 <label>パスワード:</label>
                 {{ form.password }}
                 <br><br>
-                <button type="submit" class="login-button">ログイン</button>
+                <button type="submit" class="login-button" id="submitButton">ログイン</button>
             </form>
+            
+            <script>
+                document.getElementById("submitButton").addEventListener("click", function() {
+                    document.getElementById("submitButton").disabled = true;
+                });
+            </script> 
+
             <br>
             <div class=""><a href="{% url 'accounts:student_signup' %}"><button class="signup-button">ユーザー登録</button></a></div>
             <br>
