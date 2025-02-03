@@ -37,7 +37,11 @@ class Student(models.Model):
    
     #配慮事項フィールド、テキスト形式で自由に入力できるようにする。
     consideration=models.TextField(max_length=1000,blank=True,null=True)
-
+    
+    #管理画面に表示する名前をnicknameに変更
+    def __str__(self):
+        return self.nickname
+    
 #ブログのいいね機能
 class LikeForBlogPost(models.Model):
     #いいねの対象、元の投稿が削除されたらいいねも削除する
@@ -52,6 +56,11 @@ class LikeForBlogPost(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['target','user'], name='unique_like_for_blogpost')
         ]
+    
+    #管理画面に表示する名前をtargetに変更
+    def __str__(self):
+        return self.target.title
+    
         
 #サークルのいいね機能    
 class LikeForClub(models.Model):
@@ -68,7 +77,9 @@ class LikeForClub(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['target','user'], name='unique_like_for_clubpost')
         ]
-        
+    #管理画面に表示する名前をtargetに変更
+    def __str__(self):
+        return self.target.club_name           
 
 #イベントのイイネ機能
 class LikeForEvent(models.Model):
@@ -79,10 +90,13 @@ class LikeForEvent(models.Model):
     #いいねした日付
     timestamp=models.DateTimeField(default=timezone.now)
     
-        #データベースの初期設定をするクラス
+    #データベースの初期設定をするクラス
     class Meta:
         #同じユーザーが同じ記事に対していいねできないようにする
         constraints=[
             models.UniqueConstraint(fields=['target','user'], name='unique_like_for_eventpost')
         ]
-        
+    
+    #管理画面に表示する名前をtargetに変更
+    def __str__(self):
+        return self.target.event_name

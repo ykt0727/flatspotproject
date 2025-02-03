@@ -18,7 +18,9 @@ class FreeSchool(models.Model):
     
     #住所フィールド
     address=models.CharField(max_length=255,null=False)   
-
+    
+    def __str__(self):
+        return self.freeschool_name  # 管理画面に表示する名前を freeschool_name に変更
 
 class Club(models.Model):
     
@@ -88,7 +90,10 @@ class Club(models.Model):
  
     #更新日時
     updated_at=models.DateTimeField(auto_now=True)
-    
+
+    def __str__(self):
+        return self.club_name  # 管理画面に表示する名前をclub_nameに変更
+
 
 class Event(models.Model):
     
@@ -158,23 +163,26 @@ class Event(models.Model):
  
     #更新日時
     updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.event_name  # 管理画面に表示する名前をevent_nameに変更
 
 class BlogPost(models.Model):
    
     #投稿者を紐づける
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
-   
+    
     #タイトル
     title=models.CharField(max_length=40,null=False)
-   
+    
     #ジャンル
     category_choices=[
         ('report','活動報告'),
         ('news','ニュース'),
     ]
     category=models.CharField(max_length=25,choices=category_choices)
-   
-  #画像1~5、1枚目は必須
+    
+    #画像1~5、1枚目は必須
     image1=models.ImageField(blank=False,null=False,upload_to='photos')
     image2=models.ImageField(blank=True,null=True,upload_to='photos')
     image3=models.ImageField(blank=True,null=True,upload_to='photos')
@@ -192,3 +200,7 @@ class BlogPost(models.Model):
  
     #更新日時
     updated_at=models.DateTimeField(auto_now=True)
+
+    #管理画面に表示する名前をtitleに変更
+    def __str__(self):
+        return self.title 

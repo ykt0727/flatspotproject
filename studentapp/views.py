@@ -535,15 +535,25 @@ class MypageView(TemplateView):
         context=super().get_context_data(**kwargs)
         
         if self.request.user.is_authenticated and self.request.user.user_type=='student':
-            #ログインしているユーザーがいいねした記事を取得し、contextに格納する
-            likeforblogposts=LikeForBlogPost.objects.filter(user=self.request.user).order_by('timestamp')
-            context['likeforblogposts']=likeforblogposts
-            likeforevents=LikeForEvent.objects.filter(user=self.request.user).order_by('timestamp')
-            context['likeforevents']=likeforevents
-            likeforclubs=LikeForClub.objects.filter(user=self.request.user).order_by('timestamp')
-            context['likeforclubs']=likeforclubs
-            
-            return context
+            #is_ViewがTrueの場合、全ての投稿を表示する
+            if self.request.user.student.is_view:
+                #ログインしているユーザーがいいねした記事を取得し、contextに格納する
+                likeforblogposts=LikeForBlogPost.objects.filter(user=self.request.user).order_by('timestamp')
+                context['likeforblogposts']=likeforblogposts
+                likeforevents=LikeForEvent.objects.filter(user=self.request.user).order_by('timestamp')
+                context['likeforevents']=likeforevents
+                likeforclubs=LikeForClub.objects.filter(user=self.request.user).order_by('timestamp')
+                context['likeforclubs']=likeforclubs
+                return context
+            else:
+                #ログインしているユーザーがいいねした記事を取得し、contextに格納する
+                likeforblogposts=LikeForBlogPost.objects.filter(user=self.request.user,target__public_flag=True).order_by('timestamp')
+                context['likeforblogposts']=likeforblogposts
+                likeforevents=LikeForEvent.objects.filter(user=self.request.user,target__public_flag=True).order_by('timestamp')
+                context['likeforevents']=likeforevents
+                likeforclubs=LikeForClub.objects.filter(user=self.request.user,target__public_flag=True).order_by('timestamp')
+                context['likeforclubs']=likeforclubs
+                return context
     
     def dispatch(self, *args, **kwargs):
         # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
