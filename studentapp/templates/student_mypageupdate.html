@@ -6,6 +6,13 @@
         {% csrf_token %}
         {{ user_form.as_p }}
         {{ student_form.as_p}}
-    <button type="submit">変更する</button>
+    <button type="submit" id="submitButton">変更する</button>
     </form>
+
+    <script>
+        document.getElementById("submitButton").addEventListener("submit", function() {
+            document.getElementById("submitButton").disabled = true;
+        });
+    </script>    
+
 {% endblock %}
