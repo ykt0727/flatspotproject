@@ -11,6 +11,13 @@
     {% csrf_token %}
     <p>許可する : {{ form.is_view }}</p>
     <a href="{% url 'freeschoolapp:usersearch' %}" class="cssbutton">戻る</a>
-    <button type="submit">完了</button>
+    <button type="submit" id="submitButton">完了</button>
 </form>
+
+<script>
+    document.getElementById("submitButton").addEventListener("click", function() {
+        document.getElementById("submitButton").disabled = true;
+    });
+</script>
+
 {% endblock %}

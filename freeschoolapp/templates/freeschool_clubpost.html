@@ -12,7 +12,15 @@
         <br><br>
         {{ field.errors }}
     {% endfor %}
-        <button type="submit">掲載する</button>
+        <button type="submit" id="submitButton">掲載する</button>
     </div>
 </form>
+
+<script>
+    document.getElementById("submitButton").addEventListener("click", function() {
+        document.getElementById("submitButton").disabled = true;
+    });
+</script>
+
+
 {% endblock %}

@@ -17,6 +17,14 @@
     {% for field in form.hidden_fields %}
         {{ field }}
     {% endfor %}
-    <button type="submit">変更する</button>
+    <button type="submit" id="submitButton">変更する</button>
 </form>
+
+<script>
+    document.getElementById("submitButton").addEventListener("click", function() {
+        document.getElementById("submitButton").disabled = true;
+    });
+</script>
+
+
 {% endblock %}

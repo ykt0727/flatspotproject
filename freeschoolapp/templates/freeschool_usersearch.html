@@ -4,8 +4,15 @@
 ユーザー検索画面
 <form method="get">
     <input type="search" value="{{ request.GET.query }}" name="q">
-    <button type="submit">検索</button>
+    <button type="submit" id="submitButton">検索</button>
 </form>
+
+<script>
+    document.getElementById("submitButton").addEventListener("click", function() {
+        document.getElementById("submitButton").disabled = true;
+    });
+</script>
+
 {% for object in object_list %}
     {{ object.nickname }}
     <a href="{% url 'freeschoolapp:userdetail' object.pk %}">詳細</a>
