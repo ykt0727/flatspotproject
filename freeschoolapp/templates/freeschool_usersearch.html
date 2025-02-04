@@ -2,14 +2,18 @@
 {% block title %}freeschool search{% endblock %}
 {% block contents %}
 ユーザー検索画面
-<form method="get">
+<form method="get" id="requestForm">
     <input type="search" value="{{ request.GET.query }}" name="q">
     <button type="submit" id="submitButton">検索</button>
 </form>
 
+<!--2重submitを防止する処理-->
 <script>
-    document.getElementById("submitButton").addEventListener("submit", function() {
-        document.getElementById("submitButton").disabled = true;
+    const form = document.getElementById("requestForm");
+    const submitButton = document.getElementById("submitButton");
+
+    form.addEventListener("submit", function(event){
+        submitButton.disabled = true;//ボタンを無効化
     });
 </script>
 

@@ -7,7 +7,7 @@
 <div class="request-info">
     <p class="request-accounts">※ログイン中のユーザーの情報、ここで入力した内容がクラブ管理者に送信されます</p>
     <!--メールを送信するフォーム-->
-    <form method="POST">
+    <form method="POST" id="requestForm">
         {% csrf_token %}
         {% for field in form %}
         <p>
@@ -19,12 +19,15 @@
         <button type="submit" class="request-button" id="submitButton">クラブ管理者にメールを送る</button>
     </form>
 
+    <!--2重submitを防止する処理-->
     <script>
-        document.getElementById("submitButton").addEventListener("submit", function() {
-            document.getElementById("submitButton").disabled = true;
+        const form = document.getElementById("requestForm");
+        const submitButton = document.getElementById("submitButton");
+
+        form.addEventListener("submit", function(event){
+            submitButton.disabled = true;//ボタンを無効化
         });
     </script>
-    
 
 </div> 
 

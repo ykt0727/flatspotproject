@@ -15,9 +15,14 @@
         <button type="submit" id="submitButton">掲載する</button>
     </div>
 </form>
+
+<!--2重submitを防止する処理-->
 <script>
-    document.getElementById("submitButton").addEventListener("submit", function() {
-        document.getElementById("submitButton").disabled = true;
+    const form = document.getElementById("requestForm");
+    const submitButton = document.getElementById("submitButton");
+
+    form.addEventListener("submit", function(event){
+        submitButton.disabled = true;//ボタンを無効化
     });
 </script>
 

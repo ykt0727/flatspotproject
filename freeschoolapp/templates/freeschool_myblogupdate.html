@@ -4,7 +4,7 @@
 {% block contents %}
 投稿ブログ記事内容変更画面
 <a href="{% url 'freeschoolapp:mybloglist' %}"><button>投稿ブログ一覧に戻る</button></a>
-<form method="POST" enctype="multipart/form-data" class="form">
+<form method="POST" enctype="multipart/form-data" class="form" id="requestForm">
     {% csrf_token %}
     {% for field in form.visible_fields %}
         {{ field.label }}
@@ -19,11 +19,14 @@
     {% endfor %}
     <button type="submit" id="submitButton" >変更する</button>
 </form>
+<!--2重submitを防止する処理-->
 <script>
-    document.getElementById("submitButton").addEventListener("submit", function() {
-        document.getElementById("submitButton").disabled = true;
+    const form = document.getElementById("requestForm");
+    const submitButton = document.getElementById("submitButton");
+
+    form.addEventListener("submit", function(event){
+        submitButton.disabled = true;//ボタンを無効化
     });
 </script>
-
 
 {% endblock %}

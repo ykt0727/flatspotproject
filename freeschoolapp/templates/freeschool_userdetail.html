@@ -7,17 +7,22 @@
 {{ object.nickname }}
 <br>
 限定公開ページへのアクセスを許可
-<form method="post">
+<form method="post" id="requestForm">
     {% csrf_token %}
     <p>許可する : {{ form.is_view }}</p>
     <a href="{% url 'freeschoolapp:usersearch' %}" class="cssbutton">戻る</a>
     <button type="submit" id="submitButton">完了</button>
 </form>
 
+<!--2重submitを防止する処理-->
 <script>
-    document.getElementById("submitButton").addEventListener("submit", function() {
-        document.getElementById("submitButton").disabled = true;
+    const form = document.getElementById("requestForm");
+    const submitButton = document.getElementById("submitButton");
+
+    form.addEventListener("submit", function(event){
+        submitButton.disabled = true;//ボタンを無効化
     });
 </script>
+
 
 {% endblock %}

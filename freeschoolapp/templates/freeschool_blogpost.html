@@ -5,7 +5,7 @@
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューへ戻る</button></a>
 ブログ記事投稿画面
 <!--画像を送信する際はenctypeが必要-->
-<form method="post" enctype="multipart/form-data" class="form">
+<form method="post" enctype="multipart/form-data" class="form" id="requestForm">
     {% csrf_token %}
     {% for field in post_form %}
         {{ field.label_tag }}<br>
@@ -85,11 +85,16 @@
     </div>
 </form>
 
+<!--2重submitを防止する処理-->
 <script>
-    document.getElementById("submitButton").addEventListener("submit", function() {
-        document.getElementById("submitButton").disabled = true;
+    const form = document.getElementById("requestForm");
+    const submitButton = document.getElementById("submitButton");
+
+    form.addEventListener("submit", function(event){
+        submitButton.disabled = true;//ボタンを無効化
     });
 </script>
+
 
 
 {% endblock %}

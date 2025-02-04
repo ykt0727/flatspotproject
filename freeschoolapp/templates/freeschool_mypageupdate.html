@@ -3,7 +3,7 @@
 {% block title %}アカウント情報を変更する{% endblock %}
 {% block contents %}
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューへ戻る</button></a>
-<form method="post" class="form">
+<form method="post" class="form" id="requestForm">
     {% csrf_token %}
     {% for field in user_form %}
         {{ field.label_tag }}<br>
@@ -21,9 +21,13 @@
     </div>
 </form>
 
+<!--2重submitを防止する処理-->
 <script>
-    document.getElementById("submitButton").addEventListener("submit", function() {
-        document.getElementById("submitButton").disabled = true;
+    const form = document.getElementById("requestForm");
+    const submitButton = document.getElementById("submitButton");
+
+    form.addEventListener("submit", function(event){
+        submitButton.disabled = true;//ボタンを無効化
     });
 </script>
 

@@ -5,7 +5,7 @@
 {% block contents %}
 
 <div class="request-info">
-    <form method="post">
+    <form method="post" id="requestForm">
         {% csrf_token %}
         {% for field in form %}
         <p>
@@ -17,11 +17,14 @@
         <button type="submit" class="request-button" id="submitButton">送信する</button>
     </form>
 
+    <!--2重submitを防止する処理-->
     <script>
-        document.getElementById("submitButton").addEventListener("submit", function() {
-            document.getElementById("submitButton").disabled = true;
+        const form = document.getElementById("requestForm");
+        const submitButton = document.getElementById("submitButton");
+
+        form.addEventListener("submit", function(event){
+            submitButton.disabled = true;//ボタンを無効化
         });
     </script>
-
 </div>
 {% endblock %}
