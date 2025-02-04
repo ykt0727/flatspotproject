@@ -5,9 +5,9 @@
 
 アカウントを削除してもよろしいですか？
 <!--postリクエストを利用したいのでformタグを使用する-->
-<form method="post" action="{% url 'studentapp:accountdelete' %}">
+<form method="post" action="{% url 'studentapp:accountdelete' %}" id="requestForm">
     {% csrf_token %}
-    <button type="submit" id="submitButton" id="requestForm">削除する</button>
+    <button type="submit" id="submitButton">削除する</button>
     <a href="{% url 'studentapp:mypage' %}" class="cssbutton">キャンセル</a>
 </form>
 <!--2重submitを防止する処理-->

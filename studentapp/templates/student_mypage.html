@@ -61,7 +61,14 @@
                     {% endif %}
                 </td>
             </tr>
-
+            <tr>
+                <th>ユーザー区分</th>
+                {% if user.student.is_guardian %}
+                    <td>保護者</td>
+                {% else %}
+                    <td>生徒</td>
+                {% endif %}
+            </tr>
             <tr>
                 <th>配慮事項(フリースクールにお伝えしたいこと)</th>
                 <td>{{ user.student.consideration }}</td>
