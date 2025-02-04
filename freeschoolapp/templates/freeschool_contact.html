@@ -1,13 +1,19 @@
 {% extends 'freeschool_base.html' %}
+{% load widget_tweaks %}
 {% load static %}
 {% block title %}お問い合わせ{% endblock %}
 {% block contents %}
 
-<form method="post" id="requestForm">
+<form method="post" id="requestForm" class="form">
     {% csrf_token %}
     {% for field in form %}
-    {{ field.label_tag }}
-    {{ field }}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field|add_class:"form-control" }}
+            <div class="field-errors">
+                {{ field.errors }}
+            </div>
+        </div>
     {% endfor %}
     <button type="submit" id="submitButton">送信する</button>
 </form>
@@ -21,6 +27,5 @@
         submitButton.disabled = true;//ボタンを無効化
     });
 </script>
-
 
 {% endblock %}

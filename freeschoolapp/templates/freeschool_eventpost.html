@@ -4,13 +4,17 @@
 {% block contents %}
 <a href="{% url 'freeschoolapp:top' %}"><button>メインメニューへ戻る</button></a>
 イベント掲載情報入力画面
-<form method="post" enctype="multipart/form-data" class="form">
+<form method="post" enctype="multipart/form-data" class="form" id="requestForm">
     {% csrf_token %}
     {% for field in eventpost_form %}
-        {{ field.label_tag }}<br>
-        {{ field|add_class:'field' }}
-        <br><br>
-        {{ field.errors }}
+        <div class="form-group">
+            {{ field.label_tag }}<br>
+            {{ field|add_class:"field" }}
+            <br><br>
+            <div class="field-errors">
+            {{ field.errors }}
+            </div>
+        </div>
     {% endfor %}
         <button type="submit" id="submitButton">掲載する</button>
     </div>

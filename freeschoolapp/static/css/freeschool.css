@@ -1,26 +1,68 @@
+/* メニューのスタイル */
 #menu {
-    float: left; /* 左側に配置する */
-    width: 15%;
-    height: 100%;
+    width: 200px;
     padding-left: 1%;
     border-right:1px solid #000000;
+    /* Flexboxの子要素としての設定 */
+    flex-shrink: 0;
 }
 
+/* コンテンツのスタイル */
 #contents {
-    float: right; /* 右側に配置する */
-    width: 85%;
-    height: 100vh;
     padding-left: 1%;
+    /* Flexboxの子要素としての設定 */
+    flex-grow: 1;
 }
 
-.menu_item {
-    padding-bottom: 5px;
-}
-
+/* フォームのスタイル */
 .form {
-    padding-left: 300px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
 }
 
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.field-errors {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* その他のスタイル */
 .field {
     width: 300px;
 }
@@ -34,20 +76,21 @@ table {
     border: 1px solid #000;
     width: 66%;
     table-layout: fixed;
-  }
-  
-  table th {
+}
+
+table th {
     border: 1px solid #000;
     width: 20%;
-  }
-  
-  table td {
+}
+
+table td {
     border: 1px solid #000;
     width: 50%;
     word-break: break-all;
     overflow-wrap : break-word;
-  }
+}
 
+/* ボタンのスタイル */
 .cssbutton {
     border: solid 2px #000;
     padding: 2px 5px;
