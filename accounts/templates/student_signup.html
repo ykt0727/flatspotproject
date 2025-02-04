@@ -8,7 +8,7 @@
     <title>サインアップ</title>
 </head>
 <body class="signup_body">
-    <form method="POST" class="student_signup">
+    <form method="POST" class="student_signup" id="requestForm">
     <a href="{% url 'studentapp:top' %}" class="upperlefttopbutton2">トップページに戻る</a>
     <p>新規登録するアカウントの情報を入力してください</p>
     {% csrf_token %}
@@ -68,10 +68,14 @@
     </div>
     <button type="submit" id="submitButton" class="signup_button">★新規登録★</button>
     </form>
-    
+
+    <!--2重submitを防止する処理-->
     <script>
-        document.getElementById("submitButton").addEventListener("submit", function() {
-            document.getElementById("submitButton").disabled = true;
+        const form = document.getElementById("requestForm");
+        const submitButton = document.getElementById("submitButton");
+
+        form.addEventListener("submit", function(event){
+            submitButton.disabled = true;//ボタンを無効化
         });
     </script>
 

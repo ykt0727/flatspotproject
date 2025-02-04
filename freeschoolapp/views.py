@@ -373,7 +373,7 @@ class BlogPostView(CreateView):
         #投稿フォームをcontextに格納
         context['post_form']=self.form
         return context
- 
+    
     def form_valid(self,form):
         #POSTされたデータを取得
         postdata=form.save(commit=False)
@@ -384,7 +384,7 @@ class BlogPostView(CreateView):
         messages.success(self.request, "ブログ情報を投稿しました")
 
         return super().form_valid(form)
- 
+    
     def get_success_url(self):
         # 成功後の遷移先URL
         return reverse_lazy('freeschoolapp:blogpost')
