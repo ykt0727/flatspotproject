@@ -12,6 +12,7 @@ class ClubRequestForm(forms.Form):
         label='メッセージ',
         #複数行にわたって入力できるように設定
         widget=forms.Textarea(attrs={'class':'form-control','rows': 5}),
+        max_length=1000,
     )
     
     #不登校生徒とフリースクール関係者のメアドを引数で渡す
@@ -37,6 +38,7 @@ class EventRequestForm(forms.Form):
         label='メッセージ',
         #複数行にわたって入力できるように設定
         widget=forms.Textarea(attrs={'class':'form-control','rows':5}),
+        max_length=1000,
     )
     
     #不登校生徒とフリースクール関係者のメアドを引数で渡す
@@ -57,10 +59,10 @@ class EventRequestForm(forms.Form):
 
 #お問い合わせフォーム
 class ContactForm(forms.Form):
-    name = forms.CharField(label='お名前')
-    email = forms.EmailField(label='メールアドレス')
-    title = forms.CharField(label='件名')
-    message = forms.CharField(label='メッセージ',widget=forms.Textarea)
+    name = forms.CharField(label='お名前', max_length=30)
+    email = forms.EmailField(label='メールアドレス',max_length=255)
+    title = forms.CharField(label='件名',max_length=100)
+    message = forms.CharField(label='メッセージ',widget=forms.Textarea,max_length=1000)
 
     
     def __init__(self,*args,**kwargs):
