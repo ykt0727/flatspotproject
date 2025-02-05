@@ -6,23 +6,108 @@
 サークル掲載情報登録画面
 <form method="post" enctype="multipart/form-data" class="form" id="requestForm">
     {% csrf_token %}
-    {% for field in clubpost_form %}
+    <!-- {% for field in clubpost_form %}
         {{ field.label_tag }}<br>
         {{ field|add_class:'field' }}
         <br><br>
         {{ field.errors }}
-    {% endfor %}
+    {% endfor %} -->
+    {{ clubpost_form.club_name.label_tag }}<br>
+    {{ clubpost_form.club_name|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.club_name }}
+
+    {{ clubpost_form.category.label_tag }}<br>
+    {{ clubpost_form.category|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.category }}
+
+    {{ clubpost_form.REP.label_tag }}<br>
+    {{ clubpost_form.REP|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.REP }}
+
+    {{ clubpost_form.email.label_tag }}<br>
+    {{ clubpost_form.email|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.email }}
+
+    {{ clubpost_form.phone_number.label_tag }}<br>
+    <input type="text"
+           name="phone_number" 
+           maxlength="11" 
+           class="field" 
+           required id="id_phone_number" 
+           onkeyup="phone_number_check()">
+    <div id="phone_number_error" style="color:red;"></div><br>
+    {{ clubpost_form.errors.phone_number }}
+
+    {{ clubpost_form.date.label_tag }}<br>
+    {{ clubpost_form.date|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.date }}
+
+    {{ clubpost_form.fee.label_tag }}<br>
+    {{ clubpost_form.fee|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.fee }}
+
+    {{ clubpost_form.place.label_tag }}<br>
+    {{ clubpost_form.place|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.place }}
+
+    {{ clubpost_form.sns_link.label_tag }}<br>
+    {{ clubpost_form.sns_link|add_class:'field' }}<br><br>
+    {{ clubpost_form.error.sns_links }}
+
+    {{ clubpost_form.sns_name.label_tag }}<br>
+    {{ clubpost_form.sns_name|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.sns_name }}
+
+    {{ clubpost_form.image1.label_tag }}<br>
+    {{ clubpost_form.image1|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.image1 }}
+
+    {{ clubpost_form.image2.label_tag }}<br>
+    {{ clubpost_form.image2|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.image2 }}
+
+    {{ clubpost_form.image3.label_tag }}<br>
+    {{ clubpost_form.image3|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.image3 }}
+
+    {{ clubpost_form.image4.label_tag }}<br>
+    {{ clubpost_form.image4|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.image4 }}
+
+    {{ clubpost_form.image5.label_tag }}<br>
+    {{ clubpost_form.image5|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.image5 }}
+
+    {{ clubpost_form.public_flag.label_tag }}<br>
+    {{ clubpost_form.public_flag|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.public_flag }}
+
+    {{ clubpost_form.detail_text.label_tag }}<br>
+    {{ clubpost_form.detail_text|add_class:'field' }}<br><br>
+    {{ clubpost_form.errors.detail_text }}
+
         <button type="submit" id="submitButton">掲載する</button>
     </div>
 </form>
 
-<!--2重submitを防止する処理-->
+<!--2重submitを防止する処理と電話番号のバリデーション-->
 <script>
     const form = document.getElementById("requestForm");
     const submitButton = document.getElementById("submitButton");
+    const regex = /^\d+$/;
+    var phone_number = ""
+    function phone_number_check() {
+        phone_number = document.getElementById("id_phone_number").value;
+    }
 
     form.addEventListener("submit", function(event){
-        submitButton.disabled = true;//ボタンを無効化
+        console.log(phone_number)
+        if (!regex.test(phone_number)){
+            document.getElementById('phone_number_error').innerHTML = "電話番号は半角数字11桁以内で入力してください。";
+            event.preventDefault();
+        } else {
+            submitButton.disabled = true;//ボタンを無効化
+        }
     });
 </script>
 
