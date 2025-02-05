@@ -101,7 +101,6 @@
     }
 
     form.addEventListener("submit", function(event){
-        console.log(phone_number)
         if (!regex.test(phone_number)){
             document.getElementById('phone_number_error').innerHTML = "電話番号は半角数字11桁以内で入力してください。";
             event.preventDefault();

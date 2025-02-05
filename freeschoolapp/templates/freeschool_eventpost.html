@@ -7,7 +7,7 @@
 <form method="post" enctype="multipart/form-data" class="form" id="requestForm">
     {% csrf_token %}
     {% for field in eventpost_form %}
-        <div class="form-group">
+        <!-- <div class="form-group">
             {{ field.label_tag }}<br>
             {{ field|add_class:"field" }}
             <br><br>
@@ -15,18 +15,101 @@
             {{ field.errors }}
             </div>
         </div>
-    {% endfor %}
+    {% endfor %} -->
+    {{ eventpost_form.event_name.label_tag }}<br>
+    {{ eventpost_form.event_name|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.event_name }}
+
+    {{ eventpost_form.category.label_tag }}<br>
+    {{ eventpost_form.category|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.category }}
+
+    {{ eventpost_form.REP.label_tag }}<br>
+    {{ eventpost_form.REP|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.REP }}
+
+    {{ eventpost_form.email.label_tag }}<br>
+    {{ eventpost_form.email|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.email }}
+
+    {{ eventpost_form.phone_number.label_tag }}<br>
+    <input type="text"
+           name="phone_number" 
+           maxlength="11" 
+           class="field" 
+           required id="id_phone_number" 
+           onkeyup="phone_number_check()">
+    <div id="phone_number_error" style="color:red;"></div><br>
+    {{ eventpost_form.errors.phone_number }}
+
+    {{ eventpost_form.date.label_tag }}<br>
+    {{ eventpost_form.date|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.date }}
+
+    {{ eventpost_form.fee.label_tag }}<br>
+    {{ eventpost_form.fee|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.fee }}
+
+    {{ eventpost_form.place.label_tag }}<br>
+    {{ eventpost_form.place|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.place }}
+
+    {{ eventpost_form.sns_link.label_tag }}<br>
+    {{ eventpost_form.sns_link|add_class:'field' }}<br><br>
+    {{ eventpost_form.error.sns_links }}
+
+    {{ eventpost_form.sns_name.label_tag }}<br>
+    {{ eventpost_form.sns_name|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.sns_name }}
+
+    {{ eventpost_form.image1.label_tag }}<br>
+    {{ eventpost_form.image1|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.image1 }}
+
+    {{ eventpost_form.image2.label_tag }}<br>
+    {{ eventpost_form.image2|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.image2 }}
+
+    {{ eventpost_form.image3.label_tag }}<br>
+    {{ eventpost_form.image3|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.image3 }}
+
+    {{ eventpost_form.image4.label_tag }}<br>
+    {{ eventpost_form.image4|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.image4 }}
+
+    {{ eventpost_form.image5.label_tag }}<br>
+    {{ eventpost_form.image5|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.image5 }}
+
+    {{ eventpost_form.public_flag.label_tag }}<br>
+    {{ eventpost_form.public_flag|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.public_flag }}
+
+    {{ eventpost_form.detail_text.label_tag }}<br>
+    {{ eventpost_form.detail_text|add_class:'field' }}<br><br>
+    {{ eventpost_form.errors.detail_text }}
         <button type="submit" id="submitButton">掲載する</button>
     </div>
 </form>
 
-<!--2重submitを防止する処理-->
+<!--2重submitを防止する処理と電話番号のバリデーション-->
 <script>
     const form = document.getElementById("requestForm");
     const submitButton = document.getElementById("submitButton");
+    const regex = /^\d+$/;
+    var phone_number = ""
+    function phone_number_check() {
+        phone_number = document.getElementById("id_phone_number").value;
+    }
 
     form.addEventListener("submit", function(event){
-        submitButton.disabled = true;//ボタンを無効化
+        if (!regex.test(phone_number)){
+            document.getElementById('phone_number_error').innerHTML = "電話番号は半角数字11桁以内で入力してください。";
+            event.preventDefault();
+        } else {
+            submitButton.disabled = true;//ボタンを無効化
+        }
     });
 </script>
 
