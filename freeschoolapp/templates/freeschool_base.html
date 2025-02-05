@@ -15,68 +15,67 @@
     <div class="container" style="display: flex;"> 
         <!--ログインされている場合-->
         {% if user.is_authenticated %}
-            <!--利用者がフリースクール関係者の場合のみ表示-->
-            {% if user.user_type == 'freeschool' %}
+            <div id="menu">
+                <a href="{% url 'freeschoolapp:top' %}">メインメニュー</a>
+                <!--サークルタブ-->
+                <div onclick="obj=document.getElementById('openclub').style; obj.display=(obj.display=='none')?'block':'none';">
+                    <a class="menu_item" style="cursor:pointer;">サークル▼</a>
+                </div>
+                <div id="openclub" style="display:none;clear:both;">
+                    <a class="menu_item" href="{% url 'freeschoolapp:clubpost' %}">・サークル掲載</a>
+                    <br>
+                    <a class="menu_item" href="{% url 'freeschoolapp:myclublist' %}">・管理サークル一覧</a>
+                </div>
+                <!--イベントタブ-->
+                <div onclick="obj=document.getElementById('openevent').style; obj.display=(obj.display=='none')?'block':'none';">
+                    <a class="menu_item" style="cursor:pointer;">イベント▼</a>
+                </div>
+                <div id="openevent" style="display:none;clear:both;">
+                    <a class="menu_item" href="{% url 'freeschoolapp:eventpost' %}">・イベント掲載</a>
+                    <br>
+                    <a class="menu_item" href="{% url 'freeschoolapp:myeventlist' %}">・掲載イベント一覧</a>
+                </div>
+                <!--ブログタブ-->
+                <div onclick="obj=document.getElementById('openblog').style; obj.display=(obj.display=='none')?'block':'none';">
+                    <a class="menu_item" style="cursor:pointer;">ブログ▼</a>
+                </div>
+                <div id="openblog" style="display:none;clear:both;">
+                    <a class="menu_item" href="{% url 'freeschoolapp:blogpost' %}">・ブログ記事投稿</a>
+                    <br>
+                    <a class="menu_item" href="{% url 'freeschoolapp:mybloglist' %}">・投稿ブログ記事一覧</a>
+                </div>
+                <!--ユーザー管理タブ-->
+                <div onclick="obj=document.getElementById('openusermanage').style; obj.display=(obj.display=='none')?'block':'none';">
+                    <a class="menu_item" style="cursor:pointer;">ユーザー管理▼</a>
+                </div>
+                <div id="openusermanage" style="display:none;clear:both;">
+                    <a class="menu_item" href="{% url 'freeschoolapp:usersearch' %}">・ユーザー検索</a>
+                </div>
+                <!--アカウントタブ-->
+                <div onclick="obj=document.getElementById('openaccount').style; obj.display=(obj.display=='none')?'block':'none';">
+                    <a class="menu_item" style="cursor:pointer;">アカウント▼</a>
+                </div>
+                <div id="openaccount" style="display:none;clear:both;">
+                    <a class="menu_item" href="{% url 'freeschoolapp:mypage' %}">・アカウント情報</a>
+                    <br>
+                    <a class="menu_item" href="{% url 'accounts:logout' %}">・ログアウト</a>
+                </div>
+                <a class="menu_item" href="{% url 'freeschoolapp:contact' %}">お問い合わせ</a>
+            </div>
+                <div id="contents"> 
+                
                 {% for message in messages %}
                 <div {% if message.tags %}class="{{ message.tags }}"{% endif %}>
                     {{ message }}
                 </div>
-                {% endfor %}
-            {% endif %}
+                {% endfor %} 
+                <div class="content-inner">
+        
+                {% block contents %}
+                    <!-- ここにコンテンツが挿入されます -->
+                {% endblock %}
+                </div>
         {% endif %}
-        <div id="menu">
-            <a href="{% url 'freeschoolapp:top' %}">メインメニュー</a>
-            <!--サークルタブ-->
-            <div onclick="obj=document.getElementById('openclub').style; obj.display=(obj.display=='none')?'block':'none';">
-                <a class="menu_item" style="cursor:pointer;">サークル▼</a>
-            </div>
-            <div id="openclub" style="display:none;clear:both;">
-                <a class="menu_item" href="{% url 'freeschoolapp:clubpost' %}">・サークル掲載</a>
-                <br>
-                <a class="menu_item" href="{% url 'freeschoolapp:myclublist' %}">・管理サークル一覧</a>
-            </div>
-            <!--イベントタブ-->
-            <div onclick="obj=document.getElementById('openevent').style; obj.display=(obj.display=='none')?'block':'none';">
-                <a class="menu_item" style="cursor:pointer;">イベント▼</a>
-            </div>
-            <div id="openevent" style="display:none;clear:both;">
-                <a class="menu_item" href="{% url 'freeschoolapp:eventpost' %}">・イベント掲載</a>
-                <br>
-                <a class="menu_item" href="{% url 'freeschoolapp:myeventlist' %}">・掲載イベント一覧</a>
-            </div>
-            <!--ブログタブ-->
-            <div onclick="obj=document.getElementById('openblog').style; obj.display=(obj.display=='none')?'block':'none';">
-                <a class="menu_item" style="cursor:pointer;">ブログ▼</a>
-            </div>
-            <div id="openblog" style="display:none;clear:both;">
-                <a class="menu_item" href="{% url 'freeschoolapp:blogpost' %}">・ブログ記事投稿</a>
-                <br>
-                <a class="menu_item" href="{% url 'freeschoolapp:mybloglist' %}">・投稿ブログ記事一覧</a>
-            </div>
-            <!--ユーザー管理タブ-->
-            <div onclick="obj=document.getElementById('openusermanage').style; obj.display=(obj.display=='none')?'block':'none';">
-                <a class="menu_item" style="cursor:pointer;">ユーザー管理▼</a>
-            </div>
-            <div id="openusermanage" style="display:none;clear:both;">
-                <a class="menu_item" href="{% url 'freeschoolapp:usersearch' %}">・ユーザー検索</a>
-            </div>
-            <!--アカウントタブ-->
-            <div onclick="obj=document.getElementById('openaccount').style; obj.display=(obj.display=='none')?'block':'none';">
-                <a class="menu_item" style="cursor:pointer;">アカウント▼</a>
-            </div>
-            <div id="openaccount" style="display:none;clear:both;">
-                <a class="menu_item" href="{% url 'freeschoolapp:mypage' %}">・アカウント情報</a>
-                <br>
-                <a class="menu_item" href="{% url 'accounts:logout' %}">・ログアウト</a>
-            </div>
-            <a class="menu_item" href="{% url 'freeschoolapp:contact' %}">お問い合わせ</a>
-        </div>
-        <div id="contents"> <div class="content-inner">
-            {% block contents %}
-                <!-- ここにコンテンツが挿入されます -->
-            {% endblock %}
-            </div>
-        </div>
     </div>
 </body>
 </html>
