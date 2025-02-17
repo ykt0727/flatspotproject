@@ -9,6 +9,20 @@
         <h3>イベント一覧</h3>
     </div>
 
+    <form method="get" action="{% url 'studentapp:eventlist' %}">
+        <label for="category">ジャンルを絞り込み</label>
+        <select name="category" id="category">
+            <option value="">すべて</option>
+            {% for value, label in category_choices %}
+                <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">絞り込み</button>
+    </form>
+
+
     {% if object_list %}
         <!--object_listにデータがある場合-->
 
