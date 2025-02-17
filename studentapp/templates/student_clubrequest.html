@@ -5,7 +5,12 @@
 {% block contents %}
 
 <div class="request-info">
-    <p class="request-accounts">※ログイン中のユーザーの情報、ここで入力した内容がクラブ管理者に送信されます</p>
+    <p class="request-accounts">
+        ※ログイン中のユーザーの情報、ここで入力した内容がイベント管理者に送信されます<br>
+        事前に聞いておきたいこと、不安な内容があればこちらに記入してください。<br>
+        (例) 送迎の有無、持ち物、服装、食事の有無、参加費用、その他<br>
+        何もなければ「特になし」と記入してください。
+    </p>
     <!--メールを送信するフォーム-->
     <form method="POST" id="requestForm">
         {% csrf_token %}
