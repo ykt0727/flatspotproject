@@ -12,23 +12,23 @@
         <br><br>
         {{ field.errors }}
     {% endfor %} -->
-    {{ clubpost_form.club_name.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.club_name.label_tag }}<br>
     {{ clubpost_form.club_name|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.club_name }}
 
-    {{ clubpost_form.category.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.category.label_tag }}<br>
     {{ clubpost_form.category|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.category }}
 
-    {{ clubpost_form.REP.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.REP.label_tag }}<br>
     {{ clubpost_form.REP|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.REP }}
 
-    {{ clubpost_form.email.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.email.label_tag }}<br>
     {{ clubpost_form.email|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.email }}
 
-    {{ clubpost_form.phone_number.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.phone_number.label_tag }}<br>
     <input type="text"
            name="phone_number" 
            maxlength="11" 
@@ -38,43 +38,43 @@
     <div id="phone_number_error" style="color:red;"></div><br>
     {{ clubpost_form.errors.phone_number }}
 
-    {{ clubpost_form.date.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.date.label_tag }}<br>
     {{ clubpost_form.date|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.date }}
 
-    {{ clubpost_form.fee.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.fee.label_tag }}<br>
     {{ clubpost_form.fee|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.fee }}
 
-    {{ clubpost_form.place.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.place.label_tag }}<br>
     {{ clubpost_form.place|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.place }}
 
-    {{ clubpost_form.sns_link.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.sns_link.label_tag }}<br>
     {{ clubpost_form.sns_link|add_class:'field' }}<br><br>
     {{ clubpost_form.error.sns_links }}
 
-    {{ clubpost_form.sns_name.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.sns_name.label_tag }}<br>
     {{ clubpost_form.sns_name|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.sns_name }}
 
-    {{ clubpost_form.image1.label_tag }}<br>
+    <span style="color:red;">必須 </span>{{ clubpost_form.image1.label_tag }}<br>
     {{ clubpost_form.image1|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.image1 }}
 
-    {{ clubpost_form.image2.label_tag }}<br>
+    <span style="color:blue;">任意 </span>{{ clubpost_form.image2.label_tag }}<br>
     {{ clubpost_form.image2|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.image2 }}
 
-    {{ clubpost_form.image3.label_tag }}<br>
+    <span style="color:blue;">任意 </span>{{ clubpost_form.image3.label_tag }}<br>
     {{ clubpost_form.image3|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.image3 }}
 
-    {{ clubpost_form.image4.label_tag }}<br>
+    <span style="color:blue;">任意 </span>{{ clubpost_form.image4.label_tag }}<br>
     {{ clubpost_form.image4|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.image4 }}
 
-    {{ clubpost_form.image5.label_tag }}<br>
+    <span style="color:blue;">任意 </span>{{ clubpost_form.image5.label_tag }}<br>
     {{ clubpost_form.image5|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.image5 }}
 
@@ -82,7 +82,7 @@
     {{ clubpost_form.public_flag|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.public_flag }}
 
-    {{ clubpost_form.detail_text.label_tag }}<br>
+    <span style="color:blue;">任意 </span>{{ clubpost_form.detail_text.label_tag }}<br>
     {{ clubpost_form.detail_text|add_class:'field' }}<br><br>
     {{ clubpost_form.errors.detail_text }}
 

@@ -7,11 +7,11 @@
 <!--画像を送信する際はenctypeが必要-->
 <form method="post" enctype="multipart/form-data" class="form" id="requestForm">
     {% csrf_token %}
-    {% for field in post_form %}
+    <!-- {% for field in post_form %}
         {{ field.label_tag }}<br>
         {{ field|add_class:'field' }}
         <br><br>
-    {% endfor %}
+    {% endfor %} -->
         <!-- <div>
             <label for="id_title">タイトル:</label>
         </div>
@@ -79,7 +79,41 @@
         <!-- <div>
             {{ post_form.as_p }}
         </div> -->
-        
+    <span style="color:red;">必須 </span>{{ post_form.title.label_tag }}<br>
+    {{ post_form.title|add_class:'field' }}<br><br>
+    {{ post_form.errors.title }}
+
+    <span style="color:red;">必須 </span>{{ post_form.category.label_tag }}<br>
+    {{ post_form.category|add_class:'field' }}<br><br>
+    {{ post_form.errors.category }}
+    
+    <span style="color:red;">必須 </span>{{ post_form.image1.label_tag }}<br>
+    {{ post_form.image1|add_class:'field' }}<br><br>
+    {{ post_form.errors.image1 }}
+
+    <span style="color:blue;">任意 </span>{{ post_form.image2.label_tag }}<br>
+    {{ post_form.image2|add_class:'field' }}<br><br>
+    {{ post_form.errors.image2 }}
+
+    <span style="color:blue;">任意 </span>{{ post_form.image3.label_tag }}<br>
+    {{ post_form.image3|add_class:'field' }}<br><br>
+    {{ post_form.errors.image3 }}
+
+    <span style="color:blue;">任意 </span>{{ post_form.image4.label_tag }}<br>
+    {{ post_form.image4|add_class:'field' }}<br><br>
+    {{ post_form.errors.image4 }}
+
+    <span style="color:blue;">任意 </span>{{ post_form.image5.label_tag }}<br>
+    {{ post_form.image5|add_class:'field' }}<br><br>
+    {{ post_form.errors.image5 }}
+
+    {{ post_form.public_flag.label_tag }}<br>
+    {{ post_form.public_flag|add_class:'field' }}<br><br>
+    {{ post_form.errors.public_flag }}
+
+    <span style="color:blue;">任意 </span>{{ post_form.detail_text.label_tag }}<br>
+    {{ post_form.detail_text|add_class:'field' }}<br><br>
+    {{ post_form.errors.detail_text }}
     <div>
         <button type="submit" id="submitButton">投稿する</button>
     </div>
