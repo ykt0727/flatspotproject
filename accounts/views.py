@@ -17,12 +17,12 @@ class CustomLoginView(LoginView):
         next_url = self.request.GET.get('next')  # nextパラメータを取得
         #ユーザー認証が成功されている場合
         if user.is_authenticated:
-            if next_url:
-                return next_url
             #利用者種別によって遷移されるページを変える
-            elif user.user_type=='student':
+            if user.user_type=='student':
+                if next_url:
+                    return next_url
                 return '../student/top'
-            elif user.user_type=='freeschool':
+            if user.user_type=='freeschool':
                 return '../freeschool/top'
         return super().get_redirect_url()
 

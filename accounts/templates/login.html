@@ -21,9 +21,24 @@
                 <label>パスワード:</label>
                 {{ form.password }}
                 <br><br>
+                <!-- リダイレクト用の hidden フィールド -->
+                <input type="hidden" name="next" id="next-url" value="">
+
                 <button type="submit" class="login-button" id="submitButton">ログイン</button>
             </form>
-        
+
+            <script>
+                // ページ読み込み時に hidden フィールドに現在のURLを設定
+                window.onload=function() {
+                    document.getElementById('next-url').value=window.location.href;
+                };
+            
+                // フォーム送信前にURLを更新 (必要に応じて)
+                document.getElementById('submitButton').addEventListener('click', function(event) {
+                    document.getElementById('next-url').value=window.location.href; // 必要であれば更新
+                });
+            </script>
+            
 
             <!--2重submitを防止する処理-->
             <script>
