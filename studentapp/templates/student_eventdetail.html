@@ -63,17 +63,22 @@
 
     <div class="detailitem">
         <!--ジャンルを表示する-->
-        <p>ジャンル : {{ object.get_category_display }}</p>
+        ジャンル : {{ object.get_category_display }}
+
+        <div id="freeschoolname">フリースクール名:
+        <a href="{% url 'studentapp:freeschoolinfo' object.user.freeschool.pk %}">
+            {{ object.user.freeschool.freeschool_name }}
+        </a></div>
     
         <!--代表者を表示する-->
         <p>代表者 : {{ object.REP }}</p>
     
         <!--電話番号を表示する-->
         <p>TEL : {{ object.phone_number }}</p>
-    
+        <hr>
         <!--日時を表示する-->
         <p>活動日時 : {{ object.date }}</p>
-    
+        
         <!--活動場所を表示する-->
         <p>活動場所 : {{ object.place }}</p>
     
@@ -82,7 +87,8 @@
     </div>
     
     <!--紹介文・本文を表示する-->
-    <p class="detailText">{{ object.detail_text }}</p>
+    <h2 id="detaillabel">イベントの紹介文</h2>
+    <p class="detailText">{{ object.detail_text|linebreaksbr }}</p>
     
     <!--作成日時を表示する-->
     <p class="detailCreated">{{ object.created_at }}</p>
@@ -102,6 +108,8 @@
     <!--いいねボタン関連の処理、ログインされていなければいいねボタンは表示しない-->
     {% if user.is_authenticated %}
         <!--いいねボタンの表示-->
+        <div id="likefield">
+        いいね：
         <button id="likebutton">
         {% if user_has_liked %}
         <!--イイネしている場合-->
@@ -111,6 +119,7 @@
             ♥
         {% endif %}
         </button>
+        </div>
 
         <script>
             //いいねボタンを指定
@@ -148,7 +157,7 @@
             });
         </script>
     {% endif %}
-
+    <br>
     <!--参加申し込みリンク-->
     <!--ログインされている場合-->
     {% if user.is_authenticated %}

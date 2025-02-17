@@ -61,8 +61,14 @@
         </div>
     </div>
 
+<div id="freeschoolname">フリースクール名:
+<a href="{% url 'studentapp:freeschoolinfo' object.user.freeschool.pk %}">
+    {{ object.user.freeschool.freeschool_name }}
+</a></div>
+
 <!--紹介文・本文を表示する-->
-<p class="detailText">{{ object.detail_text }}</p>
+<h2 id="detaillabel">ブログ本文</h2>
+<p class="detailText">{{ object.detail_text|linebreaksbr }}</p>
 
 <div class="detail-JC">
     <!--ジャンルを表示する-->
@@ -73,6 +79,7 @@
     <!--いいねボタン関連の処理、ログインされていなければいいねボタンは表示しない-->
     {% if user.is_authenticated %}
         <!--いいねボタンの表示-->
+        いいね：
         <button id="likebutton">
         {% if user_has_liked %}
         <!--イイネしている場合-->
