@@ -181,7 +181,7 @@
                             キャンセル
                         </button>
                         <!--ログインするボタン-->
-                        <a class="btn btn-outline-danger" href="{% url 'accounts:login' %}" role="button">
+                        <a class="btn btn-outline-danger" href="{% url 'accounts:login' %}?next={{ request.path }}" role="button">
                             ログインする
                         </a>
                     </div>

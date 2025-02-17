@@ -14,10 +14,13 @@ class CustomLoginView(LoginView):
     template_name='login.html'
     def get_redirect_url(self):
         user=self.request.user
+        next_url = self.request.GET.get('next')  # nextパラメータを取得
         #ユーザー認証が成功されている場合
         if user.is_authenticated:
+            if next_url:
+                return next_url
             #利用者種別によって遷移されるページを変える
-            if user.user_type=='student':
+            elif user.user_type=='student':
                 return '../student/top'
             elif user.user_type=='freeschool':
                 return '../freeschool/top'

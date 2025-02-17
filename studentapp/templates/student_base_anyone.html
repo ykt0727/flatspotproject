@@ -72,7 +72,7 @@
         {% endif %}
     {% else %}
       <div class="account-button">
-        <a href="{% url 'accounts:login' %}">
+        <a href="{% url 'accounts:login' %}?next={{ request.path }}">
             <button class="login-signup-button">
               ログイン/ユーザー登録
             </button>
