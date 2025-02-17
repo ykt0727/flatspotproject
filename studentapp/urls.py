@@ -36,6 +36,9 @@ urlpatterns=[
     #このサイトについて
     path('about',views.AboutView.as_view(),name='about'),
     
+    #フリースクール情報を表示する画面
+    path('freeschoolinfo/<int:pk>',views.FreeSchoolInfoView.as_view(),name='freeschoolinfo'),
+    
     #マイページ機能
     path('mypage',views.MypageView.as_view(),name='mypage'),#アカウント情報表示
     path('mypageupdate',views.MypageUpdateView.as_view(),name='mypageupdate'),#アカウント情報変更

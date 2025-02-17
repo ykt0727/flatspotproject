@@ -1,0 +1,50 @@
+{% extends 'student_base_anyone.html' %}
+{% load static %}
+{% block title %}フリースクール詳細{% endblock %}
+{% block contents %}
+    <h1>{{ object.freeschool_name }}の情報</h1>
+    <table>
+        <tbody>
+            <tr>
+                <th>団体名</th>
+                <td>{{ object.freeschool_name }}</td>
+            </tr>
+            <tr>
+                <th>代表者名</th>
+                <td>{{ object.manager_name }}</td>
+            </tr>
+            <tr>
+                <th>メールアドレス</th>
+                <td>{{ object.user.email }}</td>
+            </tr>
+            <tr>
+                <th>住所</th>
+                <td>{{ object.address }}</td>
+            <tr>
+                <th>電話番号</th>
+                <td>{{ object.user.phone_number }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>サークル</h2>
+    {% for club in clubs %}
+        <p><a href="{% url 'studentapp:clubdetail' club.pk %}">{{ club.club_name }}</a></p>
+    {% empty %}
+        <p>サークルはありません</p>
+    {% endfor %}
+
+    <h2>イベント</h2>
+    {% for event in events %}
+        <p><a href="{% url 'studentapp:eventdetail' event.pk %}">{{ event.event_name }}</a></p>
+    {% empty %}
+        <p>イベントはありません</p>
+    {% endfor %}
+
+    <h2>ブログ</h2>
+    {% for blogpost in blogposts %}
+        <p><a href="{% url 'studentapp:blogdetail' blogpost.pk %}">{{ blogpost.title }}</a></p>
+    {% empty %}
+        <p>ブログ記事はありません</p>
+    {% endfor %}
+{% endblock %}

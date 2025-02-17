@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 #モデル、フォーム関連
 from .models import CustomUser,Student,LikeForBlogPost,LikeForClub,LikeForEvent
 from .forms import ClubRequestForm,EventRequestForm,ContactForm,CustomUserForm,StudentForm
-from freeschoolapp.models import BlogPost,Club,Event
+from freeschoolapp.models import BlogPost,Club,Event,FreeSchool
 
 
 class TopView(TemplateView):
@@ -655,3 +655,17 @@ class MypageDeleteDoneView(TemplateView):
 class LogoutUrgeView(TemplateView):
     #freeschool_logouturge.htmlをレンダリング（描写）する
     template_name='student_logouturge.html'
+    
+#選択されたフリースクールの情報、関連した投稿を表示するページ
+class FreeSchoolInfoView(DetailView):
+    template_name='student_freeschoolinfo.html'
+    model=FreeSchool
+    
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        freeschool = self.get_object()
+        #サークル、ブログ、イベントを取得
+        context['clubs']=Club.objects.filter(user__freeschool=freeschool)
+        context['events']=Event.objects.filter(user__freeschool=freeschool)
+        context['blogposts']=BlogPost.objects.filter(user__freeschool=freeschool)
+        return context
