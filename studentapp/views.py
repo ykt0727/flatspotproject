@@ -383,17 +383,26 @@ class BlogListView(ListView):
     model=BlogPost
     #1ページに表示するレコードの件数を設定
     paginate_by=5
-    
     def get_queryset(self):
-        # 認証済みの場合
-        if self.request.user.is_authenticated and self.request.user.user_type == 'student':
-            #閲覧権限がある場合
-            if self.request.user.student.is_view:
-                return BlogPost.objects.order_by('created_at')
-            else:
-                return BlogPost.objects.filter(public_flag=True).order_by('created_at')
-        # それ以外の場合、publicの投稿のみ表示する。
-        return BlogPost.objects.filter(public_flag=True).order_by('created_at')
+        queryset = BlogPost.objects.order_by('-created_at')
+        
+        if self.request.user.is_authenticated and self.request.user.user_type=='student':
+            #閲覧権限がない場合、publicの投稿のみ表示する
+            if not self.request.user.student.is_view:
+                queryset=queryset.filter(public_flag=True)  # ここでフィルタリングを適用
+
+        category=self.request.GET.get('category')
+        if category:
+            queryset=queryset.filter(category=category)
+
+        return queryset
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_choices'] = BlogPost.category_choices  # 選択肢を追加
+        context['selected_category'] = self.request.GET.get('category', '')  # 選択されたカテゴリを渡す
+        return context
+    
         
     def dispatch(self, *args, **kwargs):
         # ログアウト状態か、ログイン状態でuser_typeが'student'か確認
