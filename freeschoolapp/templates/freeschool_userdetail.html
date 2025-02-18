@@ -1,15 +1,15 @@
 {% extends 'freeschool_base.html' %}
 {% block title %}freeschool userdetail{% endblock %}
 {% block contents %}
-ユーザー詳細画面
+<p>生徒ユーザーの情報</p>
+<p style="color: red;">*機能拡張予定。現在は限定公開ページへのアクセス許可のみ</p>
+
 <br>
 ニックネーム
 {{ object.nickname }}
-<br>
-限定公開ページへのアクセスを許可
 <form method="post" id="requestForm">
     {% csrf_token %}
-    <p>許可する : {{ form.is_view }}</p>
+    <p>限定公開ページへのアクセスを許可する : {{ form.is_view }}</p>
     <a href="{% url 'freeschoolapp:usersearch' %}" class="cssbutton">戻る</a>
     <button type="submit" id="submitButton">完了</button>
 </form>
